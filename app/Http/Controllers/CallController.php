@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -30,6 +31,41 @@ class CallController extends Controller
         'video/webm',
         'video/mp4',
     ];
+
+    public function index(Request $request): View
+    {
+        $this->authorize('viewAny', Call::class);
+
+        $isAdmin = auth()->user()->isAdmin();
+
+        $query = Call::with(['agent', 'template'])
+            ->when(! $isAdmin, fn ($q) => $q->where('uploaded_by', auth()->id()));
+
+        if ($request->filled('agent_id')) {
+            $query->where('agent_id', $request->agent_id);
+        }
+        if ($request->filled('template_id')) {
+            $query->where('template_id', $request->template_id);
+        }
+        if ($request->filled('outcome')) {
+            $query->where('outcome', $request->outcome);
+        }
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $calls     = $query->latest()->paginate(25)->withQueryString();
+        $agents    = Agent::orderBy('name')->get(['id', 'name']);
+        $templates = Template::orderBy('name')->get(['id', 'name']);
+
+        return view('calls.index', compact('calls', 'agents', 'templates'));
+    }
 
     public function create(): View
     {
@@ -126,6 +162,41 @@ class CallController extends Controller
             'outcome' => $call->outcome,
             'error'   => $call->error_message,
         ]);
+    }
+
+    public function destroy(Call $call): RedirectResponse
+    {
+        $this->authorize('delete', $call);
+
+        foreach (array_filter([$call->original_path, $call->audio_path]) as $path) {
+            Storage::disk('private')->delete($path);
+        }
+
+        $call->delete();
+
+        return redirect()->route('calls.index')
+            ->with('success', 'Call and all associated data deleted.');
+    }
+
+    public function rescore(Call $call): RedirectResponse
+    {
+        $this->authorize('view', $call);
+        abort_unless($call->status === 'done', 422, 'Only completed calls can be re-scored.');
+
+        $call->criterionResults()->delete();
+        $call->segments()->delete();
+
+        $call->update([
+            'status'        => 'queued',
+            'score_percent' => null,
+            'outcome'       => null,
+            'error_message' => null,
+        ]);
+
+        ProcessCallJob::dispatch($call->id);
+
+        return redirect()->route('calls.show', $call)
+            ->with('success', 'Call queued for re-scoring.');
     }
 
     public function retry(Call $call): RedirectResponse
