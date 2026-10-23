@@ -104,6 +104,43 @@
             </div>
         </div>
 
+        {{-- Charts: outcomes donut + score trend --}}
+        @php
+            $hasOutcomes = ($outcomesData['pass'] + $outcomesData['fail'] + $outcomesData['auto_fail']) > 0;
+            $hasTrend    = collect($trendData)->contains(fn($d) => $d['avg'] !== null);
+        @endphp
+        @if ($hasOutcomes || $hasTrend)
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            {{-- Outcomes donut --}}
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+                <h3 class="text-sm font-semibold text-slate-700 mb-0.5">Call Outcomes</h3>
+                <p class="text-xs text-slate-400 mb-4">All-time pass · fail · auto-fail</p>
+                @if ($hasOutcomes)
+                    <div class="relative h-44">
+                        <canvas id="dash-outcomes"></canvas>
+                    </div>
+                @else
+                    <div class="h-44 flex items-center justify-center text-sm text-slate-400">No scored calls yet.</div>
+                @endif
+            </div>
+
+            {{-- Score trend --}}
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+                <h3 class="text-sm font-semibold text-slate-700 mb-0.5">Score Trend</h3>
+                <p class="text-xs text-slate-400 mb-4">Average QA score — last 3 weeks</p>
+                @if ($hasTrend)
+                    <div class="relative h-44">
+                        <canvas id="dash-trend"></canvas>
+                    </div>
+                @else
+                    <div class="h-44 flex items-center justify-center text-sm text-slate-400">No data in this period.</div>
+                @endif
+            </div>
+
+        </div>
+        @endif
+
         {{-- Main content: needs-review queue --}}
         @if ($needsReviewCalls->isNotEmpty())
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
@@ -170,4 +207,17 @@
         @endif
 
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var C = window.SalesQaCharts;
+        if (!C) return;
+        @if ($hasOutcomes)
+        C.outcomesDonut(document.getElementById('dash-outcomes'), @json($outcomesData));
+        @endif
+        @if ($hasTrend)
+        C.scoreTrendLine(document.getElementById('dash-trend'), @json($trendData));
+        @endif
+    });
+    </script>
 </x-app-layout>

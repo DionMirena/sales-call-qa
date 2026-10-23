@@ -5,6 +5,7 @@ use App\Http\Controllers\CallController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OverrideController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('agents', [AgentController::class, 'index'])->name('agents.index');
     Route::get('agents/{agent}', [AgentController::class, 'show'])->name('agents.show');
+
+    Route::get('stats', [StatsController::class, 'index'])->name('stats.index');
 });
 
 require __DIR__.'/auth.php';
