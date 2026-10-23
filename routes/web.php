@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CallController;
+use App\Http\Controllers\OverrideController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('calls/{call}/status', [CallController::class, 'status'])->name('calls.status');
     Route::post('calls/{call}/retry', [CallController::class, 'retry'])->name('calls.retry');
     Route::post('calls/{call}/swap-speaker', [CallController::class, 'swapSpeaker'])->name('calls.swap_speaker');
+    Route::post('criterion-results/{criterionResult}/overrides', [OverrideController::class, 'store'])->name('overrides.store');
 });
 
 require __DIR__.'/auth.php';

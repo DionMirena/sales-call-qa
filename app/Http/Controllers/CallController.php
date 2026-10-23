@@ -81,7 +81,7 @@ class CallController extends Controller
     public function show(Call $call): View
     {
         $this->authorize('view', $call);
-        $call->load(['agent', 'template', 'uploader', 'criterionResults', 'segments']);
+        $call->load(['agent', 'template', 'uploader', 'criterionResults.overrides.user', 'segments']);
 
         $segmentsJson = $call->segments->map(fn ($s) => [
             'code'     => $s->code,

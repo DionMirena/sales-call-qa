@@ -235,7 +235,97 @@
                                     @endforeach
                                 </div>
                             @endif
-                        </div>
+
+                            {{-- Override form + audit trail ────────────────────── --}}
+                            @php $hasErrors = $errors->hasBag("cr_{$result->id}"); @endphp
+                            <div x-data="{ open: {{ $hasErrors ? 'true' : 'false' }} }"
+                                 class="mt-3 pt-3 border-t border-gray-100">
+
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs {{ $result->overrides->isNotEmpty() ? 'text-indigo-600 font-medium' : 'text-transparent' }}">
+                                        ✎ Human reviewed
+                                    </span>
+                                    <button @click="open = !open" type="button"
+                                            class="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+                                            x-text="open ? 'Cancel' : 'Override result'">
+                                    </button>
+                                </div>
+
+                                {{-- Form --}}
+                                <div x-show="open" x-cloak class="mt-3">
+                                    <form method="POST" action="{{ route('overrides.store', $result) }}">
+                                        @csrf
+                                        <div class="flex flex-col sm:flex-row gap-2 items-start">
+
+                                            @if($result->criterion_type === 'pass_fail')
+                                                <select name="new_result"
+                                                        class="border border-gray-300 rounded px-2 py-1.5 text-sm bg-white shrink-0">
+                                                    <option value="">— select —</option>
+                                                    <option value="pass">Pass</option>
+                                                    <option value="fail">Fail</option>
+                                                </select>
+                                            @elseif($result->criterion_type === 'yes_no_na')
+                                                <select name="new_result"
+                                                        class="border border-gray-300 rounded px-2 py-1.5 text-sm bg-white shrink-0">
+                                                    <option value="">— select —</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                    <option value="na">N/A</option>
+                                                </select>
+                                            @elseif($result->criterion_type === 'scale_1_5')
+                                                <select name="new_result"
+                                                        class="border border-gray-300 rounded px-2 py-1.5 text-sm bg-white shrink-0">
+                                                    <option value="">— select —</option>
+                                                    @foreach(range(1, 5) as $n)
+                                                        <option value="{{ $n }}">{{ $n }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @else
+                                                <input type="text" name="new_result"
+                                                       placeholder="Corrected value"
+                                                       class="border border-gray-300 rounded px-2 py-1.5 text-sm flex-1">
+                                            @endif
+
+                                            <textarea name="reason" rows="2" required minlength="10"
+                                                      placeholder="Reason (min 10 chars)"
+                                                      class="border border-gray-300 rounded px-2 py-1.5 text-sm flex-1 resize-none"></textarea>
+
+                                            <button type="submit"
+                                                    class="shrink-0 px-3 py-1.5 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition-colors">
+                                                Save
+                                            </button>
+                                        </div>
+
+                                        @error('new_result', "cr_{$result->id}")
+                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                        @error('reason', "cr_{$result->id}")
+                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </form>
+                                </div>
+
+                                {{-- Audit trail --}}
+                                @if($result->overrides->isNotEmpty())
+                                    <div class="mt-3 space-y-2">
+                                        @foreach($result->overrides as $ov)
+                                            <div class="text-xs bg-indigo-50 rounded p-2.5 border border-indigo-100">
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="font-medium text-gray-800">{{ $ov->user->name }}</span>
+                                                    <span class="text-gray-400">changed</span>
+                                                    <span class="font-mono bg-red-50 text-red-700 px-1 rounded">{{ strtoupper($ov->old_result) }}</span>
+                                                    <span class="text-gray-400">→</span>
+                                                    <span class="font-mono bg-green-50 text-green-700 px-1 rounded font-semibold">{{ strtoupper($ov->new_result) }}</span>
+                                                    <span class="text-gray-400 ml-auto">{{ $ov->created_at->diffForHumans() }}</span>
+                                                </div>
+                                                <p class="mt-1 text-gray-500 italic">"{{ $ov->reason }}"</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>{{-- /override --}}
+
+                        </div>{{-- /criterion card --}}
                     @endforeach
                 </div>
 
