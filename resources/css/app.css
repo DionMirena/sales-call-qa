@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Prevent Alpine.js flash on x-cloak elements */
+[x-cloak] { display: none !important; }

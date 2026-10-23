@@ -1,180 +1,221 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Calls</h2>
-            <a href="{{ route('calls.create') }}"
-               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700">
-                + Upload Call
-            </a>
+        <div>
+            <h1 class="text-base font-semibold text-slate-800">Calls</h1>
+            <p class="text-xs text-slate-400 hidden sm:block">{{ $calls->total() }} {{ Str::plural('call', $calls->total()) }} found</p>
         </div>
+        <a href="{{ route('calls.create') }}"
+           class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-colors shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span class="hidden sm:inline">Upload Call</span>
+        </a>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
+    <div class="p-4 sm:p-6 space-y-4 max-w-7xl mx-auto w-full">
 
-            @if (session('success'))
-                <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md text-sm">
-                    {{ session('success') }}
-                </div>
-            @endif
+        @if (session('success'))
+            <div class="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ session('success') }}
+            </div>
+        @endif
 
-            {{-- Filters --}}
-            <form method="GET" action="{{ route('calls.index') }}"
-                  class="bg-white shadow-sm rounded-lg p-4">
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Agent</label>
-                        <select name="agent_id"
-                                class="w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">All agents</option>
-                            @foreach ($agents as $agent)
-                                <option value="{{ $agent->id }}"
-                                    {{ request('agent_id') == $agent->id ? 'selected' : '' }}>
-                                    {{ $agent->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Template</label>
-                        <select name="template_id"
-                                class="w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">All templates</option>
-                            @foreach ($templates as $tpl)
-                                <option value="{{ $tpl->id }}"
-                                    {{ request('template_id') == $tpl->id ? 'selected' : '' }}>
-                                    {{ $tpl->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Outcome</label>
-                        <select name="outcome"
-                                class="w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">All outcomes</option>
-                            <option value="pass" {{ request('outcome') === 'pass' ? 'selected' : '' }}>Pass</option>
-                            <option value="fail" {{ request('outcome') === 'fail' ? 'selected' : '' }}>Fail</option>
-                            <option value="auto_fail" {{ request('outcome') === 'auto_fail' ? 'selected' : '' }}>Auto-fail</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Status</label>
-                        <select name="status"
-                                class="w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">All statuses</option>
-                            <option value="done" {{ request('status') === 'done' ? 'selected' : '' }}>Done</option>
-                            <option value="queued" {{ request('status') === 'queued' ? 'selected' : '' }}>Queued</option>
-                            <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Failed</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">From</label>
-                        <input type="date" name="date_from" value="{{ request('date_from') }}"
-                               class="w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">To</label>
-                        <input type="date" name="date_to" value="{{ request('date_to') }}"
-                               class="w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                    </div>
-                </div>
-
-                <div class="mt-3 flex items-center gap-2">
-                    <button type="submit"
-                            class="px-4 py-1.5 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700">
-                        Filter
-                    </button>
+        {{-- Filters --}}
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4"
+             x-data="{ showFilters: {{ collect(request()->only(['agent_id','template_id','outcome','status','date_from','date_to']))->filter()->isNotEmpty() ? 'true' : 'false' }} }">
+            <div class="flex items-center justify-between mb-3">
+                <button @click="showFilters = !showFilters"
+                        class="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                    </svg>
+                    Filters
+                    @php $activeFilters = collect(request()->only(['agent_id','template_id','outcome','status','date_from','date_to']))->filter()->count(); @endphp
+                    @if($activeFilters)
+                        <span class="px-1.5 py-0.5 bg-indigo-600 text-white text-xs rounded-full">{{ $activeFilters }}</span>
+                    @endif
+                </button>
+                @if($activeFilters)
                     <a href="{{ route('calls.index') }}"
-                       class="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200">
-                        Clear
-                    </a>
-                    <span class="text-xs text-gray-500 ms-auto">
-                        {{ $calls->total() }} {{ Str::plural('call', $calls->total()) }}
-                    </span>
-                </div>
-            </form>
+                       class="text-xs text-slate-400 hover:text-slate-600 transition-colors">Clear all</a>
+                @endif
+            </div>
 
-            {{-- Table --}}
-            <div class="bg-white shadow-sm rounded-lg overflow-hidden">
-                @if ($calls->isEmpty())
-                    <div class="px-6 py-12 text-center text-gray-500 text-sm">
-                        No calls found. <a href="{{ route('calls.create') }}" class="text-indigo-600 hover:underline">Upload the first one</a>.
+            <div x-show="showFilters">
+                <form method="GET" action="{{ route('calls.index') }}">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Agent</label>
+                            <select name="agent_id"
+                                    class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">All agents</option>
+                                @foreach ($agents as $agent)
+                                    <option value="{{ $agent->id }}" {{ request('agent_id') == $agent->id ? 'selected' : '' }}>
+                                        {{ $agent->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Template</label>
+                            <select name="template_id"
+                                    class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">All templates</option>
+                                @foreach ($templates as $tpl)
+                                    <option value="{{ $tpl->id }}" {{ request('template_id') == $tpl->id ? 'selected' : '' }}>
+                                        {{ $tpl->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Outcome</label>
+                            <select name="outcome"
+                                    class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">All outcomes</option>
+                                <option value="pass" {{ request('outcome') === 'pass' ? 'selected' : '' }}>Pass</option>
+                                <option value="fail" {{ request('outcome') === 'fail' ? 'selected' : '' }}>Fail</option>
+                                <option value="auto_fail" {{ request('outcome') === 'auto_fail' ? 'selected' : '' }}>Auto-fail</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Status</label>
+                            <select name="status"
+                                    class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">All statuses</option>
+                                <option value="done" {{ request('status') === 'done' ? 'selected' : '' }}>Done</option>
+                                <option value="queued" {{ request('status') === 'queued' ? 'selected' : '' }}>Queued</option>
+                                <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Failed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">From</label>
+                            <input type="date" name="date_from" value="{{ request('date_from') }}"
+                                   class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">To</label>
+                            <input type="date" name="date_to" value="{{ request('date_to') }}"
+                                   class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
                     </div>
-                @else
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
+                    <div class="mt-3 flex gap-2">
+                        <button type="submit"
+                                class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-colors">
+                            Apply
+                        </button>
+                        <a href="{{ route('calls.index') }}"
+                           class="px-4 py-2 bg-slate-100 text-slate-600 text-sm rounded-xl hover:bg-slate-200 transition-colors">
+                            Reset
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {{-- Table --}}
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+            @if ($calls->isEmpty())
+                <div class="py-16 text-center">
+                    <div class="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-slate-700 mb-1">No calls found</p>
+                    <p class="text-sm text-slate-400 mb-4">
+                        @if($activeFilters) Try adjusting your filters. @else Upload the first call to get started. @endif
+                    </p>
+                    <a href="{{ route('calls.create') }}"
+                       class="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm rounded-xl hover:bg-indigo-700 transition-colors">
+                        Upload a call
+                    </a>
+                </div>
+            @else
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-100 text-sm">
+                        <thead class="bg-slate-50">
                             <tr>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider text-xs">Agent</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider text-xs">Template</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider text-xs">Score</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider text-xs">Outcome</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider text-xs">Status</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider text-xs">Uploaded</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Agent</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Template</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Score</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Outcome</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Date</th>
                                 <th class="px-4 py-3"></th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="divide-y divide-slate-50">
                             @foreach ($calls as $call)
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-4 py-3 font-medium text-gray-900">
-                                        <a href="{{ route('agents.show', $call->agent) }}"
-                                           class="hover:text-indigo-600">{{ $call->agent->name }}</a>
-                                        @if ($call->agent->team)
-                                            <span class="text-xs text-gray-400 block">{{ $call->agent->team }}</span>
-                                        @endif
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center gap-2.5">
+                                            <div class="w-7 h-7 bg-indigo-100 rounded-full flex items-center justify-center text-xs font-bold text-indigo-700 shrink-0">
+                                                {{ strtoupper(substr($call->agent->name, 0, 2)) }}
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('agents.show', $call->agent) }}"
+                                                   class="font-semibold text-slate-800 hover:text-indigo-600 transition-colors">
+                                                    {{ $call->agent->name }}
+                                                </a>
+                                                @if ($call->agent->team)
+                                                    <p class="text-xs text-slate-400">{{ $call->agent->team }}</p>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td class="px-4 py-3 text-gray-600">{{ $call->template->name }}</td>
-                                    <td class="px-4 py-3 font-semibold">
+                                    <td class="px-4 py-3 text-slate-600 max-w-[160px] truncate">{{ $call->template->name }}</td>
+                                    <td class="px-4 py-3">
                                         @if ($call->score_percent !== null)
-                                            {{ number_format($call->score_percent, 1) }}%
+                                            <span class="font-bold {{ $call->score_percent >= 80 ? 'text-emerald-600' : ($call->score_percent >= 60 ? 'text-amber-600' : 'text-red-600') }}">
+                                                {{ number_format($call->score_percent, 1) }}%
+                                            </span>
                                         @else
-                                            <span class="text-gray-400">—</span>
+                                            <span class="text-slate-300">—</span>
                                         @endif
                                     </td>
                                     <td class="px-4 py-3">
                                         @if ($call->outcome === 'pass')
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Pass</span>
+                                            <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Pass</span>
                                         @elseif ($call->outcome === 'fail')
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Fail</span>
+                                            <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">Fail</span>
                                         @elseif ($call->outcome === 'auto_fail')
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">Auto-fail</span>
+                                            <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold bg-red-200 text-red-800">Auto-fail</span>
                                         @else
-                                            <span class="text-gray-400 text-xs">—</span>
+                                            <span class="text-slate-300 text-xs">—</span>
                                         @endif
                                     </td>
                                     <td class="px-4 py-3">
                                         @php
-                                            $statusColors = [
-                                                'done'         => 'bg-green-100 text-green-800',
-                                                'failed'       => 'bg-red-100 text-red-800',
-                                                'queued'       => 'bg-gray-100 text-gray-700',
-                                                'normalising'  => 'bg-yellow-100 text-yellow-800',
-                                                'transcribing' => 'bg-blue-100 text-blue-800',
-                                                'scoring'      => 'bg-purple-100 text-purple-800',
+                                            $statusMap = [
+                                                'done'         => 'bg-emerald-100 text-emerald-700',
+                                                'failed'       => 'bg-red-100 text-red-700',
+                                                'queued'       => 'bg-slate-100 text-slate-600',
+                                                'normalising'  => 'bg-amber-100 text-amber-700',
+                                                'transcribing' => 'bg-blue-100 text-blue-700',
+                                                'scoring'      => 'bg-indigo-100 text-indigo-700',
                                             ];
                                         @endphp
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $statusColors[$call->status] ?? 'bg-gray-100 text-gray-700' }}">
+                                        <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold {{ $statusMap[$call->status] ?? 'bg-slate-100 text-slate-600' }}">
                                             {{ ucfirst($call->status) }}
                                         </span>
                                     </td>
-                                    <td class="px-4 py-3 text-gray-500 text-xs">{{ $call->created_at->format('d M Y') }}</td>
+                                    <td class="px-4 py-3 text-slate-400 text-xs whitespace-nowrap">{{ $call->created_at->format('d M Y') }}</td>
                                     <td class="px-4 py-3 text-right whitespace-nowrap">
                                         <a href="{{ route('calls.show', $call) }}"
-                                           class="text-indigo-600 hover:text-indigo-800 text-xs font-medium me-3">View</a>
-
+                                           class="text-indigo-600 hover:text-indigo-800 text-xs font-semibold mr-3">View</a>
                                         <form method="POST" action="{{ route('calls.destroy', $call) }}"
                                               class="inline"
                                               onsubmit="return confirm('Delete this call and all its data?')">
-                                            @csrf
-                                            @method('DELETE')
+                                            @csrf @method('DELETE')
                                             <button type="submit"
-                                                    class="text-red-500 hover:text-red-700 text-xs font-medium">
+                                                    class="text-red-400 hover:text-red-700 text-xs font-medium transition-colors">
                                                 Delete
                                             </button>
                                         </form>
@@ -183,14 +224,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
 
-                    @if ($calls->hasPages())
-                        <div class="px-4 py-3 border-t border-gray-200">
-                            {{ $calls->links() }}
-                        </div>
-                    @endif
+                @if ($calls->hasPages())
+                    <div class="px-4 py-3 border-t border-slate-100">
+                        {{ $calls->links() }}
+                    </div>
                 @endif
-            </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
