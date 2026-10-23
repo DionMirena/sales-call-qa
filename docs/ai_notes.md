@@ -23,4 +23,12 @@ This file records every mistake made by the AI assistant during this project: wr
 - **Fix:** Installed Node.js 24 LTS via winget. Also added `$this->withoutVite()` to `tests/TestCase.php` so tests never require a build artefact, making the test suite faster and independent of front-end compilation.
 - **Lesson:** Check Node.js version compatibility with the framework's front-end toolchain. Laravel 13 requires Node 20+. Always add `withoutVite()` to base TestCase on any Breeze/Vite project.
 
+## Phase 2 – Templates
+
+### Mistake 3: `authorize()` not available — Laravel 13 removed it from base Controller
+- **What happened:** `TemplateController::authorize()` threw `Call to undefined method`. Laravel 13 removed `AuthorizesRequests` from the base `Controller` class; controllers must opt in.
+- **How it was caught:** 6 test failures on the first test run, all with the same 500 traceback pointing to `TemplateController.php`.
+- **Fix:** Added `use AuthorizesRequests;` to `app/Http/Controllers/Controller.php`.
+- **Lesson:** When upgrading or starting fresh on Laravel 11+, always check whether `AuthorizesRequests` and `ValidatesRequests` have been removed from the base controller. Add them explicitly if needed.
+
 <!-- Add new entries below as they occur. -->
