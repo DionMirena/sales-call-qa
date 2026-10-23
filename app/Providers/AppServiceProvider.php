@@ -8,6 +8,7 @@ use App\Models\Template;
 use App\Policies\CallPolicy;
 use App\Policies\OverridePolicy;
 use App\Policies\TemplatePolicy;
+use App\Services\ClaudeScoringService;
 use App\Services\DeepgramTranscriptionService;
 use App\Services\FakeScoringService;
 use App\Services\FakeTranscriptionService;
@@ -25,8 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->bind(ScoringService::class, FakeScoringService::class);
         } else {
             $this->app->bind(TranscriptionService::class, DeepgramTranscriptionService::class);
-            // ClaudeScoringService bound in Phase 4; for now fake is used when real not ready
-            $this->app->bind(ScoringService::class, FakeScoringService::class);
+            $this->app->bind(ScoringService::class, ClaudeScoringService::class);
         }
     }
 
