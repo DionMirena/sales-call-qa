@@ -1,0 +1,25 @@
+AGENT: Good morning, this is Daniel Hughes from Insurvas Insurance. I should let you know this call may be recorded for quality and training purposes. Is that okay?
+CUSTOMER: Yes, absolutely.
+AGENT: Great. I'm calling about the life insurance enquiry you submitted. I want to make sure I give you genuinely useful information rather than a generic pitch, so I'd like to take a bit more time understanding your situation. Is that okay?
+CUSTOMER: That's fine. I appreciate that approach actually.
+AGENT: Thank you. Let me start with the basics — how old are you?
+CUSTOMER: I'm thirty-three.
+AGENT: And how would you describe your health? Any significant medical history — long-term conditions, anything treated in the last five years?
+CUSTOMER: No, I'm healthy. No conditions, never been hospitalised. I don't smoke, I do exercise.
+AGENT: That's a strong profile for life insurance. Do you drink alcohol?
+CUSTOMER: Occasionally, socially. Maybe a few glasses of wine a week.
+AGENT: Fine. And do you have any existing life insurance — through your employer or privately?
+CUSTOMER: My employer gives me two times salary, so about eighty thousand. But I know it's not enough.
+AGENT: Good to know. And do you have dependants who rely on your income?
+CUSTOMER: My partner, and we're expecting our first child in four months.
+AGENT: Congratulations. A new baby is a really good prompt to review cover. Do you have a mortgage?
+CUSTOMER: Yes, we have about two hundred and eighty thousand left on it. It's a joint mortgage.
+AGENT: And in terms of monthly premium, what's comfortable for you?
+CUSTOMER: I'd say up to forty-five pounds, maybe fifty at a push.
+AGENT: Right. So thinking about it holistically: you've got employer cover of eighty thousand, a joint mortgage of two eighty, and a baby arriving soon. I'd suggest thinking about cover in two parts — one that specifically covers the mortgage and one that provides income replacement for your family. A decreasing term policy to mirror the mortgage over its remaining term, and a separate level term for additional family protection, would give you layered cover. Alternatively, a single larger level term policy simplifies things. For a healthy non-smoking thirty-three year old, cover of three hundred and fifty thousand pounds over thirty years would likely run around eighteen to twenty-five pounds a month — well within your budget.
+CUSTOMER: That's helpful context. I hadn't thought about splitting the cover.
+AGENT: It's worth considering. The premium is confirmed after underwriting, not before — I want to be clear that the figures I've quoted are illustrative, not a guarantee.
+CUSTOMER: I understand. What's the process to apply?
+AGENT: I'll email you a detailed illustration today — it'll cover both options so you can compare. There'll be a link to begin the application at your own pace. Once you submit, the underwriting team follows up within two working days. And once the policy is issued, you have a fourteen day cooling off period to cancel for a full refund.
+CUSTOMER: That all sounds very thorough. Thank you, Daniel.
+AGENT: My pleasure. I'll get that email sent within the hour. Congratulations again on the baby, and have a great day.

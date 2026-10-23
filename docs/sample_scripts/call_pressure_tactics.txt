@@ -1,4 +1,4 @@
-AGENT: Hello, this is Daniel from FortifyLife. This call may be recorded. I'm calling because you filled out a form about life insurance.
+AGENT: Hello, this is Daniel from Insurvas Insurance. This call may be recorded. I'm calling because you filled out a form about life insurance.
 CUSTOMER: Yes, that's right.
 AGENT: Great. I can offer you guaranteed approval on a policy today. No medical questions, everyone is accepted.
 CUSTOMER: Oh really? That sounds good.

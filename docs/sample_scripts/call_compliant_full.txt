@@ -1,0 +1,23 @@
+AGENT: Hello, this is Emma Clarke calling from Insurvas Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that okay?
+CUSTOMER: Yes, that's fine.
+AGENT: Brilliant. I'm calling because you submitted an enquiry about life insurance cover last week. I'd love to help you explore your options today. Is now a good time?
+CUSTOMER: Yes, I've been expecting your call.
+AGENT: Great. Before I suggest anything, I'd like to learn a bit more about your situation so I can point you in the right direction. Can I ask how old you are?
+CUSTOMER: I'm forty-two.
+AGENT: And are you generally in good health? Any significant medical history I should be aware of — diabetes, heart conditions, anything like that?
+CUSTOMER: Nothing serious. I had high blood pressure a couple of years ago but it's well controlled with medication now.
+AGENT: Okay, that's helpful, thank you. And do you currently have any life insurance in place?
+CUSTOMER: I have a small policy through my employer, maybe fifty thousand pounds. But I know that ends if I leave the job.
+AGENT: That's a common situation. And do you have dependants — a partner, children — who rely on your income?
+CUSTOMER: Yes, my husband and two teenagers.
+AGENT: Understood. And roughly what kind of monthly premium would fit comfortably into your budget?
+CUSTOMER: I'd say up to sixty pounds a month, maybe a bit more if the cover is right.
+AGENT: That's really helpful. Based on what you've shared, I think a decreasing term policy or a level term policy could both work well. Given your children are teenagers, a fifteen to twenty year term might be sensible. A level term at three hundred thousand pounds over twenty years, for someone your age and health profile, would likely fall between forty and fifty-five pounds a month — though that will be confirmed after underwriting.
+CUSTOMER: That sounds reasonable. What does underwriting involve?
+AGENT: It's mostly a health questionnaire — they'll ask about your blood pressure medication, family medical history, lifestyle. It's usually straightforward. The important thing is it's not a guaranteed rate until underwriting completes.
+CUSTOMER: Okay, understood.
+AGENT: Also, once the policy is issued, you have a fourteen day cooling off period where you can cancel for a full refund, no questions asked.
+CUSTOMER: Oh good, that's reassuring.
+AGENT: Perfect. So the next steps are I'll send you a summary email today with the product details, a quote illustration, and a link to start the application. The underwriting team will then be in touch within two working days. Does that work for you?
+CUSTOMER: Yes, that's great. Thanks, Emma.
+AGENT: Wonderful. Thank you so much for your time. Have a lovely afternoon.

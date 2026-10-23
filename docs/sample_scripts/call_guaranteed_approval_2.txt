@@ -1,0 +1,17 @@
+AGENT: Good morning, this is Daniel Hughes from Insurvas Insurance. This call may be recorded. I'm calling about your life insurance enquiry.
+CUSTOMER: Yes, I filled in a form online.
+AGENT: Great. I've got some really exciting news for you. We have a product that offers guaranteed acceptance — no medical questions, no health checks, everyone is approved. You cannot be turned down.
+CUSTOMER: Oh, that sounds interesting. I have some health issues so I was worried about getting cover.
+AGENT: With this product you don't need to worry at all. Guaranteed approval regardless of your health history. You're in.
+CUSTOMER: That does sound appealing.
+AGENT: Can I ask your age and roughly what level of cover you're thinking?
+CUSTOMER: I'm sixty-two. I'd like maybe a hundred thousand pounds to leave for my kids.
+AGENT: Perfect. At sixty-two with guaranteed acceptance, we can absolutely get that sorted for you. The premium would be around eighty-five pounds a month.
+CUSTOMER: Is there any cooling off period if I change my mind?
+AGENT: Yes, there's a standard fourteen day cancellation window once the policy is issued.
+CUSTOMER: Okay. What happens next?
+AGENT: I'll get your application started now. I just need a few details — your full name, address, date of birth, and bank details for the direct debit.
+CUSTOMER: I can give you my name and address but I'd rather not give bank details over the phone today.
+AGENT: That's completely fine. I'll email you a secure link to complete the application online, including the payment setup. The next steps summary will come through today.
+CUSTOMER: Alright, thank you.
+AGENT: Thank you. I'll get that sent over now.

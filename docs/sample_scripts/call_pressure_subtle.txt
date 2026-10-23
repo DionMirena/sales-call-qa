@@ -1,0 +1,23 @@
+AGENT: Hello, this is Emma Clarke from Insurvas Insurance. This call may be recorded for quality purposes. Is that okay?
+CUSTOMER: Yes, fine.
+AGENT: Great. I'm calling because you enquired about life insurance recently. I'm glad I caught you today because we have an enhanced rate available this week that I want to make sure you know about.
+CUSTOMER: Oh right. What does that mean?
+AGENT: It means the underwriters are offering slightly lower premiums for new applications submitted this week. It's a pricing window they open periodically, and it won't be available indefinitely. So it's worth exploring while it's on the table.
+CUSTOMER: I see. How long does it last?
+AGENT: It typically closes by end of week, sometimes sooner depending on application volumes. Let me get some details from you so we can take advantage of it. How old are you?
+CUSTOMER: Forty-four.
+AGENT: And are you in good health?
+CUSTOMER: Yes, generally healthy.
+AGENT: Do you have dependants — a partner or kids?
+CUSTOMER: Yes, wife and two kids.
+AGENT: And existing cover?
+CUSTOMER: A small employer policy.
+AGENT: Budget per month?
+CUSTOMER: Maybe forty to sixty pounds.
+AGENT: Perfect. For your profile, I'd suggest two hundred and fifty thousand over twenty years — likely around thirty-five to forty-five pounds a month at the enhanced rate. If we can get your application in this week, you'd lock in the lower price. The cooling off period is fourteen days if you change your mind once it's issued.
+CUSTOMER: I'm not sure I want to rush into this.
+AGENT: I completely understand. I just want to make sure you have all the information so you can decide. The enhanced rate really is worth acting on while it's there.
+CUSTOMER: Okay, what do you need from me?
+AGENT: I'll email you the summary and application link today. Please do try to complete it within the next few days to secure the rate. Shall I send that over now?
+CUSTOMER: Yes okay, go ahead.
+AGENT: Brilliant. Thank you for your time. I'll get that sent right away.
