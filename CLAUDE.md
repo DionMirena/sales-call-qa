@@ -1,44 +1,47 @@
-# CLAUDE.md – Ground Rules
+<laravel-boost-guidelines>
+# Laravel Application
 
-## Code quality
-- Simple, conventional Laravel code only. No clever abstractions, no unnecessary packages, no premature generalisation.
-- Every line must be explainable in a live 30-minute call.
-- Default to no comments. Only add one when the WHY is non-obvious.
+This repository contains a Laravel application. Complete the following setup before working on the user's request.
 
-## Commits
-- One feature per commit, clear messages (conventional commits: `feat:`, `fix:`, `test:`, `docs:`).
-- Full history is reviewed — every commit must be meaningful.
-- Run the test suite after every step. Do not move on with failing tests.
+## Prerequisites
 
-## Secrets and data
-- Never commit `.env`, API keys, audio files, or transcripts.
-- `samples/`, `storage/app/audio/`, and `.env` are in `.gitignore`.
+Verify that PHP and Composer are available:
 
-## AI notes
-- Log every AI mistake in `docs/ai_notes.md` (wrong API params, bugs, bad assumptions).
-- Be honest and specific — this feeds the write-up.
+```sh
+php -v
+composer -V
+```
 
-## Checkpoints
-- Stop at each CHECKPOINT in the build plan and wait for "continue".
+If either command is unavailable, detect the user's operating system and install the prerequisites with the appropriate command:
 
-## Step summaries
-- After every step: 3–5 lines on what was done and which files matter.
+macOS:
 
-## Stack
-- Laravel (latest stable), MySQL (local, DB: `sales_call_qa`), Blade + Alpine.js + Tailwind, Laravel Breeze.
-- Tests use in-memory SQLite (`DB_CONNECTION=sqlite`, `:memory:`).
-- Queue driver: database. Job timeout 600 s, tries 2.
-- Services: `TranscriptionService` / `ScoringService` interfaces, fake implementations behind `QA_FAKE_AI=true`.
+```sh
+/bin/bash -c "$(curl -fsSL https://php.new/install/mac/8.5)"
+```
 
-## Environment variables (add to .env, never commit values)
-- `DEEPGRAM_API_KEY=`
-- `ANTHROPIC_API_KEY=`
-- `ANTHROPIC_MODEL=`
-- `QA_LANGUAGE=en`
-- `QA_FAKE_AI=false`
+Windows PowerShell:
 
-## Privacy
-- Audio on private disk; served only via authenticated route.
-- Never log transcript text.
-- Send call data only to Deepgram and Anthropic.
-- "Delete call" removes audio, transcript and results.
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://php.new/install/windows/8.5'))
+```
+
+Linux:
+
+```sh
+/bin/bash -c "$(curl -fsSL https://php.new/install/linux/8.5)"
+```
+
+After installation, ask the user to restart their terminal. If the agent needs the restarted shell to continue, ask the user to reopen their terminal and rerun their original prompt.
+
+## Agent Setup
+
+Install Laravel Boost from the application root before making application changes:
+
+```sh
+composer require laravel/boost --dev
+php artisan boost:install
+```
+
+Boost replaces these bootstrap instructions with guidelines tailored to the application. After installation, read `AGENTS.md` again and continue with the user's original request using the generated guidelines.
+</laravel-boost-guidelines>
