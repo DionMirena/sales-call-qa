@@ -95,6 +95,27 @@ CALLS = [
         "script": "call_thorough_discovery.txt",
         "description": "Daniel Hughes — exceptionally thorough needs discovery — pass",
     },
+    # ---- 4 longer calls ----
+    {
+        "name": "chatty_compliant",
+        "script": "call_chatty_compliant.txt",
+        "description": "Sarah Mitchell — chatty customer, objections handled, full compliance (~10 min) — pass",
+    },
+    {
+        "name": "no_cooling_pressure",
+        "script": "call_no_cooling_pressure.txt",
+        "description": "James O'Brien — no cooling-off + subtle pressure phrase (~10 min) — auto-fail",
+    },
+    {
+        "name": "joint_policy_full",
+        "script": "call_joint_policy_full.txt",
+        "description": "Emma Clarke — joint policy, mortgage, CI add-on, callback (~25 min) — pass",
+    },
+    {
+        "name": "marathon_call",
+        "script": "call_marathon_call.txt",
+        "description": "Daniel Hughes — long discovery, diabetes, hold, 3 quotes (~50 min) — pass",
+    },
 ]
 
 
@@ -114,8 +135,17 @@ def parse_script(text: str) -> list[dict]:
 
 async def tts_line(text: str, voice: str, out_path: str) -> None:
     import edge_tts
-    communicate = edge_tts.Communicate(text, voice)
-    await communicate.save(out_path)
+    for attempt in range(6):
+        try:
+            communicate = edge_tts.Communicate(text, voice)
+            await communicate.save(out_path)
+            return
+        except Exception as exc:
+            if attempt == 5:
+                raise
+            wait = 5 * (2 ** attempt)  # 5, 10, 20, 40, 80 s
+            print(f"    TTS error ({exc}), retrying in {wait}s...")
+            await asyncio.sleep(wait)
 
 
 async def generate_call(call: dict, tmp_dir: Path) -> Path:
@@ -133,6 +163,9 @@ async def generate_call(call: dict, tmp_dir: Path) -> Path:
         segment_files.append(seg_path)
         if (i + 1) % 5 == 0:
             print(f"    {i + 1}/{len(lines)} segments done")
+        # Small pause between segments to avoid rate limiting on long calls
+        if len(lines) > 100:
+            await asyncio.sleep(0.15)
 
     # Concatenate with ffmpeg
     list_file = tmp_dir / f"{call['name']}_list.txt"

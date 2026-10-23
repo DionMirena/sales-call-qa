@@ -23,7 +23,7 @@ class AudioNormaliser
             $outputPath,
         ]);
 
-        $process->setTimeout(300);
+        $process->setTimeout(600);
         $process->run();
 
         if (! $process->isSuccessful()) {

@@ -17,7 +17,7 @@ class ProcessCallJob implements ShouldQueue
 {
     use Queueable, InteractsWithQueue, SerializesModels;
 
-    public int $timeout = 600;
+    public int $timeout = 900;
     public int $tries   = 2;
 
     public function __construct(public readonly int $callId) {}

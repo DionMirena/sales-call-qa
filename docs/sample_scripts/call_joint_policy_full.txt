@@ -1,0 +1,138 @@
+AGENT: Good morning, this is Emma Clarke calling from Insurvas Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that alright?
+CUSTOMER: Yes, that's fine. Hi.
+AGENT: Hi there. So I'm calling today because you and your partner submitted a joint enquiry about life insurance last week. I wanted to have a proper conversation about your situation rather than just sending a generic email. Is now a good time?
+CUSTOMER: Yes, perfect timing actually. My wife is here as well — we said we'd do this together.
+AGENT: Oh, that's ideal. Would you like to put me on speaker?
+CUSTOMER: Yes, one second. Karen? Karen, it's the insurance person.
+CUSTOMER: Hi, I'm Karen. Hi there.
+AGENT: Hi Karen, lovely to have you both. I'm Emma. So I was just explaining to Tom that you'd both put in the enquiry and I wanted to chat through your situation properly. If it's okay, I'll ask you both a few questions so I can understand what you actually need. Is that all right?
+CUSTOMER: Yes, absolutely. We've got plenty of time.
+AGENT: Great. Let me start with the basics. Tom, how old are you?
+CUSTOMER: I'm forty-four.
+AGENT: And Karen?
+CUSTOMER: I'm forty-one.
+AGENT: Good. And Tom, how would you describe your health? Any significant medical history — anything long-term, anything you're currently treated for?
+CUSTOMER: Pretty healthy overall. I do have slightly elevated blood pressure — not on medication, I manage it with diet and exercise. I go to the gym twice a week. Nothing else significant.
+AGENT: Good. Non-medicated blood pressure is generally fine — underwriters just want to know about it and will ask for some readings. If it's consistently well-controlled, it typically doesn't load the premium significantly. Do you smoke?
+CUSTOMER: No. Never have.
+AGENT: Excellent. Karen, what about you — health-wise?
+CUSTOMER: I had an underactive thyroid diagnosed about four years ago — hypothyroidism. I'm on levothyroxine, which keeps it fully controlled. No other conditions.
+AGENT: That's good to know. Hypothyroidism on stable medication is actually very common and underwriters are well used to it. When it's well-controlled with a consistent dose, it typically doesn't affect life insurance premiums. Do you smoke, Karen?
+CUSTOMER: No. Neither of us do.
+AGENT: Two non-smokers — that's going to work very well for your premiums. Does either of you drink alcohol?
+CUSTOMER: Socially. Wine at weekends, maybe a glass or two during the week sometimes.
+AGENT: Fine, well within normal range. And just on the health side — does either of you have any family history of significant conditions? Things like heart disease, stroke, or cancer in close relatives before the age of sixty?
+CUSTOMER: My father had a heart attack at sixty-two. He's fine now, but it was serious at the time.
+AGENT: Okay. A first-degree relative with a heart event after sixty is noted, but sixty-two is above the typical threshold that triggers an automatic loading. Underwriters usually apply additional scrutiny below sixty. It's worth being transparent about on the questionnaire, but I wouldn't expect it to affect your premium significantly.
+CUSTOMER: That's good to know. I've been slightly worried about that.
+AGENT: Understandably. And Karen, what about your family history?
+CUSTOMER: My mother has diabetes, which is well managed. And her mother — my grandmother — had breast cancer in her seventies. Both are otherwise in good health.
+AGENT: Again, maternal diabetes is common and the age of the grandmother's cancer diagnosis — seventies — is above the threshold underwriters pay close attention to for family history purposes. Neither of those would be expected to cause a problem. Thank you both for being so thorough.
+CUSTOMER: We want to get it right.
+AGENT: Absolutely the right approach. And do either of you have any existing life insurance in place?
+CUSTOMER: We both have employer death-in-service. Mine is four times salary and Karen's is three times.
+AGENT: And roughly what are your salaries, if you don't mind me asking? Just so I can factor in the existing cover levels.
+CUSTOMER: I'm on about sixty-five thousand. Karen's on about forty-two thousand.
+AGENT: So you've got existing employer cover of around two hundred and sixty thousand for Tom and about a hundred and twenty-six thousand for Karen. Both of those would disappear if either of you changed jobs or were made redundant — so there's definitely a gap to plan around. Do you have any private policies as well?
+CUSTOMER: No, nothing else.
+AGENT: Okay. So there's a meaningful coverage gap there, particularly for a job change scenario. Do you have dependants?
+CUSTOMER: Yes, two children. Amy is twelve and Dylan is nine.
+AGENT: Both at school, relying on your income. And do you have a mortgage?
+CUSTOMER: Yes. About three hundred and twenty thousand left on it. Twenty-two years remaining.
+AGENT: Is it a repayment or interest-only mortgage?
+CUSTOMER: Repayment.
+AGENT: Good. A repayment mortgage means the outstanding balance reduces over time, which is important for how we structure the cover. An interest-only mortgage has a flat balance throughout — if it were that, we'd want level term to match it precisely. Repayment gives you more flexibility. And is it a joint mortgage?
+CUSTOMER: Yes, joint.
+AGENT: Alright. So in the event one of you passed away, the surviving partner would still have the mortgage obligation. That's the single biggest financial liability we need to make sure is covered. Do you have any significant savings — an emergency fund, investments?
+CUSTOMER: We have maybe twenty thousand in savings. Nothing significant.
+AGENT: Okay. So twenty thousand as a buffer, which is useful but wouldn't stretch far against a three hundred and twenty thousand mortgage and two children to support. Right — in terms of monthly budget, what were you thinking?
+CUSTOMER: We were thinking around sixty pounds a month. Combined. Is that realistic for both of us?
+AGENT: It's a starting point, and I appreciate you have a budget in mind. Can I be honest with you about what sixty pounds actually buys at your age and with your mortgage size, before we lock onto a number?
+CUSTOMER: Yes, absolutely.
+AGENT: At sixty pounds a month combined, you'd get decent cover but it would be a stretch to cover the mortgage and provide meaningful income replacement. A level term policy for Tom of, say, three hundred thousand over twenty-five years at his age and health profile would be roughly twenty-eight to thirty-five pounds a month. A similar policy for Karen — two hundred and fifty thousand over twenty-five years — would be around twenty to twenty-eight pounds. Combined, that's already near the top of your sixty pound budget and it's a fairly modest coverage amount given the mortgage and two children.
+CUSTOMER: I see. What would we need to spend to feel properly covered?
+AGENT: Let me give you the fuller picture. A rough planning guideline is to aim for cover equal to about ten times annual income, so the surviving partner could invest the lump sum and draw income from it. For Tom at sixty-five thousand, that's ideally six hundred and fifty thousand. For Karen at forty-two thousand, around four hundred and twenty thousand. Those are aspirational figures, and your budget will naturally set where you land in practice. But just so you understand the gap you're working with.
+CUSTOMER: Karen, that sounds like a lot more than sixty pounds.
+CUSTOMER: It does, doesn't it. Emma, what would it actually cost to get closer to those figures?
+AGENT: I can walk you through a few realistic options. First though, I want to make sure you understand the two main structures. You can either take out a joint life first-death policy — one policy that pays out when the first of you dies — or two separate single-life policies. The joint option is sometimes slightly cheaper in combined terms, and there's only one policy to manage. The downside is that once it pays out, the surviving partner is left with no cover. With young children, that's a real concern — Karen would be uninsured at a moment of maximum financial stress. Two separate policies means each of you has independent cover throughout the full term.
+CUSTOMER: Yes, I think separate sounds better. You'd want to still be covered even after something happened to me.
+CUSTOMER: Absolutely. Two separate.
+AGENT: That's the sensible approach for your situation. Okay, so let me outline two or three options. The first option is a level term policy of four hundred thousand pounds for Tom over a twenty-five year term, combined with a level term of three hundred thousand for Karen over the same term. That gives you meaningful cover beyond the mortgage and provides Karen with substantial income replacement. For your ages and health profiles, I'd estimate that combined at roughly sixty-five to eighty pounds a month. The lower end assumes a clean underwriting outcome for Tom's blood pressure; the upper end factors in a small loading.
+CUSTOMER: Okay. That's more than sixty but not massively so.
+AGENT: Exactly. The second option, if budget is a firm constraint, is a decreasing term policy to mirror the mortgage — three hundred and twenty thousand over twenty-two years for whoever survives — and then a smaller separate level term for income protection. The decreasing term is cheaper because the cover reduces as the mortgage reduces. You might get a combined package for fifty to sixty-five pounds a month, but the lump sum available to the survivor would be lower after the mortgage is repaid.
+CUSTOMER: I think I'd prefer the first option — the full level terms. Karen, what do you think?
+CUSTOMER: Yes. Seventy-five pounds would be a stretch but doable if it means proper cover for both of us.
+AGENT: Before we lock onto a number, can I ask — does the premium stay the same over the twenty-five years, or do things like inflation affect it?
+CUSTOMER: That's a good question actually. We weren't sure about that.
+AGENT: With a standard level term policy, the premium is fixed for the entire term — what you pay in month one is what you pay in month three hundred. And the sum assured is fixed too, so four hundred thousand is always four hundred thousand. Some policies offer an indexation option where the cover increases each year in line with the retail price index, and the premium rises accordingly. That maintains the real value of the cover as prices rise over time. The downside is a rising monthly cost.
+CUSTOMER: I think fixed is simpler for budgeting.
+CUSTOMER: Yes, I'd prefer to know exactly what we're paying.
+AGENT: Fixed is the most common choice for exactly that reason. And just so you know — if your circumstances change significantly, like moving to a bigger house or having another child, most policies offer a guaranteed insurability option, which lets you increase cover at certain life events without going through a full underwriting process again. I'll look specifically for policies that include that feature for you.
+CUSTOMER: Oh, we've actually been talking about possibly moving to a bigger house in the next two or three years.
+AGENT: That's useful to know. A house move would typically be a qualifying life event for a guaranteed increase. So you could start with the cover we agree today and top it up when you move, without starting from scratch.
+CUSTOMER: Perfect. That's reassuring.
+AGENT: Good. Now — that's a very reasonable way to look at it. And remember — the premiums I've quoted are illustrative, pending underwriting. They could come in slightly lower or slightly higher depending on what the questionnaire reveals about Tom's blood pressure and Karen's thyroid condition. But the ballpark should be accurate.
+CUSTOMER: What would make it more expensive in underwriting?
+AGENT: For Tom — if the blood pressure readings come back elevated at the time of the questionnaire, underwriters might add a small loading. If it's consistently controlled, it may not be an issue. For Karen — hypothyroidism on stable medication at a consistent dose is generally treated as a standard risk. If there's been any recent adjustment to the medication or any complications, they'd want to know more. But based on what you've told me, both should be fairly routine.
+CUSTOMER: That's reassuring. Karen, do you have a recent note of your levothyroxine dose?
+CUSTOMER: Yes, I've been on fifty micrograms for about three years. Stable.
+AGENT: Perfect. Stable dose over three years is exactly what underwriters like to see. Good. Now, Karen, you had a question earlier you mentioned — was it about critical illness cover?
+CUSTOMER: Yes, I wanted to ask about that. I've seen it mentioned on comparison sites but wasn't sure what it actually is.
+AGENT: Great question. Critical illness cover is a separate product to life insurance. It pays out a lump sum if you're diagnosed with one of a list of serious conditions — the most common ones are major cancers, heart attack, and stroke, but the list typically includes thirty to forty conditions depending on the insurer. The key difference is that you don't have to die — you just have to be diagnosed. The payout is designed to give you financial breathing room if you're seriously ill but survive. You can use it for anything — keeping up with the mortgage while you can't work, paying for private treatment, adapting your home, replacing income.
+CUSTOMER: My husband's sister had a cancer diagnosis last year. She survived, but she was off work for nearly a year.
+AGENT: That must have been very difficult for the family. And yes, that is exactly the scenario critical illness cover is designed for. Without financial support, nine months off work with a mortgage and children is genuinely devastating. With a payout, you have options — you're not forced to make decisions under maximum stress.
+CUSTOMER: Can you add it onto the life insurance?
+AGENT: Yes, many insurers offer a combined life and critical illness product — so a single policy that pays out on either death or diagnosis of a critical illness, whichever happens first. The benefit is simplicity and it's sometimes cost-efficient. The downside is that if the critical illness cover pays out, the life insurance element is also used up. Alternatively you can take them separately, which gives each policy its own payout. For a family with a mortgage this size, separate policies for each is often the better approach.
+CUSTOMER: How much more would it cost to add critical illness?
+AGENT: It's a meaningful addition to the premium — critical illness is generally priced at one and a half to two times the cost of equivalent life-only cover, because the probability of a serious illness diagnosis is statistically higher than death at your ages. As a rough estimate, adding critical illness cover of, say, two hundred thousand to Tom's existing package might add twenty to thirty pounds a month. Karen's might be similar. But the underwriting process for critical illness can also be more detailed, particularly for conditions like Tom's blood pressure.
+CUSTOMER: That starts to push the total up quite a bit.
+AGENT: It does. I'd suggest this: start with the life insurance applications first, see what rates come back, and then we can separately look at critical illness quotes once you have the life insurance premium confirmed. That way you have a clear picture of each cost separately before deciding whether to add critical illness.
+CUSTOMER: That sounds very sensible.
+AGENT: Good. While I have you both — I mentioned writing in trust earlier and I want to make sure you understand what that means, because it can be quite important.
+CUSTOMER: Please explain that.
+AGENT: When a life insurance policy is not written in trust, if you die the payout forms part of your estate. It goes through a legal process called probate before it reaches your family. That can take months, and during that time your family may not be able to access the funds. It also means the payout could be subject to inheritance tax if your estate is large enough. When the policy is written in trust, you nominate specific beneficiaries — Karen, for example, or the children — and the payout goes directly to them, bypassing probate. It's typically faster, avoids inheritance tax on the policy proceeds, and is generally more efficient. The process is usually free through the insurer — they provide a trust form you complete after the policy is issued.
+CUSTOMER: We'd want Karen to get the money, obviously.
+AGENT: And in your case, Karen, you'd nominate Tom.
+CUSTOMER: Yes. Do we need a solicitor for that?
+AGENT: For a straightforward discretionary family trust, no — the insurer's standard form is usually sufficient. If you have a complex estate or specific requirements — for example, if you wanted to set conditions on how the money is used for the children — you might want independent advice. But for most families, the standard trust is perfectly adequate and there's no cost.
+CUSTOMER: And what happens if both of us died? Say in an accident together. Who would the children's money go to?
+AGENT: Good question. When you set up the trust, you'd typically nominate a backup trustee — a sibling, a close friend, or a parent — who steps in if the primary trustees aren't available. The trust document specifies how the money is distributed among the beneficiaries in that scenario. For a discretionary trust, the backup trustee would have discretion over how to use the funds for Amy and Dylan's benefit. If you want specific conditions — like the money being held until they're twenty-five, or released in stages — that can be written in. A solicitor would be helpful if you want anything more complex than the standard arrangement.
+CUSTOMER: Hmm. I think we'd want it to go to the children in equal shares. They're too young for me to think about conditions right now.
+AGENT: Equal shares is the most common arrangement and entirely reasonable. The standard trust form will support that without any additional legal advice needed. I'll make a note of that in the email so it's documented when you come to complete it.
+CUSTOMER: Thank you. Tom, are you happy with all of that?
+CUSTOMER: Yes. I feel like we've actually learned a lot today. I had no idea any of this was so involved.
+AGENT: Ha! It always sounds more complicated than it ends up being in practice. Once you've got the email and had a chance to read through it, I think it'll all feel more straightforward.
+CUSTOMER: Good to know. We'll look at that once the policies are sorted.
+AGENT: Absolutely. I'll include a brief note about the trust process in the email so you have it for reference. Now, I'll also include an overview of critical illness cover so you have the full picture. The key point is that today's call is purely information gathering — there's no commitment to anything. I'll send you the illustrations and you can review them at your own pace.
+CUSTOMER: That's great. I have one more question actually — what's the medical questionnaire like? Karen was worried it might be complicated.
+AGENT: It's straightforward for most people. You complete it online — it takes maybe twenty to thirty minutes. It asks about your medical history, any current conditions and medications, family history of certain conditions, lifestyle factors like smoking and alcohol. For Karen, it'll specifically ask about the thyroid condition and levothyroxine. For Tom, it'll ask about the blood pressure — ideally have a recent blood pressure reading to hand, Tom. The actual questions are clear and they give you guidance on what they're looking for.
+CUSTOMER: Okay. I had a reading done two months ago — one twenty over seventy-eight.
+AGENT: That's a very good reading, Tom. One twenty over seventy-eight is comfortably in the normal range. Underwriters would be very happy with that. Make sure you mention it in the questionnaire — it'll support your case.
+CUSTOMER: Right. I'll make a note of that.
+AGENT: Now, I want to make sure you understand what happens between the application and the policy being issued, so there are no surprises. After you submit the applications, the underwriting team will review them independently. Tom's application and Karen's application are assessed separately. They'll look at your questionnaire responses, and they may come back with follow-up questions. If they're satisfied, they'll offer a premium — which may or may not match my estimate today. You then have the option to accept or decline.
+CUSTOMER: What if one of us gets accepted at a higher rate than expected? Do we have to accept it?
+AGENT: No. You're under no obligation to accept any rate. If it comes back higher than you're comfortable with, you can decline and look at alternatives — a lower sum assured, a shorter term, or a different insurer who might rate your profile differently. Different insurers underwrite the same health histories differently.
+CUSTOMER: And if one of us is declined?
+AGENT: A decline is relatively rare for the health profiles you've described, but if it happened, it would mean applying to a specialist insurer or a non-standard risk insurer. They do exist and they cater specifically to people who've been declined elsewhere. The premium would be higher, but cover is still usually obtainable. I'd work with you to find an alternative.
+CUSTOMER: I hope it doesn't come to that, but it's good to know there are options.
+AGENT: There usually are. And just to reassure you — neither of the health conditions you've mentioned today are red flags for a decline. They're just factors that underwriters want to understand fully.
+CUSTOMER: Okay. One more question — if we take out these policies and then we both change jobs in a year, does anything change?
+AGENT: No. Once a policy is issued and in force, it's yours regardless of employment. The premium stays the same, the cover stays the same, and there's no link to your employer. You can even move abroad for a period and the policy remains valid, subject to the specific terms. Life insurance is personal, not employment-linked.
+CUSTOMER: That's a big relief. That was actually one of the things putting us off before — we weren't sure what happened if we moved jobs.
+AGENT: That's a very common misconception. Employer death-in-service is employment-linked — which is exactly why you need a private policy to fill the gap. But private life insurance is completely portable.
+CUSTOMER: That's really helpful to know. Okay, I think we've covered everything.
+AGENT: Good. Now, I'm conscious we've covered a lot of ground today and Karen, you mentioned you'd want to review things before making any decisions. I think a sensible approach is for me to send the full email today, and we could schedule a callback for later in the week so I can answer any questions once you've had a chance to read through everything. Would that work?
+CUSTOMER: Yes, that would be perfect actually. I want to look at the numbers on paper before we go ahead.
+AGENT: Completely understandable. What works for you day and time wise?
+CUSTOMER: Thursday afternoon? After about two?
+AGENT: Thursday afternoon works perfectly. Shall we say two o'clock? I'll call on this number.
+CUSTOMER: Yes, two o'clock on Thursday. That's great.
+AGENT: Brilliant. And just before I let you go — one last important thing. When the policies are eventually issued, you'll each have a fourteen day cooling off period from the date of issue. During that time, you can cancel either policy for a full refund, no questions asked. So there's genuinely no financial risk in starting the application — if you change your mind, you're fully protected.
+CUSTOMER: That's good to know. I like that there's an out.
+AGENT: There is, and I always want people to know that before they start. Alright, so to confirm the plan: I'll send the email today with the illustrations for both of you, the critical illness overview, and the trust information. On Thursday at two I'll call back to talk through any questions, and if you're both happy we can initiate the applications at that point. Does that all sound right?
+CUSTOMER: Yes, that's perfect. Thank you, Emma.
+CUSTOMER: Yes, very thorough. Really appreciate it.
+AGENT: My pleasure. Thank you both so much for your time today. It's been a really good conversation. I'll get that email across to you within the hour. Look forward to speaking Thursday.
+CUSTOMER: Thanks so much. Bye.
+CUSTOMER: Bye, Emma. Very helpful.
+AGENT: Take care. Goodbye.

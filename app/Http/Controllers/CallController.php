@@ -9,10 +9,10 @@ use App\Models\Template;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CallController extends Controller
 {
@@ -123,6 +123,7 @@ class CallController extends Controller
             'code'     => $s->code,
             'speaker'  => $s->speaker,
             'start_ms' => $s->start_ms,
+            'end_ms'   => $s->end_ms,
             'text'     => $s->text,
         ])->values()->all();
 
@@ -139,13 +140,19 @@ class CallController extends Controller
         return response()->json(['agent_speaker' => $call->agent_speaker]);
     }
 
-    public function audio(Call $call): Response
+    public function audio(Call $call): BinaryFileResponse
     {
         $this->authorize('view', $call);
 
         $path = Storage::disk('private')->path($call->audio_path);
 
         abort_unless(file_exists($path), 404);
+
+        if (request()->boolean('download')) {
+            $name = pathinfo($call->original_filename, PATHINFO_FILENAME) . '.mp3';
+
+            return response()->download($path, $name, ['Content-Type' => 'audio/mpeg']);
+        }
 
         return response()->file($path, [
             'Content-Type'  => 'audio/mpeg',

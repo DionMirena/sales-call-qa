@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Seeds 10 sample calls from samples/ directory, spread over the last 3 weeks.
  * Run: php artisan db:seed --class=SampleCallSeeder
- * Then: php artisan queue:work --stop-when-empty --timeout=600
+ * Then: php artisan queue:work --stop-when-empty --timeout=900
  */
 class SampleCallSeeder extends Seeder
 {
@@ -32,6 +32,12 @@ class SampleCallSeeder extends Seeder
         ['no_next_steps',        1, -7],
         ['incomplete_discovery', 5, -6],
         ['thorough_discovery',   4, -5],
+
+        // 4 longer calls — spread over last 3 weeks
+        ['chatty_compliant',   1, -17],
+        ['no_cooling_pressure', 2, -11],
+        ['joint_policy_full',   3, -8],
+        ['marathon_call',       4, -2],
     ];
 
     public function run(): void
@@ -44,6 +50,11 @@ class SampleCallSeeder extends Seeder
 
             if (! file_exists($src)) {
                 $this->command->warn("Skipping {$name}: samples/{$name}.mp3 not found");
+                continue;
+            }
+
+            if (DB::table('calls')->where('original_filename', "{$name}.mp3")->exists()) {
+                $this->command->line("Skipping {$name}: already in database");
                 continue;
             }
 
@@ -66,6 +77,6 @@ class SampleCallSeeder extends Seeder
             $this->command->info("Queued call #{$call->id}: {$name} (agent {$agentId}, {$daysOffset}d)");
         }
 
-        $this->command->info('All 10 calls queued. Run: php artisan queue:work --stop-when-empty --timeout=600');
+        $this->command->info('Calls queued. Run: php artisan queue:work --stop-when-empty --timeout=900');
     }
 }

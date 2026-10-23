@@ -1,0 +1,62 @@
+AGENT: Good afternoon, this is Sarah Mitchell calling from Insurvas Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that okay with you?
+CUSTOMER: Yes, that's absolutely fine. Go ahead.
+AGENT: Brilliant. So I'm calling today because you submitted an enquiry about life insurance on our website a couple of days ago. I wanted to have a proper conversation rather than just firing a form at you. Is now a good time?
+CUSTOMER: Yes, perfect timing actually. I was wondering when you'd call. I half expected it to just be an automated email.
+AGENT: Ha, we like to actually speak to people. I think it makes a real difference — a quick conversation means I can understand what you actually need rather than guessing. Is that alright with you?
+CUSTOMER: No, it's great. I appreciate it.
+AGENT: Wonderful. Before I suggest anything, I'd like to ask you a few questions to get a picture of your situation. Is that okay?
+CUSTOMER: Yes, go ahead. I'm not going anywhere.
+AGENT: How old are you, if you don't mind me asking?
+CUSTOMER: I'm fifty-eight. Had my birthday last month actually.
+AGENT: Oh, happy belated birthday! Right, so fifty-eight — there are still excellent options available at that age. And are you generally in good health? Any significant medical history — heart conditions, diabetes, anything chronic?
+CUSTOMER: Nothing serious, touch wood. I'm on a statin for cholesterol — been on it about two years now. And I had my right knee replaced three years ago, which is completely sorted. Other than that, I'm doing well.
+AGENT: Good to know, thank you. Statins are extremely common — underwriters see them all the time and they typically don't affect your premium at all. The knee replacement, being historical and fully healed, shouldn't be an issue either. Do you smoke?
+CUSTOMER: No, gave that up fifteen years ago. Best decision I ever made.
+AGENT: It really is, and it makes a significant difference to the rates you'll get. Non-smokers get substantially better premiums. Well done on that. Do you drink alcohol?
+CUSTOMER: A glass or two of wine most evenings. I like unwinding after work. My wife thinks it's too much but I tell her it's medicinal.
+AGENT: Ha! A couple of glasses in the evening is well within what underwriters consider normal. Nothing to be concerned about there.
+CUSTOMER: Good, good. Although don't tell my wife I said that.
+AGENT: Ha, I won't breathe a word. Right — do you have any existing life insurance in place at the moment?
+CUSTOMER: I've got a death-in-service through my employer — three times salary, I think. But I'm planning to retire in the next three or four years, so that disappears when I go. Oh, and my wife and I took out some joint policy about twenty years ago. I'd honestly have to dig out the paperwork to tell you if it's still active. We set up a direct debit and never really thought about it again.
+AGENT: Ha, that's a very common situation actually. It's worth having a look for that policy because if it's still running it might affect what additional cover you need. But let's plan on the assumption that your employer benefit goes at retirement and see what the picture looks like from there. Do you have dependants who rely on your income?
+CUSTOMER: My wife Karen. She doesn't work — gave that up when we had the children. Our two are grown up now, which is a relief, but Karen completely relies on my income. She'd be in a very difficult position if something happened to me.
+AGENT: I see. So the main priority is protecting Karen financially. Does she have any income or savings of her own at all?
+CUSTOMER: She has a small pension from years ago that she'll start drawing at sixty-five. Maybe four or five hundred a month. But that on its own wouldn't cover much.
+AGENT: Right, so there's clearly a gap there. And does Karen have any cover of her own? Did you ask about that when I brought up the joint policy?
+CUSTOMER: No, the joint one covers both of us. But if that's lapsed, she'd have nothing in her own right.
+AGENT: Understood. It might be worth thinking about individual policies going forward — we can come to that in a moment. And do you still have a mortgage?
+CUSTOMER: Yes, about eighty thousand left on it. Six years to run, I think.
+AGENT: Good. And roughly what kind of monthly premium would feel comfortable for you?
+CUSTOMER: I'd say fifty to sixty pounds a month, ideally. I don't want to be paying through the nose, but I know it needs doing.
+AGENT: That's a very workable budget. Let me sketch out what I'd probably suggest, and you can tell me if it makes sense. Given you have the mortgage and a dependent wife, there are really two separate things to protect. First — the mortgage. A decreasing term policy of eighty thousand over six years would clear the house if anything happened. For your age, that might be as low as ten to fifteen pounds a month. Second — longer-term financial security for Karen. A level term policy of, let's say, one hundred and fifty thousand pounds over fifteen years gives her a meaningful lump sum to live on, fund her pension gap, and cover ongoing costs. That would likely be in the range of thirty to forty pounds a month. Combined, you're probably looking at forty to fifty-five pounds a month — well inside your budget.
+CUSTOMER: That sounds sensible. My mate Dave keeps going on about whole of life cover. What's the difference?
+AGENT: Ha, Dave's not wrong that whole of life has its place. Whole of life means the policy runs indefinitely and pays out whenever you die — it's guaranteed rather than time-limited. That sounds good but the premiums are considerably higher because the insurer knows the payout is inevitable. At your age, a whole of life policy could easily cost a hundred and twenty to a hundred and fifty pounds a month — two to three times what you'd pay for term cover.
+CUSTOMER: That's a lot more.
+AGENT: It is. Whole of life tends to make more sense when the goal is leaving a guaranteed sum for inheritance purposes — passing something on to the children, or managing inheritance tax. If your goal is protecting Karen and the mortgage while you're still working and have those financial commitments, term cover is far more cost-efficient.
+CUSTOMER: No, I'm not fussed about leaving a big estate. The kids are sorted and independent now. A term policy sounds right.
+AGENT: I think that's the right call for your situation. One thing I should mention — Karen asked me to ask about whether she could also have cover. Was that the case, or is it just you today?
+CUSTOMER: She did actually say something about that. I suppose if I can cover her too, that would be worth doing.
+AGENT: Absolutely. Two options — a joint life first-death policy that pays out when the first of you dies, or two separate single-life policies. The joint option can sometimes be slightly cheaper in combined terms, but once it pays out, the other person is left uninsured. Two separate policies means each of you retains independent cover. Given Karen doesn't work and depends on you, a policy on her life would give you a lump sum to cover expenses and support if something happened to her — childcare historically, domestic support, reorganising your life. It's not as large a concern as protecting her from your death, but it's worth considering.
+CUSTOMER: Does she have to do the same questionnaire and everything?
+AGENT: Yes, she'd complete her own online questionnaire. How is Karen's health generally?
+CUSTOMER: Very good actually. Never ill, touch wood. She doesn't smoke, doesn't drink much.
+AGENT: In that case a modest policy on Karen would be quite affordable. I can include an illustration for her in the information I send across, so you can both review it together.
+CUSTOMER: Yes, please do that. I'll mention it to her.
+AGENT: Will do. Now — the figures I've been giving you are illustrative, not a guaranteed rate. The actual premium is confirmed after underwriting, which is an online health questionnaire you complete yourself. They'll ask about the statin, your family history, whether you have any other medical conditions. It's usually quite quick — maybe twenty to thirty minutes.
+CUSTOMER: Do I need to see a doctor for it?
+AGENT: Not usually. You complete it yourself online. Occasionally underwriters ask for a GP report for clarification — for example if there's a more complex medical history — but for your profile I'd expect it to be straightforward. If they do need a report, they contact your GP directly and let you know.
+CUSTOMER: Good. I really don't have time for waiting rooms.
+AGENT: Ha, completely understandable. Right, there's one more important thing I should mention — once a policy is issued, you have a fourteen day cooling off period during which you can cancel and receive a full refund. No questions asked, no penalties. So there's absolutely no risk in getting the process started.
+CUSTOMER: Oh, that's reassuring. I always worry about getting committed to something before I'm ready.
+AGENT: No, definitely not the case here. And you can withdraw from the application at any point before the policy is issued if you have second thoughts. There's no obligation until you're completely happy.
+CUSTOMER: Perfect. One last thing — my mate Dave also said life insurance can affect things. Like other financial products or memberships. Is that true?
+AGENT: Ha! No, not in the way Dave might be thinking. Life insurance is completely standalone — it doesn't interact with other financial products, doesn't affect your mortgage arrangement, has no impact on any memberships. You might be thinking of income protection insurance, which can have implications for certain state benefits in some circumstances. But life insurance? Your golf club is entirely safe.
+CUSTOMER: Ha! That was exactly what I was worried about. We have a club competition next weekend and I need to be there.
+AGENT: Ha, golf competitions are very much not affected. Right — shall I tell you what happens next?
+CUSTOMER: Yes, please.
+AGENT: So I'll send you an email today with both illustrations — the mortgage decreasing term and the family level term — plus a separate illustration for Karen if you'd like one, and all the product information documents. There'll be a link to start the application when you're ready. Once you submit, the underwriting team follows up within two to three working days. There's no pressure or time limit — review it at your own pace. Any questions after reading it through, just give us a call. Does that sound okay?
+CUSTOMER: That sounds very clear and very professional. I'm glad I filled in that form. Much better than staring at a comparison website.
+AGENT: That's exactly why we do it this way. You'll have the email within the hour, Graham. Thank you so much for your time today, and happy belated birthday again!
+CUSTOMER: Ha, thank you! I'll look out for the email. Lovely talking to you, Sarah.
+AGENT: And you. Take care. Bye bye.
+CUSTOMER: Bye bye.

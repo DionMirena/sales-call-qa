@@ -68,8 +68,7 @@
     {{-- ── Processing state ─────────────────────────────────────────────────── --}}
     @if($call->status !== 'done')
         <div class="p-4 sm:p-6 max-w-2xl mx-auto w-full"
-             x-data="callStatus('{{ $call->status }}', '{{ route('calls.status', $call) }}')"
-             x-init="init()">
+             x-data="callStatus('{{ $call->status }}', '{{ route('calls.status', $call) }}')">
 
             {{-- Step tracker --}}
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-4">
@@ -153,15 +152,11 @@
                 @endif
             </div>
         </div>
-
-        {{-- Hidden Alpine status poller --}}
-        <div x-data="callStatus('{{ $call->status }}', '{{ route('calls.status', $call) }}')"
-             x-init="init()" class="hidden"></div>
     @endif
 
     {{-- ── Done state: split-pane results ────────────────────────────────────── --}}
     @if($call->status === 'done')
-        <div x-data="resultsPage()" x-init="init()"
+        <div x-data="resultsPage()"
              class="flex flex-col lg:flex-row h-[calc(100vh-3.5rem)] overflow-hidden">
 
             {{-- LEFT: Audio + Transcript --}}
@@ -191,10 +186,36 @@
                 {{-- Audio player --}}
                 @if($call->audio_path)
                     <div class="px-4 py-3 bg-white border-b border-slate-100 shrink-0">
+                        {{-- The browser's own ⋮ menu (download / speed) renders clipped here, so we hide it and provide our own controls below. --}}
                         <audio x-ref="audio" controls preload="metadata"
-                               class="w-full h-8 accent-indigo-600">
+                               controlslist="nodownload noplaybackrate"
+                               class="w-full h-8 accent-indigo-600"
+                               @loadedmetadata="applySpeed()"
+                               @timeupdate="trackTime()"
+                               @seeked="trackTime(true)"
+                               @play="trackTime(true)"
+                               @ratechange="speed = $event.target.playbackRate">
                             <source src="{{ route('calls.audio', $call) }}" type="audio/mpeg">
                         </audio>
+                        <div class="mt-2 flex items-center gap-2 flex-wrap">
+                            <label for="playback-speed" class="text-xs text-slate-500">Speed</label>
+                            <select id="playback-speed"
+                                    @change="setSpeed(parseFloat($event.target.value))"
+                                    class="h-8 pl-2.5 pr-8 py-0 rounded-lg border-slate-200 bg-white text-xs font-medium text-slate-700 focus:border-indigo-500 focus:ring-indigo-500">
+                                <template x-for="rate in [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]" :key="rate">
+                                    <option :value="rate" :selected="speed === rate" x-text="rate === 1 ? 'Normal (1×)' : rate + '×'"></option>
+                                </template>
+                            </select>
+                            <a href="{{ route('calls.audio', ['call' => $call, 'download' => 1]) }}"
+                               class="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+                                Download
+                            </a>
+                            <label class="ml-auto flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer">
+                                <input type="checkbox" x-model="follow" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                Follow transcript
+                            </label>
+                        </div>
                     </div>
                 @endif
 
@@ -214,8 +235,9 @@
                         <template x-for="seg in segments" :key="seg.code">
                             <div :id="'seg-' + seg.code"
                                  @click="seekTo(seg.start_ms)"
-                                 class="flex gap-2 cursor-pointer group"
-                                 :class="seg.speaker === agentSpeaker ? 'flex-row' : 'flex-row-reverse'">
+                                 class="flex gap-2 cursor-pointer group rounded-xl transition-colors"
+                                 :class="[seg.speaker === agentSpeaker ? 'flex-row' : 'flex-row-reverse',
+                                          activeCode === seg.code ? 'bg-amber-100/70 ring-2 ring-amber-300 -mx-1.5 px-1.5 py-1' : '']">
 
                                 {{-- Avatar --}}
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5"
@@ -501,8 +523,37 @@
             agentSpeaker: @json($call->agent_speaker ?? 0),
             segments: @json($segmentsJson),
             swapUrl: @json(route('calls.swap_speaker', $call)),
+            speed: 1,
+            follow: true,
+            activeCode: null,
 
-            init() {},
+            // Always open at normal speed; the browser can otherwise carry over a previous rate.
+            applySpeed() {
+                const audio = this.$refs.audio;
+                if (audio) { audio.defaultPlaybackRate = this.speed; audio.playbackRate = this.speed; }
+            },
+
+            setSpeed(rate) {
+                this.speed = rate;
+                this.applySpeed();
+            },
+
+            // Highlight the line being spoken and keep it in view. After a seek (dragging or
+            // clicking the progress bar) or pressing play, jump to that line straight away.
+            trackTime(jump = false) {
+                const ms = this.$refs.audio.currentTime * 1000;
+                let current = this.segments[0] ?? null;
+                for (const seg of this.segments) {
+                    if (seg.start_ms > ms) break;
+                    current = seg;
+                }
+                const code = current?.code ?? null;
+                if (code === this.activeCode && !jump) return;
+                this.activeCode = code;
+                if (code && this.follow && (jump || !this.$refs.audio.paused)) {
+                    document.getElementById('seg-' + code)?.scrollIntoView({ behavior: 'smooth', block: jump ? 'center' : 'nearest' });
+                }
+            },
 
             seekTo(startMs) {
                 const audio = this.$refs.audio;

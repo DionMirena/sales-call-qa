@@ -12,6 +12,7 @@ use App\Services\ClaudeScoringService;
 use App\Services\DeepgramTranscriptionService;
 use App\Services\FakeScoringService;
 use App\Services\FakeTranscriptionService;
+use App\Services\KeywordScoringService;
 use App\Services\ScoringService;
 use App\Services\TranscriptionService;
 use Illuminate\Support\Facades\Gate;
@@ -26,7 +27,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->bind(ScoringService::class, FakeScoringService::class);
         } else {
             $this->app->bind(TranscriptionService::class, DeepgramTranscriptionService::class);
-            $this->app->bind(ScoringService::class, ClaudeScoringService::class);
+            // Without an Anthropic key, score the real transcript with the free keyword scorer.
+            $this->app->bind(ScoringService::class, str_starts_with((string) config('qa.anthropic_key'), 'sk-ant-')
+                ? ClaudeScoringService::class
+                : KeywordScoringService::class);
         }
     }
 

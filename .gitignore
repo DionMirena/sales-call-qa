@@ -14,6 +14,12 @@
 /storage/app/audio/
 /storage/app/private/
 
+# Laravel runtime cache (generated, not source)
+/storage/framework/views/
+/storage/framework/sessions/
+/storage/framework/cache/
+/storage/logs/
+
 # Build artefacts
 /public/build/
 

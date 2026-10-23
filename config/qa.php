@@ -2,6 +2,7 @@
 
 return [
     'language'    => env('QA_LANGUAGE', 'en'),
+    'company_name' => env('QA_COMPANY_NAME', 'INSURVAS'),
     'fake_ai'     => env('QA_FAKE_AI', false),
     'model'       => env('ANTHROPIC_MODEL', 'claude-sonnet-4-6'),
     'deepgram_key' => env('DEEPGRAM_API_KEY'),

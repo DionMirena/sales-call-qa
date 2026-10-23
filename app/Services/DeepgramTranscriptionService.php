@@ -11,17 +11,24 @@ class DeepgramTranscriptionService implements TranscriptionService
     {
         $apiKey   = config('qa.deepgram_key');
         $language = config('qa.language', 'en');
+        $company  = (string) config('qa.company_name');
 
-        $response = Http::withToken($apiKey)
-            ->withHeaders(['Content-Type' => 'audio/mpeg'])
-            ->withBody(file_get_contents($path), 'application/octet-stream')
-            ->post('https://api.deepgram.com/v1/listen', [
+        // Deepgram API keys use the "Token" scheme, not "Bearer".
+        // Options must be query parameters because the request body is the audio itself.
+        $response = Http::withToken($apiKey, 'Token')
+            ->timeout(900)
+            ->withQueryParameters(array_filter([
+                'model'        => 'nova-2',
                 'diarize'      => 'true',
                 'utterances'   => 'true',
                 'punctuate'    => 'true',
                 'smart_format' => 'true',
                 'language'     => $language,
-            ]);
+                // Made-up brand names are often misheard, so boost the company name.
+                'keywords'     => $company !== '' ? ucfirst(mb_strtolower($company)) . ':3' : null,
+            ]))
+            ->withBody(file_get_contents($path), 'audio/mpeg')
+            ->post('https://api.deepgram.com/v1/listen');
 
         if (! $response->successful()) {
             throw new RuntimeException(
@@ -47,7 +54,10 @@ class DeepgramTranscriptionService implements TranscriptionService
                 'speaker'  => (int) ($utterance['speaker'] ?? 0),
                 'start_ms' => $startMs,
                 'end_ms'   => $endMs,
-                'text'     => $utterance['transcript'] ?? '',
+                // Show the company name in its official spelling (e.g. "Insurvas" → "INSURVAS").
+                'text'     => $company !== ''
+                    ? preg_replace('/\b' . preg_quote($company, '/') . '\b/iu', $company, $utterance['transcript'] ?? '')
+                    : ($utterance['transcript'] ?? ''),
             ];
 
             $totalDurationMs = max($totalDurationMs, $endMs);
@@ -55,7 +65,8 @@ class DeepgramTranscriptionService implements TranscriptionService
 
         return [
             'segments'         => $segments,
-            'duration_seconds' => (int) ceil($totalDurationMs / 1000),
+            // Whole seconds of the audio itself, rounded down like the browser player shows it.
+            'duration_seconds' => (int) floor($data['metadata']['duration'] ?? $totalDurationMs / 1000),
         ];
     }
 }

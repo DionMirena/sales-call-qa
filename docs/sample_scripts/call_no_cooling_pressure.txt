@@ -1,0 +1,59 @@
+AGENT: Hello, this is James O'Brien calling from Insurvas Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that okay?
+CUSTOMER: Yes, that's fine.
+AGENT: Thank you. I'm calling because you submitted a life insurance enquiry last week. I wanted to follow up and have a proper chat to see how I can help. Is now a good time?
+CUSTOMER: Yes, I've been meaning to sort this out. Go ahead.
+AGENT: Great. Before I suggest anything, I'd like to understand your situation properly first. Is it okay if I ask you a few questions?
+CUSTOMER: Of course, yes.
+AGENT: How old are you?
+CUSTOMER: Forty-seven.
+AGENT: And how is your health generally? Any significant medical history — anything long-term, anything treated in the last few years?
+CUSTOMER: Pretty healthy, I'd say. I had asthma as a child but it completely resolved — no medication, no inhaler, hasn't bothered me in twenty years. And I had a minor ankle fracture two years ago, but that's fully healed. Other than that, nothing.
+AGENT: Good — resolved childhood asthma that hasn't required treatment in years is very common and underwriters don't classify it as an ongoing condition. The ankle fracture being fully healed won't affect anything. Do you smoke?
+CUSTOMER: No, never smoked.
+AGENT: Excellent. That really does make a positive difference to your rates. Do you drink alcohol?
+CUSTOMER: Yes, socially. Maybe a few drinks at the weekend and occasionally during the week. Nothing excessive.
+AGENT: Fine, well within normal range. No concerns there. Do you have any existing life insurance in place at the moment?
+CUSTOMER: I have something through work. I think it's twice my annual salary — roughly seventy-five thousand.
+AGENT: Okay. And do you have dependants — a partner, children?
+CUSTOMER: Yes. My husband Paul. And we have two children — twelve and fifteen.
+AGENT: So both still at home and at school. And is there a mortgage?
+CUSTOMER: Yes. We've got about a hundred and sixty thousand left. About twelve years remaining.
+AGENT: Right. And in terms of what you'd be comfortable paying monthly — roughly what sort of premium would suit?
+CUSTOMER: I'd say up to fifty, fifty-five pounds a month. I don't want it to be a stretch.
+AGENT: Good, that's workable. Can I ask what prompted you to look into this now? Was there a particular reason?
+CUSTOMER: My mother passed away last year. She didn't have any cover and it was a real struggle for my father. I thought, I don't want to put Paul in that situation.
+AGENT: I'm sorry for your loss. That is such an understandable reason to do this, and a very responsible decision. Let me make sure we put together something that genuinely protects Paul and your children.
+CUSTOMER: Thank you. Yes, that's what I want.
+AGENT: Absolutely. So thinking about your situation: you have employer cover of around seventy-five thousand, which would disappear if you changed jobs or were made redundant. You have a mortgage of a hundred and sixty thousand with twelve years remaining, and two children at home who'll need financial support for at least another eight to ten years. The gap between your employer cover and what your family actually needs is significant. I'd suggest looking at a level term policy of around three hundred thousand pounds over a twenty-year term. That clears the mortgage and provides substantial income replacement for Paul and the children well beyond when the mortgage ends. For a healthy non-smoking forty-seven year old, that's likely in the region of thirty-five to forty-five pounds a month — inside your budget.
+CUSTOMER: Why twenty years rather than twelve to just match the mortgage?
+AGENT: Good question. Twelve years matches the mortgage, which is one way to think about it. But your children will be in their late twenties at that point — Amy will be twenty-seven, your fifteen year old will be twenty-five. They may still be in education, or getting started in life and not fully independent. The extra eight years of cover means Paul has protection for a longer period and your children are fully through to adulthood. It's only modestly more expensive and I think it's worth it.
+CUSTOMER: That makes sense, yes.
+AGENT: The other option would be to match the mortgage exactly with a decreasing term policy — so the cover reduces as you pay the mortgage down — and take a separate smaller policy for family income. That can sometimes be more cost-efficient. But honestly, for most people in your situation, a single clean level term policy is simpler and gives you more flexibility.
+CUSTOMER: I do prefer simpler, if I'm honest.
+AGENT: Most people do. Shall I look at what a three hundred thousand level term over twenty years would look like for you?
+CUSTOMER: Yes please.
+AGENT: Can I also ask — does Paul work? Does he have his own income?
+CUSTOMER: Yes, he works full-time. He earns about forty thousand.
+AGENT: So Paul wouldn't be left completely without income, but the household would take a significant hit without your salary. And there would be the ongoing costs of the children, childcare if needed, and the mortgage to service. The cover would mean all of that is secured. Good. Now, one thing that's worth considering — would you like me to also look at a policy for Paul? Two separate single-life policies would mean each of you is independently covered. A joint life first-death policy is an option too — it covers both of you and pays on whichever death occurs first — but once it pays out, the survivor is left uninsured. With children involved, two separate policies tends to work better.
+CUSTOMER: I'd want Paul to have cover as well, yes. Can you include something for him?
+AGENT: Absolutely. I'll include an indicative quote for Paul in what I send you. His age and health would affect the premium but I can give you a realistic picture.
+CUSTOMER: He's forty-five, no major health issues.
+AGENT: Good. A healthy non-smoking forty-five year old would be quite affordable. I'll include that. Can I ask — have you looked into critical illness cover at all?
+CUSTOMER: I've seen it mentioned but I'm not sure what it actually is.
+AGENT: Critical illness cover pays out a lump sum if you're diagnosed with one of a list of serious conditions — typically major cancers, heart attack, stroke, that kind of thing. It's separate to life insurance — it's triggered by a diagnosis, not by death. The idea is to give you financial breathing space if you're seriously ill but survive. It can be added to a life insurance policy in some cases or taken out separately. With children and a mortgage, it's definitely worth knowing about. I can include some information about it in what I send you so you can see what it would add to the cost.
+CUSTOMER: Yes please. My sister-in-law had a cancer diagnosis last year and was off work for nine months. It really made us think.
+AGENT: That must have been a worrying time for the family. And yes, exactly — nine months off work without financial support is devastating for most households. Critical illness cover is designed for precisely that situation. The payout can be used for anything — keeping up with the mortgage, living costs, private treatment, adapting to a new normal.
+CUSTOMER: Okay. I'll read about it and see what the cost difference is.
+AGENT: Perfect. Now, the figures I've given you are illustrative — the actual premium is confirmed after underwriting. You'd complete an online health questionnaire yourself — it covers general health, family medical history, the childhood asthma. For your profile I'd expect it to be quite straightforward. It usually takes two to five working days to get a confirmed rate back.
+CUSTOMER: Is there anything that might cause problems with the underwriting? Given the asthma?
+AGENT: Asthma that resolved in childhood and hasn't required any treatment in over twenty years is generally classified as "resolved" — underwriters treat it the same as if you never had it. I wouldn't expect it to be a factor at all. The questionnaire will ask about it, you'll confirm it's resolved, and that should be the end of it.
+CUSTOMER: That's reassuring.
+AGENT: Good. And I should mention — we're seeing some very good rates for people in the forty-to-fifty age bracket at the moment, particularly non-smokers. It is really worth acting on, given your family situation and the financial gap you currently have.
+CUSTOMER: Is there any urgency? Should I be rushing?
+AGENT: There's no hard deadline, but insurance rates do move with market conditions and the sooner you have cover in place the better for your family. I wouldn't want you to feel pressured — take the time you need to review the information — but getting the application in sooner rather than later does make sense.
+CUSTOMER: Fair enough. I'll have a look at the email and discuss with Paul.
+AGENT: Of course. Take all the time you need. So next steps — I'll send you an email today with your quote illustration, an indicative quote for Paul, the critical illness information, and all the product documentation. There'll be a link to start the application at your own pace. Any questions after you've read through it, just call or email. Does that sound good?
+CUSTOMER: Yes, that sounds very helpful. Thank you for explaining everything so clearly.
+AGENT: My pleasure. You'll have the email within the hour. Thanks very much for your time today, Alison. Take care.
+CUSTOMER: Thank you, James. Bye.
+AGENT: Goodbye.

@@ -8,6 +8,7 @@ use App\Models\Template;
 use App\Models\TranscriptSegment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CallResultsTest extends TestCase
@@ -112,5 +113,29 @@ class CallResultsTest extends TestCase
     {
         $call = $this->doneCall();
         $this->get(route('calls.audio', $call))->assertRedirect('/login');
+    }
+
+    public function test_audio_route_streams_the_normalised_file(): void
+    {
+        Storage::fake('private');
+        Storage::disk('private')->put('calls/1/audio.mp3', 'fake mp3 bytes');
+        $call = $this->doneCall();
+
+        $this->actingAs($call->uploader)
+            ->get(route('calls.audio', $call))
+            ->assertOk()
+            ->assertHeader('Content-Type', 'audio/mpeg');
+    }
+
+    public function test_audio_route_downloads_with_the_original_name(): void
+    {
+        Storage::fake('private');
+        Storage::disk('private')->put('calls/1/audio.mp3', 'fake mp3 bytes');
+        $call = $this->doneCall();
+
+        $this->actingAs($call->uploader)
+            ->get(route('calls.audio', ['call' => $call, 'download' => 1]))
+            ->assertOk()
+            ->assertDownload('orig.mp3');
     }
 }
