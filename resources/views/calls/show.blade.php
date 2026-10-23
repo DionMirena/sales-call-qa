@@ -1,227 +1,338 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between gap-4">
-            <div class="min-w-0">
-                <h2 class="text-xl font-semibold text-gray-800 truncate">
-                    {{ $call->original_filename }}
-                </h2>
-                <p class="text-sm text-gray-500 mt-0.5">
-                    Agent: <strong>{{ $call->agent->name }}</strong>
-                    &middot; {{ $call->template->name }}
+        <div class="flex items-center gap-2 min-w-0 flex-1">
+            <a href="{{ route('calls.index') }}"
+               class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="min-w-0 flex-1">
+                <h1 class="text-sm font-semibold text-slate-800 truncate">{{ $call->original_filename }}</h1>
+                <div class="flex items-center gap-1.5 text-xs text-slate-400 mt-0.5">
+                    <span class="font-medium text-slate-600">{{ $call->agent->name }}</span>
+                    <span>·</span>
+                    <span class="truncate">{{ $call->template->name }}</span>
                     @if($call->customer_name)
-                        &middot; {{ $call->customer_name }}
+                        <span>·</span>
+                        <span>{{ $call->customer_name }}</span>
                     @endif
-                </p>
+                </div>
             </div>
-            <div class="shrink-0 flex items-center gap-2">
-                @if($call->status === 'done')
-                    @php
-                        $badgeClass = match($call->outcome) {
-                            'pass'      => 'bg-green-100 text-green-800',
-                            'auto_fail' => 'bg-red-100 text-red-800',
-                            default     => 'bg-yellow-100 text-yellow-800',
-                        };
-                    @endphp
-                    <span class="px-3 py-1 rounded-full font-bold text-sm {{ $badgeClass }}">
-                        {{ strtoupper(str_replace('_', '-', $call->outcome)) }}
-                    </span>
-                    <form method="POST" action="{{ route('calls.rescore', $call) }}"
-                          onsubmit="return confirm('Re-score this call? Existing scores and overrides will be deleted.')">
-                        @csrf
-                        <button class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded hover:bg-gray-200">
-                            Re-score
-                        </button>
-                    </form>
-                @endif
-                <form method="POST" action="{{ route('calls.destroy', $call) }}"
-                      onsubmit="return confirm('Delete this call and all its data?')">
+        </div>
+        {{-- Header actions --}}
+        <div class="flex items-center gap-2 shrink-0">
+            @if($call->status === 'done')
+                @php
+                    $outcomeColors = [
+                        'pass'      => 'bg-emerald-100 text-emerald-700',
+                        'auto_fail' => 'bg-red-100 text-red-700',
+                        'fail'      => 'bg-red-100 text-red-700',
+                    ];
+                @endphp
+                <span class="hidden sm:inline-flex px-3 py-1 rounded-full text-xs font-bold
+                             {{ $outcomeColors[$call->outcome] ?? 'bg-slate-100 text-slate-600' }}">
+                    {{ strtoupper(str_replace('_', '-', $call->outcome)) }}
+                </span>
+                <span class="hidden sm:inline-flex px-3 py-1 rounded-full text-xs font-bold
+                             {{ $call->score_percent >= 80 ? 'bg-emerald-100 text-emerald-700' : ($call->score_percent >= 60 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700') }}">
+                    {{ number_format($call->score_percent, 0) }}%
+                </span>
+                <form method="POST" action="{{ route('calls.rescore', $call) }}"
+                      onsubmit="return confirm('Re-score this call? Existing scores and overrides will be deleted.')">
                     @csrf
-                    @method('DELETE')
-                    <button class="px-3 py-1 bg-red-50 text-red-600 text-sm rounded hover:bg-red-100">
-                        Delete
+                    <button class="px-3 py-1.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-200 transition-colors">
+                        Re-score
                     </button>
                 </form>
-            </div>
+            @endif
+            <form method="POST" action="{{ route('calls.destroy', $call) }}"
+                  onsubmit="return confirm('Delete this call and all its data?')">
+                @csrf @method('DELETE')
+                <button class="px-3 py-1.5 bg-red-50 text-red-600 text-xs font-medium rounded-lg hover:bg-red-100 transition-colors">
+                    Delete
+                </button>
+            </form>
         </div>
     </x-slot>
 
-    <div class="py-6 max-w-5xl mx-auto px-4 space-y-5">
+    @if(session('success'))
+        <div class="mx-4 mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm flex items-center gap-2">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @if(session('success'))
-            <div class="p-3 bg-green-100 text-green-800 rounded text-sm">{{ session('success') }}</div>
-        @endif
+    {{-- ── Processing state ─────────────────────────────────────────────────── --}}
+    @if($call->status !== 'done')
+        <div class="p-4 sm:p-6 max-w-2xl mx-auto w-full"
+             x-data="callStatus('{{ $call->status }}', '{{ route('calls.status', $call) }}')"
+             x-init="init()">
 
-        {{-- ── Status banner (queued / processing / failed) ──────────────────────── --}}
-        @if($call->status !== 'done')
-            <div x-data="callStatus('{{ $call->status }}', '{{ route('calls.status', $call) }}')"
-                 x-init="init()"
-                 class="rounded-lg border p-4"
-                 :class="{
-                     'bg-yellow-50 border-yellow-200': ['queued','normalising','transcribing','scoring'].includes(status),
-                     'bg-red-50   border-red-200':     status === 'failed',
-                 }">
+            {{-- Step tracker --}}
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-4">
+                <h3 class="text-sm font-semibold text-slate-700 mb-6">Processing</h3>
 
-                <div class="flex items-center gap-3">
-                    <template x-if="['queued','normalising','transcribing','scoring'].includes(status)">
-                        <svg class="animate-spin h-5 w-5 text-yellow-600 shrink-0" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                        </svg>
-                    </template>
-                    <div>
-                        <p class="font-medium"
-                           :class="{
-                               'text-yellow-800': ['queued','normalising','transcribing','scoring'].includes(status),
-                               'text-red-800':    status === 'failed',
-                           }"
-                           x-text="statusLabel()"></p>
-                        <template x-if="status === 'failed' && errorMsg">
-                            <p class="text-sm text-red-600 mt-1" x-text="errorMsg"></p>
-                        </template>
+                @php
+                    $steps = [
+                        ['key' => 'queued',       'label' => 'Queued',      'desc' => 'Waiting for a worker'],
+                        ['key' => 'normalising',  'label' => 'Normalising', 'desc' => 'Converting audio with ffmpeg'],
+                        ['key' => 'transcribing', 'label' => 'Transcribing','desc' => 'Sending to Deepgram'],
+                        ['key' => 'scoring',      'label' => 'Scoring',     'desc' => 'Analysing with AI'],
+                        ['key' => 'done',         'label' => 'Complete',    'desc' => 'Results ready'],
+                    ];
+                    $stepOrder = ['queued'=>0,'normalising'=>1,'transcribing'=>2,'scoring'=>3,'done'=>4,'failed'=>4];
+                @endphp
+
+                <div class="relative">
+                    {{-- Connector line --}}
+                    <div class="absolute left-4 top-4 bottom-4 w-0.5 bg-slate-100"></div>
+
+                    <div class="space-y-6">
+                        @foreach ($steps as $i => $step)
+                            @php
+                                $statusIndex = $stepOrder[$call->status] ?? 0;
+                                $stepIndex = $i;
+                                $isDone    = $statusIndex > $stepIndex;
+                                $isActive  = $statusIndex === $stepIndex && $call->status !== 'failed';
+                                $isFailed  = $call->status === 'failed' && $stepIndex === 3;
+                            @endphp
+                            <div class="flex items-start gap-4 relative">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10
+                                            {{ $isDone   ? 'bg-emerald-500'  : '' }}
+                                            {{ $isActive ? 'bg-indigo-600 ring-4 ring-indigo-100' : '' }}
+                                            {{ $isFailed ? 'bg-red-500'      : '' }}
+                                            {{ !$isDone && !$isActive && !$isFailed ? 'bg-slate-100' : '' }}">
+                                    @if($isDone)
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    @elseif($isActive)
+                                        <svg class="w-3.5 h-3.5 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                                        </svg>
+                                    @elseif($isFailed)
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    @else
+                                        <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                                    @endif
+                                </div>
+                                <div class="pt-1">
+                                    <p class="text-sm font-semibold {{ $isActive ? 'text-indigo-700' : ($isDone ? 'text-slate-800' : 'text-slate-400') }}">
+                                        {{ $step['label'] }}
+                                    </p>
+                                    <p class="text-xs {{ $isActive ? 'text-indigo-500' : 'text-slate-400' }}">
+                                        {{ $step['desc'] }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
-                <template x-if="status === 'failed'">
-                    <form method="POST" action="{{ route('calls.retry', $call) }}" class="mt-3">
+                @if($call->status === 'failed' && $call->error_message)
+                    <div class="mt-5 p-3 bg-red-50 rounded-xl text-sm text-red-700">
+                        {{ $call->error_message }}
+                    </div>
+                @endif
+
+                @if($call->status === 'failed')
+                    <form method="POST" action="{{ route('calls.retry', $call) }}" class="mt-4">
                         @csrf
-                        <button class="px-4 py-1.5 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                        <button class="w-full py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition-colors">
                             Retry processing
                         </button>
                     </form>
-                </template>
+                @else
+                    <p class="mt-5 text-xs text-slate-400 text-center">Page refreshes automatically when complete…</p>
+                @endif
             </div>
-        @endif
+        </div>
 
-        {{-- ── Full results (done state) ───────────────────────────────────────────── --}}
-        @if($call->status === 'done')
-            <div x-data="resultsPage()" x-init="init()">
+        {{-- Hidden Alpine status poller --}}
+        <div x-data="callStatus('{{ $call->status }}', '{{ route('calls.status', $call) }}')"
+             x-init="init()" class="hidden"></div>
+    @endif
 
-                {{-- Score summary ──────────────────────────────────────────────────── --}}
-                <div class="bg-white shadow-sm rounded-lg p-5 grid grid-cols-2 sm:grid-cols-5 gap-x-4 gap-y-3 text-sm">
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Score</p>
-                        <p class="text-3xl font-extrabold text-gray-900">{{ number_format($call->score_percent, 1) }}%</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Outcome</p>
-                        @if($call->outcome === 'pass')
-                            <span class="px-2.5 py-1 bg-green-100 text-green-800 rounded-full font-bold text-sm">PASS</span>
-                        @elseif($call->outcome === 'auto_fail')
-                            <span class="px-2.5 py-1 bg-red-100 text-red-800 rounded-full font-bold text-sm">AUTO-FAIL</span>
-                        @else
-                            <span class="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-full font-bold text-sm">FAIL</span>
-                        @endif
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Duration</p>
-                        <p class="font-semibold">{{ $call->duration_seconds ? gmdate('i:s', $call->duration_seconds) : '—' }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Agent</p>
-                        <p class="font-semibold truncate">{{ $call->agent->name }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Template</p>
-                        <p class="font-semibold truncate text-xs">{{ $call->template->name }}</p>
-                    </div>
+    {{-- ── Done state: split-pane results ────────────────────────────────────── --}}
+    @if($call->status === 'done')
+        <div x-data="resultsPage()" x-init="init()"
+             class="flex flex-col lg:flex-row h-[calc(100vh-3.5rem)] overflow-hidden">
+
+            {{-- LEFT: Audio + Transcript --}}
+            <div class="lg:w-5/12 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200
+                        max-h-[50vh] lg:max-h-none">
+
+                {{-- Score bar (mobile only — desktop shows in header) --}}
+                <div class="lg:hidden flex items-center gap-3 px-4 py-2 bg-white border-b border-slate-100">
+                    @php
+                        $badgeColor = match($call->outcome) {
+                            'pass'      => 'bg-emerald-100 text-emerald-700',
+                            'auto_fail' => 'bg-red-100 text-red-700',
+                            default     => 'bg-red-100 text-red-700',
+                        };
+                    @endphp
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold {{ $badgeColor }}">
+                        {{ strtoupper(str_replace('_', '-', $call->outcome)) }}
+                    </span>
+                    <span class="text-2xl font-extrabold {{ $call->score_percent >= 80 ? 'text-emerald-600' : ($call->score_percent >= 60 ? 'text-amber-600' : 'text-red-600') }}">
+                        {{ number_format($call->score_percent, 0) }}%
+                    </span>
+                    @if($call->duration_seconds)
+                        <span class="text-xs text-slate-400 ml-auto">{{ gmdate('i:s', $call->duration_seconds) }}</span>
+                    @endif
                 </div>
 
-                {{-- Audio player ────────────────────────────────────────────────────── --}}
+                {{-- Audio player --}}
                 @if($call->audio_path)
-                    <div class="bg-white shadow-sm rounded-lg p-4">
-                        <p class="text-xs text-gray-400 uppercase tracking-wide mb-2">Audio</p>
-                        <audio x-ref="audio" controls preload="metadata" class="w-full">
+                    <div class="px-4 py-3 bg-white border-b border-slate-100 shrink-0">
+                        <audio x-ref="audio" controls preload="metadata"
+                               class="w-full h-8 accent-indigo-600">
                             <source src="{{ route('calls.audio', $call) }}" type="audio/mpeg">
                         </audio>
                     </div>
                 @endif
 
-                {{-- Transcript ──────────────────────────────────────────────────────── --}}
-                <div class="bg-white shadow-sm rounded-lg overflow-hidden">
-                    <div class="flex items-center justify-between px-4 py-3 border-b bg-gray-50">
-                        <p class="font-semibold text-gray-700 text-sm">
-                            Transcript
-                            <span class="text-gray-400 font-normal ml-1">({{ $call->segments->count() }} segments)</span>
+                {{-- Transcript --}}
+                <div class="flex-1 overflow-y-auto bg-slate-50">
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-white border-b border-slate-100 sticky top-0">
+                        <p class="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                            Transcript <span class="text-slate-400 font-normal normal-case">({{ $call->segments->count() }} segments)</span>
                         </p>
                         <button @click="swapSpeakers()"
-                                class="text-xs px-3 py-1.5 rounded-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 transition-colors">
+                                class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
                             ⇄ Swap speakers
                         </button>
                     </div>
 
-                    <div class="overflow-y-auto divide-y divide-gray-100" style="max-height:420px">
+                    <div class="px-4 py-3 space-y-3">
                         <template x-for="seg in segments" :key="seg.code">
-                            <div class="flex gap-3 px-4 py-2.5 text-sm cursor-pointer hover:bg-blue-50/60 transition-colors"
-                                 :id="'seg-' + seg.code"
-                                 @click="seekTo(seg.start_ms)">
-                                <div class="shrink-0 w-28 text-xs pt-0.5 space-y-0.5">
-                                    <p class="font-semibold font-mono"
-                                       :class="seg.speaker === agentSpeaker ? 'text-blue-700' : 'text-gray-500'"
-                                       x-text="speakerLabel(seg.speaker)"></p>
-                                    <p class="text-gray-400" x-text="formatTime(seg.start_ms)"></p>
-                                </div>
-                                <div class="flex-1 leading-snug">
-                                    <span class="text-gray-300 font-mono text-xs select-none mr-1" x-text="seg.code"></span>
-                                    <span class="text-gray-700" x-text="seg.text"></span>
+                            <div :id="'seg-' + seg.code"
+                                 @click="seekTo(seg.start_ms)"
+                                 class="flex gap-2 cursor-pointer group"
+                                 :class="seg.speaker === agentSpeaker ? 'flex-row' : 'flex-row-reverse'">
+
+                                {{-- Avatar --}}
+                                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5"
+                                     :class="seg.speaker === agentSpeaker ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-200 text-slate-600'"
+                                     x-text="speakerLabel(seg.speaker).charAt(0)"></div>
+
+                                {{-- Bubble --}}
+                                <div class="max-w-[80%]">
+                                    <p class="text-xs font-semibold mb-0.5"
+                                       :class="seg.speaker === agentSpeaker ? 'text-indigo-600' : 'text-slate-500'"
+                                       x-text="speakerLabel(seg.speaker) + ' · ' + formatTime(seg.start_ms)"></p>
+                                    <div class="rounded-2xl px-3.5 py-2.5 text-sm leading-snug group-hover:opacity-90 transition-opacity"
+                                         :class="seg.speaker === agentSpeaker
+                                             ? 'bg-indigo-600 text-white rounded-tl-sm'
+                                             : 'bg-white border border-slate-200 text-slate-700 rounded-tr-sm'">
+                                        <span class="font-mono text-xs opacity-50 mr-1" x-text="seg.code"></span>
+                                        <span x-text="seg.text"></span>
+                                    </div>
                                 </div>
                             </div>
                         </template>
+
+                        @if($call->segments->isEmpty())
+                            <div class="text-center py-8 text-slate-400 text-sm">No transcript available.</div>
+                        @endif
                     </div>
                 </div>
+            </div>
 
-                {{-- Criterion result cards ───────────────────────────────────────────── --}}
-                <div class="space-y-3">
-                    <h3 class="font-semibold text-gray-700 text-sm uppercase tracking-wide">Criterion Results</h3>
+            {{-- RIGHT: Criteria panel --}}
+            <div class="lg:w-7/12 flex flex-col overflow-hidden">
 
-                    @foreach($call->criterionResults as $result)
+                {{-- Desktop score bar --}}
+                <div class="hidden lg:flex items-center gap-4 px-5 py-3 bg-white border-b border-slate-100 shrink-0">
+                    @php
+                        $outcomeLabel = strtoupper(str_replace('_', '-', $call->outcome));
+                    @endphp
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wide mb-0.5">Overall Score</p>
+                        <p class="text-2xl font-extrabold {{ $call->score_percent >= 80 ? 'text-emerald-600' : ($call->score_percent >= 60 ? 'text-amber-600' : 'text-red-600') }}">
+                            {{ number_format($call->score_percent, 1) }}%
+                        </p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold {{ $badgeColor }}">{{ $outcomeLabel }}</span>
+                    @if($call->duration_seconds)
+                        <div class="ml-auto text-right">
+                            <p class="text-xs text-slate-400">Duration</p>
+                            <p class="text-sm font-semibold text-slate-700">{{ gmdate('i:s', $call->duration_seconds) }}</p>
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Criteria list --}}
+                <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Criteria</h3>
+                        <span class="text-xs text-slate-400">{{ $call->criterionResults->count() }} criteria</span>
+                    </div>
+
+                    @forelse($call->criterionResults as $result)
                         @php
-                            $effective    = $result->effectiveResult();
-                            $isExtract    = $result->criterion_type === 'extract';
-                            $isGood       = in_array($effective, ['pass', 'yes'])
-                                            || (is_numeric($effective) && (int)$effective >= 4);
-                            $isBad        = in_array($effective, ['fail', 'no'])
-                                            || (is_numeric($effective) && (int)$effective <= 2);
+                            $effective = $result->effectiveResult();
+                            $isExtract = $result->criterion_type === 'extract';
+                            $isGood    = in_array($effective, ['pass', 'yes']) || (is_numeric($effective) && (int)$effective >= 4);
+                            $isBad     = in_array($effective, ['fail', 'no'])  || (is_numeric($effective) && (int)$effective <= 2);
+                            $hasErrors = $errors->hasBag("cr_{$result->id}");
                         @endphp
-                        <div class="bg-white shadow-sm rounded-lg p-4
-                            {{ $result->needs_review ? 'border-l-4 border-l-yellow-400' : 'border border-gray-100' }}">
+
+                        <div class="bg-white rounded-2xl border shadow-sm overflow-hidden
+                                    {{ $result->needs_review ? 'border-amber-300' : 'border-slate-100' }}">
 
                             {{-- Card header --}}
-                            <div class="flex items-start justify-between gap-4">
+                            <div class="flex items-start gap-3 p-4">
                                 <div class="flex-1 min-w-0">
-                                    <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
-                                        <h4 class="font-semibold text-gray-800 text-sm">{{ $result->criterion_name }}</h4>
+                                    <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                                        <h4 class="text-sm font-semibold text-slate-800">{{ $result->criterion_name }}</h4>
                                         @if($result->criterion_is_critical)
-                                            <span class="text-xs px-1.5 py-0.5 bg-red-50 text-red-700 rounded border border-red-200 font-medium">CRITICAL</span>
+                                            <span class="px-1.5 py-0.5 bg-red-50 text-red-600 text-xs font-semibold rounded-md border border-red-200">
+                                                CRITICAL
+                                            </span>
                                         @endif
                                         @if($result->needs_review)
-                                            <span class="text-xs px-1.5 py-0.5 bg-yellow-50 text-yellow-700 rounded border border-yellow-200 font-medium">⚑ Needs review</span>
+                                            <span class="px-1.5 py-0.5 bg-amber-50 text-amber-600 text-xs font-medium rounded-md border border-amber-200">
+                                                ⚑ Review
+                                            </span>
+                                        @endif
+                                        @if($result->overrides->isNotEmpty())
+                                            <span class="px-1.5 py-0.5 bg-indigo-50 text-indigo-600 text-xs font-medium rounded-md">
+                                                ✎ Overridden
+                                            </span>
                                         @endif
                                     </div>
-                                    <p class="text-xs text-gray-400">
+                                    <p class="text-xs text-slate-400">
                                         {{ ucfirst(str_replace('_', ' ', $result->criterion_type)) }}
-                                        &middot; weight {{ $result->criterion_weight }}
-                                        &middot; {{ ucfirst($result->verification_status) }}
+                                        · weight {{ $result->criterion_weight }}
+                                        · {{ ucfirst($result->verification_status) }}
                                     </p>
                                 </div>
 
-                                {{-- Result badge + confidence --}}
+                                {{-- Result badge --}}
                                 <div class="shrink-0 text-right">
                                     @if($isExtract)
-                                        <p class="text-sm text-gray-700 italic">{{ $effective ?: '—' }}</p>
+                                        <p class="text-sm text-slate-700 italic max-w-[140px] truncate">{{ $effective ?: '—' }}</p>
                                     @else
-                                        <span class="px-2.5 py-1 rounded-full text-sm font-bold
-                                            {{ $isGood ? 'bg-green-100 text-green-800' : '' }}
-                                            {{ $isBad  ? 'bg-red-100   text-red-800'   : '' }}
-                                            {{ !$isGood && !$isBad ? 'bg-gray-100 text-gray-600' : '' }}
-                                        ">{{ strtoupper($effective) }}</span>
+                                        <span class="inline-flex px-2.5 py-1 rounded-full text-sm font-bold
+                                            {{ $isGood ? 'bg-emerald-100 text-emerald-700' : '' }}
+                                            {{ $isBad  ? 'bg-red-100 text-red-700'         : '' }}
+                                            {{ !$isGood && !$isBad ? 'bg-slate-100 text-slate-600' : '' }}">
+                                            {{ strtoupper($effective) }}
+                                        </span>
                                     @endif
-
                                     @if(!$isExtract)
-                                        <div class="mt-1.5 text-xs text-gray-400">
-                                            {{ round($result->confidence * 100) }}% confidence
-                                            <div class="h-1.5 bg-gray-100 rounded-full mt-0.5 w-20 ml-auto">
+                                        <div class="mt-1.5">
+                                            <p class="text-xs text-slate-400 mb-0.5">{{ round($result->confidence * 100) }}% confidence</p>
+                                            <div class="h-1.5 bg-slate-100 rounded-full w-20 ml-auto">
                                                 <div class="h-1.5 rounded-full
-                                                    {{ $result->confidence >= 0.8 ? 'bg-green-400' : ($result->confidence >= 0.6 ? 'bg-yellow-400' : 'bg-red-400') }}"
+                                                    {{ $result->confidence >= 0.8 ? 'bg-emerald-400' : ($result->confidence >= 0.6 ? 'bg-amber-400' : 'bg-red-400') }}"
                                                      style="width:{{ round($result->confidence * 100) }}%"></div>
                                             </div>
                                         </div>
@@ -231,21 +342,26 @@
 
                             {{-- Reasoning --}}
                             @if($result->reasoning)
-                                <p class="text-sm text-gray-500 mt-2 italic leading-snug">{{ $result->reasoning }}</p>
+                                <div class="px-4 pb-3">
+                                    <p class="text-xs text-slate-500 italic leading-relaxed bg-slate-50 rounded-xl p-2.5">
+                                        {{ $result->reasoning }}
+                                    </p>
+                                </div>
                             @endif
 
                             {{-- Evidence --}}
                             @if(!empty($result->evidence))
-                                <div class="mt-3 space-y-1.5">
+                                <div class="px-4 pb-3 space-y-1.5">
                                     @foreach($result->evidence as $ev)
                                         <div class="flex items-start gap-2 text-xs">
-                                            <span class="shrink-0 font-mono px-1.5 py-0.5 rounded
-                                                {{ ($ev['verified'] ?? false) ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-500 border border-red-200' }}">
+                                            <span class="shrink-0 font-mono px-1.5 py-0.5 rounded-md text-xs font-semibold
+                                                {{ ($ev['verified'] ?? false)
+                                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                                    : 'bg-red-50 text-red-500 border border-red-200' }}">
                                                 {{ $ev['segment_code'] }}
                                             </span>
                                             <button @click="seekToCode('{{ $ev['segment_code'] }}')"
-                                                    title="Seek audio to this segment"
-                                                    class="text-left text-gray-500 hover:text-blue-600 italic transition-colors leading-snug">
+                                                    class="text-left text-slate-500 hover:text-indigo-600 italic transition-colors leading-snug text-xs">
                                                 "{{ Str::limit($ev['quote'] ?? '', 120) }}"
                                             </button>
                                         </div>
@@ -253,37 +369,35 @@
                                 </div>
                             @endif
 
-                            {{-- Override form + audit trail ────────────────────── --}}
-                            @php $hasErrors = $errors->hasBag("cr_{$result->id}"); @endphp
+                            {{-- Override section --}}
                             <div x-data="{ open: {{ $hasErrors ? 'true' : 'false' }} }"
-                                 class="mt-3 pt-3 border-t border-gray-100">
-
-                                <div class="flex items-center justify-between">
-                                    <span class="text-xs {{ $result->overrides->isNotEmpty() ? 'text-indigo-600 font-medium' : 'text-transparent' }}">
-                                        ✎ Human reviewed
-                                    </span>
+                                 class="border-t border-slate-100">
+                                <div class="flex items-center justify-between px-4 py-2.5">
+                                    @if($result->overrides->isNotEmpty())
+                                        <span class="text-xs text-indigo-600 font-medium">✎ Human reviewed</span>
+                                    @else
+                                        <span></span>
+                                    @endif
                                     <button @click="open = !open" type="button"
-                                            class="text-xs text-gray-400 hover:text-gray-700 transition-colors"
-                                            x-text="open ? 'Cancel' : 'Override result'">
-                                    </button>
+                                            class="text-xs text-slate-400 hover:text-slate-700 transition-colors"
+                                            x-text="open ? 'Cancel' : 'Override result'"></button>
                                 </div>
 
-                                {{-- Form --}}
-                                <div x-show="open" x-cloak class="mt-3">
+                                {{-- Override form --}}
+                                <div x-show="open" x-cloak class="px-4 pb-4">
                                     <form method="POST" action="{{ route('overrides.store', $result) }}">
                                         @csrf
-                                        <div class="flex flex-col sm:flex-row gap-2 items-start">
-
+                                        <div class="flex flex-col sm:flex-row gap-2">
                                             @if($result->criterion_type === 'pass_fail')
                                                 <select name="new_result"
-                                                        class="border border-gray-300 rounded px-2 py-1.5 text-sm bg-white shrink-0">
+                                                        class="border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500 shrink-0">
                                                     <option value="">— select —</option>
                                                     <option value="pass">Pass</option>
                                                     <option value="fail">Fail</option>
                                                 </select>
                                             @elseif($result->criterion_type === 'yes_no_na')
                                                 <select name="new_result"
-                                                        class="border border-gray-300 rounded px-2 py-1.5 text-sm bg-white shrink-0">
+                                                        class="border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500 shrink-0">
                                                     <option value="">— select —</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="no">No</option>
@@ -291,7 +405,7 @@
                                                 </select>
                                             @elseif($result->criterion_type === 'scale_1_5')
                                                 <select name="new_result"
-                                                        class="border border-gray-300 rounded px-2 py-1.5 text-sm bg-white shrink-0">
+                                                        class="border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500 shrink-0">
                                                     <option value="">— select —</option>
                                                     @foreach(range(1, 5) as $n)
                                                         <option value="{{ $n }}">{{ $n }}</option>
@@ -300,56 +414,54 @@
                                             @else
                                                 <input type="text" name="new_result"
                                                        placeholder="Corrected value"
-                                                       class="border border-gray-300 rounded px-2 py-1.5 text-sm flex-1">
+                                                       class="border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1">
                                             @endif
-
                                             <textarea name="reason" rows="2" required minlength="10"
-                                                      placeholder="Reason (min 10 chars)"
-                                                      class="border border-gray-300 rounded px-2 py-1.5 text-sm flex-1 resize-none"></textarea>
-
+                                                      placeholder="Reason for override (required, min 10 chars)"
+                                                      class="border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500 flex-1 resize-none"></textarea>
                                             <button type="submit"
-                                                    class="shrink-0 px-3 py-1.5 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition-colors">
+                                                    class="shrink-0 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-colors self-start">
                                                 Save
                                             </button>
                                         </div>
-
                                         @error('new_result', "cr_{$result->id}")
-                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                            <p class="text-red-600 text-xs mt-1.5">{{ $message }}</p>
                                         @enderror
                                         @error('reason', "cr_{$result->id}")
-                                            <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                            <p class="text-red-600 text-xs mt-1.5">{{ $message }}</p>
                                         @enderror
                                     </form>
                                 </div>
 
                                 {{-- Audit trail --}}
                                 @if($result->overrides->isNotEmpty())
-                                    <div class="mt-3 space-y-2">
+                                    <div class="px-4 pb-4 space-y-2">
                                         @foreach($result->overrides as $ov)
-                                            <div class="text-xs bg-indigo-50 rounded p-2.5 border border-indigo-100">
-                                                <div class="flex items-center gap-1.5">
-                                                    <span class="font-medium text-gray-800">{{ $ov->user->name }}</span>
-                                                    <span class="text-gray-400">changed</span>
-                                                    <span class="font-mono bg-red-50 text-red-700 px-1 rounded">{{ strtoupper($ov->old_result) }}</span>
-                                                    <span class="text-gray-400">→</span>
-                                                    <span class="font-mono bg-green-50 text-green-700 px-1 rounded font-semibold">{{ strtoupper($ov->new_result) }}</span>
-                                                    <span class="text-gray-400 ml-auto">{{ $ov->created_at->diffForHumans() }}</span>
+                                            <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100 text-xs">
+                                                <div class="flex flex-wrap items-center gap-1.5">
+                                                    <span class="font-semibold text-slate-800">{{ $ov->user->name }}</span>
+                                                    <span class="text-slate-400">changed</span>
+                                                    <span class="font-mono bg-red-50 text-red-700 px-1.5 py-0.5 rounded">{{ strtoupper($ov->old_result) }}</span>
+                                                    <span class="text-slate-400">→</span>
+                                                    <span class="font-mono bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-semibold">{{ strtoupper($ov->new_result) }}</span>
+                                                    <span class="text-slate-400 ml-auto">{{ $ov->created_at->diffForHumans() }}</span>
                                                 </div>
-                                                <p class="mt-1 text-gray-500 italic">"{{ $ov->reason }}"</p>
+                                                <p class="mt-1.5 text-slate-500 italic">"{{ $ov->reason }}"</p>
                                             </div>
                                         @endforeach
                                     </div>
                                 @endif
-                            </div>{{-- /override --}}
-
-                        </div>{{-- /criterion card --}}
-                    @endforeach
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center py-12 text-slate-400 text-sm">
+                            No criterion results yet.
+                        </div>
+                    @endforelse
                 </div>
-
-            </div>{{-- /x-data resultsPage --}}
-        @endif
-
-    </div>
+            </div>
+        </div>
+    @endif
 
     <script>
     function callStatus(initial, statusUrl) {
@@ -369,7 +481,7 @@
                     this.status   = data.status;
                     this.errorMsg = data.error;
                     if (data.status === 'done') { clearInterval(this.interval); window.location.reload(); }
-                    else if (data.status === 'failed') { clearInterval(this.interval); }
+                    else if (data.status === 'failed') { clearInterval(this.interval); window.location.reload(); }
                 } catch(e) {}
             },
             statusLabel() {

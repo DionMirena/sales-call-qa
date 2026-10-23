@@ -1,12 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800">New Template</h2>
+        <div class="flex items-center gap-2 min-w-0">
+            <a href="{{ route('templates.index') }}"
+               class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <h1 class="text-base font-semibold text-slate-800 truncate">New Template</h1>
+            <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full shrink-0">Draft</span>
+        </div>
     </x-slot>
 
-    <div class="py-6 max-w-4xl mx-auto px-4">
-        <form method="POST" action="{{ route('templates.store') }}">
-            @csrf
-            @include('templates._form')
-        </form>
-    </div>
+    <form method="POST" action="{{ route('templates.store') }}" class="h-[calc(100vh-3.5rem)] flex flex-col">
+        @csrf
+        @include('templates._form')
+    </form>
 </x-app-layout>

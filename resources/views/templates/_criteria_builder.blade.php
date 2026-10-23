@@ -1,84 +1,110 @@
-{{-- Alpine.js criteria builder. Expects $existing (array of criteria for editing) or nothing for create. --}}
-<div
-    x-data="criteriaBuilder({{ json_encode($existing ?? []) }})"
-    class="space-y-3"
->
+{{-- Criteria builder rows. Must live inside criteriaBuilder() x-data scope. --}}
+<div class="space-y-3">
     <template x-for="(row, index) in rows" :key="row.key">
-        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium text-gray-700" x-text="'Criterion ' + (index + 1)"></span>
-                <div class="flex gap-2">
+        <div class="border border-slate-200 rounded-xl bg-white overflow-hidden">
+
+            {{-- Row header --}}
+            <div class="flex items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase" x-text="'Criterion ' + (index + 1)"></span>
+                    <template x-if="row.is_critical">
+                        <span class="px-1.5 py-0.5 bg-red-50 text-red-600 text-xs font-semibold rounded border border-red-200">CRITICAL</span>
+                    </template>
+                </div>
+                <div class="flex items-center gap-1">
                     <button type="button" @click="moveUp(index)"
                             :disabled="index === 0"
-                            class="text-xs px-2 py-1 bg-white border rounded hover:bg-gray-100 disabled:opacity-30">↑</button>
+                            class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200 disabled:opacity-30 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                        </svg>
+                    </button>
                     <button type="button" @click="moveDown(index)"
                             :disabled="index === rows.length - 1"
-                            class="text-xs px-2 py-1 bg-white border rounded hover:bg-gray-100 disabled:opacity-30">↓</button>
+                            class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200 disabled:opacity-30 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
                     <button type="button" @click="remove(index)"
-                            class="text-xs px-2 py-1 bg-red-50 border border-red-200 text-red-600 rounded hover:bg-red-100">
-                        Remove
+                            class="p-1 rounded text-red-400 hover:text-red-700 hover:bg-red-50 transition-colors ml-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
                     </button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-3">
+            <div class="p-4 space-y-3">
                 {{-- Name --}}
                 <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Name <span class="text-red-500">*</span></label>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">
+                        Name <span class="text-red-500">*</span>
+                    </label>
                     <input type="text"
                            :name="'criteria[' + index + '][name]'"
                            x-model="row.name"
                            required
-                           class="w-full text-sm border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
-                           placeholder="e.g. Agent Identification">
+                           class="w-full text-sm border-slate-200 rounded-xl bg-slate-50
+                                  focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-colors"
+                           placeholder="e.g. Recording Disclosure">
                 </div>
 
                 {{-- Description --}}
                 <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Description — what good looks like <span class="text-red-500">*</span></label>
-                    <textarea
-                        :name="'criteria[' + index + '][description]'"
-                        x-model="row.description"
-                        required
-                        rows="2"
-                        class="w-full text-sm border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Agent clearly states their full name and the company name..."></textarea>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">
+                        Description — what good looks like <span class="text-red-500">*</span>
+                    </label>
+                    <textarea :name="'criteria[' + index + '][description]'"
+                              x-model="row.description"
+                              required
+                              rows="2"
+                              class="w-full text-sm border-slate-200 rounded-xl bg-slate-50
+                                     focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white
+                                     transition-colors resize-none"
+                              placeholder="Agent clearly states their full name and the company…"></textarea>
                 </div>
 
                 {{-- Fail conditions --}}
                 <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Fail conditions (optional)</label>
-                    <textarea
-                        :name="'criteria[' + index + '][fail_conditions]'"
-                        x-model="row.fail_conditions"
-                        rows="1"
-                        class="w-full text-sm border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Agent does not state name OR does not state company name."></textarea>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">
+                        Fail conditions <span class="text-slate-300 font-normal normal-case">(optional)</span>
+                    </label>
+                    <textarea :name="'criteria[' + index + '][fail_conditions]'"
+                              x-model="row.fail_conditions"
+                              rows="1"
+                              class="w-full text-sm border-slate-200 rounded-xl bg-slate-50
+                                     focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white
+                                     transition-colors resize-none"
+                              placeholder="Agent does not state name OR does not state company name"></textarea>
                 </div>
 
-                {{-- Type, Weight, Phase, Critical in one row --}}
+                {{-- Type / Weight / Phase / Critical --}}
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Type <span class="text-red-500">*</span></label>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Type <span class="text-red-500">*</span></label>
                         <select :name="'criteria[' + index + '][type]'" x-model="row.type"
-                                class="w-full text-sm border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+                                class="w-full text-sm border-slate-200 rounded-xl bg-slate-50
+                                       focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-colors">
                             <option value="pass_fail">pass / fail</option>
                             <option value="yes_no_na">yes / no / N/A</option>
                             <option value="scale_1_5">scale 1–5</option>
-                            <option value="extract">extract (info only)</option>
+                            <option value="extract">extract</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Weight (0–10)</label>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Weight</label>
                         <input type="number" min="0" max="10"
                                :name="'criteria[' + index + '][weight]'"
                                x-model.number="row.weight"
-                               class="w-full text-sm border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+                               class="w-full text-sm border-slate-200 rounded-xl bg-slate-50
+                                      focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1">Phase hint</label>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wide">Phase</label>
                         <select :name="'criteria[' + index + '][phase_hint]'" x-model="row.phase_hint"
-                                class="w-full text-sm border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+                                class="w-full text-sm border-slate-200 rounded-xl bg-slate-50
+                                       focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-colors">
                             <option value="anywhere">anywhere</option>
                             <option value="opening">opening</option>
                             <option value="discovery">discovery</option>
@@ -87,15 +113,15 @@
                             <option value="close">close</option>
                         </select>
                     </div>
-                    <div class="flex items-end pb-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <div class="flex items-end pb-0.5">
+                        <label class="flex items-center gap-2 cursor-pointer">
                             <input type="hidden" :name="'criteria[' + index + '][is_critical]'" value="0">
                             <input type="checkbox"
                                    :name="'criteria[' + index + '][is_critical]'"
                                    x-model="row.is_critical"
                                    value="1"
-                                   class="rounded border-gray-300 text-red-600 focus:ring-red-500">
-                            <span class="text-xs font-medium text-gray-700">⚠ Critical</span>
+                                   class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                            <span class="text-xs font-semibold text-slate-600">⚠ Critical</span>
                         </label>
                     </div>
                 </div>
@@ -104,8 +130,13 @@
     </template>
 
     <button type="button" @click="add()"
-            class="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-indigo-400 hover:text-indigo-600 transition">
-        + Add criterion
+            class="w-full py-3 border-2 border-dashed border-slate-200 rounded-xl text-sm text-slate-400
+                   hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50/40 transition-all duration-150
+                   flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Add criterion
     </button>
 </div>
 
