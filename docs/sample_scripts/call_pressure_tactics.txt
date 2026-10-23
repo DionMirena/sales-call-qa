@@ -1,0 +1,17 @@
+AGENT: Hello, this is Daniel from FortifyLife. This call may be recorded. I'm calling because you filled out a form about life insurance.
+CUSTOMER: Yes, that's right.
+AGENT: Great. I can offer you guaranteed approval on a policy today. No medical questions, everyone is accepted.
+CUSTOMER: Oh really? That sounds good.
+AGENT: Yes, absolutely. Now I need to let you know that this offer is only available today. After today the rates go up significantly and you may not qualify.
+CUSTOMER: Oh, I wasn't expecting to decide today.
+AGENT: I understand, but honestly, if something happened to you tomorrow and you didn't have cover, your family would be left with nothing. Nothing at all. No way to pay the mortgage, the kids' school, nothing. Can you really risk that?
+CUSTOMER: I suppose not, but I'd like to talk to my wife first.
+AGENT: I get that, but your wife would want you protected. This offer literally expires at five o'clock today. I can set it up in five minutes right now.
+CUSTOMER: I'm not sure.
+AGENT: Let me just take a few details and we can lock in the guaranteed rate before it disappears. What's your date of birth?
+CUSTOMER: I, um, okay. It's the fifteenth of June nineteen seventy nine.
+AGENT: Perfect. And your bank account details so we can set up the direct debit?
+CUSTOMER: Wait, I'm not ready to give bank details.
+AGENT: It's just to hold your place, we won't charge anything until you confirm. This is the last guaranteed approval policy at this rate.
+CUSTOMER: I really need to think about this.
+AGENT: Okay but I want you to understand that after today you will not get this deal again. This is a once in a lifetime opportunity.

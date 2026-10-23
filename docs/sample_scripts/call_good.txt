@@ -1,0 +1,23 @@
+AGENT: Hello, this is Sarah Mitchell from Clearview Life Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that okay?
+CUSTOMER: Sure, that's fine.
+AGENT: Wonderful. I'm calling today because you recently submitted an enquiry on our website about life insurance cover. I'd love to help you find the right policy. Do you have a few minutes?
+CUSTOMER: Yes, go ahead.
+AGENT: Great. To make sure I recommend the right product for you, may I ask a few questions first? Could you tell me your age?
+CUSTOMER: I'm thirty eight.
+AGENT: Thank you. And do you have any existing life insurance cover at the moment?
+CUSTOMER: No, nothing at all. My wife has cover through work but I don't.
+AGENT: And do you have children or other dependants who rely on your income?
+CUSTOMER: Yes, two kids, seven and nine.
+AGENT: Perfect, that's really helpful. And are there any significant health conditions I should be aware of, like diabetes, heart issues, anything like that?
+CUSTOMER: No, I'm generally pretty healthy. Had a knee operation a few years back but nothing serious.
+AGENT: That's reassuring. And roughly what kind of monthly premium are you comfortable with?
+CUSTOMER: I was thinking somewhere between thirty and fifty pounds a month.
+AGENT: Brilliant. Based on what you've told me, I'd suggest a level term life policy for five hundred thousand pounds of cover over a twenty five year term, which would see your youngest through to their thirties. With your age and health profile, that would typically come in around thirty two to thirty six pounds a month. Would that work for you?
+CUSTOMER: That sounds about right, yes.
+AGENT: Excellent. I do want to be clear that the final premium will be confirmed after underwriting, which just means they may ask a few more health questions. It's not guaranteed to be approved at that rate, but based on what you've said it should be straightforward.
+CUSTOMER: Okay, that makes sense.
+AGENT: Also, once the policy is issued, you have a fourteen day cooling off period where you can cancel and receive a full refund, no questions asked.
+CUSTOMER: Good to know.
+AGENT: Great. So the next step is I'll send you a summary email with all the details and a link to start the application. The underwriting team will follow up within two working days. Does that all sound good?
+CUSTOMER: Yes, perfect. Thank you Sarah.
+AGENT: Thank you for your time. Have a lovely day.

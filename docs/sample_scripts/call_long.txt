@@ -1,0 +1,53 @@
+AGENT: Good morning, this is Emma from Horizon Life Insurance. Just to let you know, this call is being recorded for quality and training purposes. Is that okay with you?
+CUSTOMER: Yes, that's fine.
+AGENT: Wonderful. Thank you for your time this morning. I'm calling because you recently filled out a request for a life insurance quote on our website. My name is Emma, and I work with our personal protection team here at Horizon. Before we start, do you have about fifteen to twenty minutes? I want to make sure we find the right fit for you rather than just a quick sale.
+CUSTOMER: Yes, I've set some time aside. I've been meaning to sort out cover for a while now.
+AGENT: That's great to hear. A lot of people put it off, so you're ahead of the curve. Let me start by asking a few questions so I really understand your situation. First, could you tell me your age?
+CUSTOMER: I'm forty four.
+AGENT: Great. And are you in employment, self-employed, or something else?
+CUSTOMER: I'm a teacher. Secondary school, been doing it for about fifteen years.
+AGENT: Lovely. And is there a partner or spouse in the picture?
+CUSTOMER: Yes, my husband. He's forty seven and he works in IT.
+AGENT: Does he have any life cover currently, either through his employer or privately?
+CUSTOMER: He has death in service through his company. Four times his salary, I think. But nothing separate.
+AGENT: That's worth knowing. Death in service is useful but it disappears if he changes jobs. Okay. And children or other financial dependants?
+CUSTOMER: Two children. One is sixteen and one is twelve.
+AGENT: So roughly another six years until the youngest finishes school, and maybe longer if they go to university. Do you have a mortgage?
+CUSTOMER: Yes, we do. About one hundred and sixty thousand left on it. We've got twelve years remaining.
+AGENT: And do you currently have any life insurance yourself, either at work or privately?
+CUSTOMER: I have a small one through the teachers' union, but I'm not sure of the amount. Maybe fifty thousand. It feels inadequate.
+AGENT: Your instinct is probably right. Fifty thousand wouldn't go very far with a mortgage of that size and two children in the picture. How are you with health generally? Any conditions worth mentioning?
+CUSTOMER: I have mild asthma. Well-controlled with an inhaler. I take a low dose of blood pressure medication, started about two years ago. No history of serious illness otherwise.
+AGENT: Thank you for being upfront about that. Those are quite common and usually manageable from an underwriting perspective, though the insurer will ask about them. Do you smoke?
+CUSTOMER: No, I stopped about six years ago.
+AGENT: Excellent. Giving up smoking makes a real difference to premiums. How long ago exactly?
+CUSTOMER: Six years and a few months.
+AGENT: Good. Most insurers treat you as a non-smoker after twelve months, so you'll get the better rate. Now, budget. What range feels comfortable as a monthly premium?
+CUSTOMER: Honestly, somewhere between thirty and sixty pounds. I'd rather pay a bit more and have proper cover than go cheap and find out later there's a gap.
+AGENT: That's a very sensible approach. Let me think through a few options with you. Given your mortgage, the most straightforward option is a decreasing term policy that mirrors the remaining mortgage term of twelve years, covering about a hundred and sixty thousand. That's relatively inexpensive. But given your children are still young and your husband's coverage is tied to his job, I'd also like to show you a level term policy with a longer term and a higher sum assured, so you have real peace of mind beyond just the mortgage.
+CUSTOMER: Yes, I'd like to see both.
+AGENT: Of course. Option A, a decreasing term policy, one hundred and sixty thousand over twelve years to match the mortgage. With your profile I'd estimate around eighteen to twenty two pounds a month, subject to underwriting. Option B, a level term policy, three hundred thousand pounds over twenty years. That would give you and the family protection until your youngest is potentially thirty two and through any further education. For that, with your profile, I'd estimate roughly forty to forty eight pounds a month.
+CUSTOMER: That second one is more interesting to me. What does three hundred thousand actually cover? Like, worst case, what would my family do with it?
+AGENT: Great question. In the worst case, assuming your husband also had a claim or lost his job, three hundred thousand could pay off the mortgage completely, leaving about one hundred and forty thousand. That could fund three to four years of living costs, or be invested conservatively to generate income, or pay for university for both children. It's a genuine safety net rather than just plugging one gap.
+CUSTOMER: That makes sense. I think I'd lean toward that option.
+AGENT: Before we go further on that, there are a couple of things I want to make sure I've told you. One, nothing I'm quoting you today is a guaranteed price. The final premium depends on the underwriting process, which means the insurer will ask questions about your asthma, blood pressure medication, and smoking history. Based on what you've told me, I'd expect it to be in the range I've quoted, but it could be slightly higher.
+CUSTOMER: Okay, that's fair.
+AGENT: Two, once you receive your policy documents, you have a fourteen day cooling off period to review everything. If you change your mind for any reason during that window, you can cancel and receive a full refund with no penalty.
+CUSTOMER: That's reassuring.
+AGENT: Now, I also want to talk briefly about whether it's worth considering joint life cover versus two separate policies. With joint, you get one payout and the policy ends. With separate policies, each person has their own sum assured. Given that your situations are different and your husband has employer cover, I'd actually lean toward separate policies, but it depends on cost. Do you want me to check whether a joint policy would be cheaper?
+CUSTOMER: Yes, please compare them.
+AGENT: I'll do that. It'll take me a minute to pull up the comparison. Do you mind if I put you on a brief hold?
+CUSTOMER: No, that's fine.
+AGENT: Thank you. Okay, so I've looked at this. A joint life first death policy for three hundred thousand over twenty years would come in at approximately fifty four to sixty pounds a month. Two separate policies, three hundred thousand each, would come to approximately seventy eight to ninety five pounds a month total. The joint policy is cheaper but remember: it pays once, and if you both made a claim at the same time, only one payout occurs.
+CUSTOMER: So two separate policies doubles our protection?
+AGENT: Exactly. Each policy is completely independent. Given you have two young children and a mortgage, I personally think two separate policies are worth the extra cost, but you should discuss it with your husband. There's no rush to decide today.
+CUSTOMER: I appreciate that. I'll talk to him tonight.
+AGENT: Perfect. The main things to discuss are the sum assured, the term, and whether you go joint or separate. What I'll do is send you a summary email with both scenarios, the key terms, and what the underwriting process looks like. That way you and your husband can review it together before committing to anything.
+CUSTOMER: That would be really helpful. Thank you Emma.
+AGENT: Of course. One last thing, just to summarise what I'll be sending you. Option one, decreasing term, one hundred and sixty thousand over twelve years, around eighteen to twenty two pounds. Option two, level term, three hundred thousand over twenty years, around forty to forty eight pounds. And the comparison with a joint policy. The email will also explain the fourteen day cooling off period, the underwriting process, and what documents you'll need. Does that all sound right?
+CUSTOMER: Yes, that covers everything we discussed.
+AGENT: Wonderful. And just for the record, your contact email is the one on the form?
+CUSTOMER: Yes, that's the right one.
+AGENT: Perfect. Thank you so much for your time this morning. I've really enjoyed talking through this with you. If you have any questions after reading the email, feel free to call us back and ask for me, Emma, or any of the team. Have a wonderful rest of your day.
+CUSTOMER: Thank you Emma, you too. Goodbye.
+AGENT: Goodbye.
