@@ -1,0 +1,19 @@
+AGENT: Hi, this is Priya Sharma from Insurvas Insurance. This call may be recorded. Is that okay?
+CUSTOMER: Yes.
+AGENT: I'm following up on your life insurance enquiry. Can I ask a few quick questions?
+CUSTOMER: Sure.
+AGENT: How old are you?
+CUSTOMER: I'm fifty-three.
+AGENT: Great, and are you in good health?
+CUSTOMER: I'm alright. I take tablets for cholesterol.
+AGENT: Okay. Based on your age, a level term policy covering you to sixty-five or seventy would make sense. Something like a hundred and fifty to two hundred thousand pounds. Premiums at fifty-three for a term of fifteen years can range quite a bit — probably sixty to ninety pounds a month depending on your full health picture.
+CUSTOMER: Right. Is that for any amount of cover?
+AGENT: That's a rough estimate for the kind of cover I mentioned. The underwriters will confirm based on your full application.
+CUSTOMER: And once the policy is in place, can I cancel it?
+AGENT: Yes, there's a fourteen day cooling off period when it first starts. And you can cancel anytime by stopping the direct debit.
+CUSTOMER: Okay. I'm not sure it's the right time for me.
+AGENT: That's completely fine. There's no pressure. I'd suggest I email you some information and you can look at it in your own time.
+CUSTOMER: Yeah, do that.
+AGENT: I'll send that over today. Is there anything else before we finish?
+CUSTOMER: No, that's all.
+AGENT: Okay. Speak soon.

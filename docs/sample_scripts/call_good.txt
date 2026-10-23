@@ -1,4 +1,4 @@
-AGENT: Hello, this is Sarah Mitchell from Clearview Life Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that okay?
+AGENT: Hello, this is Sarah Mitchell from Insurvas Insurance. Just to let you know, this call may be recorded for training and quality purposes. Is that okay?
 CUSTOMER: Sure, that's fine.
 AGENT: Wonderful. I'm calling today because you recently submitted an enquiry on our website about life insurance cover. I'd love to help you find the right policy. Do you have a few minutes?
 CUSTOMER: Yes, go ahead.

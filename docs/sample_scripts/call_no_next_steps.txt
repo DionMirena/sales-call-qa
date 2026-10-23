@@ -1,0 +1,23 @@
+AGENT: Hello, this is Sarah Mitchell from Insurvas Insurance. This call may be recorded for training and quality purposes. Is that okay?
+CUSTOMER: Yes, that's fine.
+AGENT: Great. I'm calling about your recent enquiry regarding life insurance. Is now convenient?
+CUSTOMER: Yes, go ahead.
+AGENT: Lovely. Let me ask a few questions so I can help properly. How old are you?
+CUSTOMER: Thirty-seven.
+AGENT: And any health conditions to be aware of?
+CUSTOMER: I'm a type two diabetic, diagnosed three years ago. It's diet-controlled.
+AGENT: Thank you for being upfront about that. That will be noted during underwriting. Do you have existing life cover?
+CUSTOMER: I have a policy that expires next year — about seventy-five thousand pounds.
+AGENT: And family dependants?
+CUSTOMER: My husband and a four year old.
+AGENT: Budget per month?
+CUSTOMER: I was thinking forty to sixty pounds.
+AGENT: Understood. With managed diabetes, cover is absolutely available but underwriting will want more detail and the premium may be slightly higher than for someone without that history. A level term at two hundred and fifty thousand pounds over twenty-five years might come in around forty-five to sixty-five pounds, depending on underwriting. I'd say expect the higher end of your budget.
+CUSTOMER: Okay. That's honest, I appreciate it.
+AGENT: Also, once the policy is issued, you have a fourteen day cooling off period to cancel and receive a full refund.
+CUSTOMER: Good to know. So what do I do now?
+AGENT: I'll pass your details to our underwriting team and they'll be in touch.
+CUSTOMER: Okay. Should I expect a call or email?
+AGENT: Either or both, depending. They'll be in touch within a few days.
+CUSTOMER: Alright. Thanks, Sarah.
+AGENT: Thank you. Bye.

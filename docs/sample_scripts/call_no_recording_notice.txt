@@ -1,0 +1,21 @@
+AGENT: Good afternoon, this is Priya Sharma from Insurvas Insurance. Is this Mr. Davidson?
+CUSTOMER: Yes, speaking.
+AGENT: Great. I'm calling because you submitted an enquiry about life insurance last week and I wanted to follow up. Is now a good time?
+CUSTOMER: Yes, that's fine.
+AGENT: Brilliant. To point you toward the right product, can I ask a few questions? Firstly, how old are you?
+CUSTOMER: I'm fifty-one.
+AGENT: And are you generally in good health? Anything significant to mention?
+CUSTOMER: I had a minor heart scare about four years ago, but I've been clear since and I'm on a low-dose aspirin.
+AGENT: Thank you for sharing that. Do you currently have any life insurance in place?
+CUSTOMER: No, I had a policy but it expired last year and I didn't renew it.
+AGENT: And do you have a partner or children who depend on your income?
+CUSTOMER: My wife and we have a son at university.
+AGENT: Understood. What kind of monthly budget are you working with?
+CUSTOMER: I'd say fifty to eighty pounds.
+AGENT: Based on your age and health history, a level term policy would probably work well. For three hundred thousand pounds over fifteen years, you might expect to pay around sixty to seventy-five pounds a month — though that could be affected by the cardiac history, so underwriting will confirm the exact rate.
+CUSTOMER: Okay. I'd want to know the exact figure before committing.
+AGENT: Absolutely, that's sensible. You'd only commit once you've seen the confirmed premium. Also, after the policy is issued you'd have a fourteen day cooling off period to change your mind and get a full refund.
+CUSTOMER: Okay, good to know.
+AGENT: So the next steps are: I'll email you a summary and illustration, and the underwriting team will follow up within two working days with a full quote based on your health details.
+CUSTOMER: That sounds fine. Thank you, Priya.
+AGENT: Thank you for your time. Have a good afternoon.

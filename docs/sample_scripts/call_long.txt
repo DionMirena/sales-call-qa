@@ -1,6 +1,6 @@
-AGENT: Good morning, this is Emma from Horizon Life Insurance. Just to let you know, this call is being recorded for quality and training purposes. Is that okay with you?
+AGENT: Good morning, this is Emma from Insurvas Insurance. Just to let you know, this call is being recorded for quality and training purposes. Is that okay with you?
 CUSTOMER: Yes, that's fine.
-AGENT: Wonderful. Thank you for your time this morning. I'm calling because you recently filled out a request for a life insurance quote on our website. My name is Emma, and I work with our personal protection team here at Horizon. Before we start, do you have about fifteen to twenty minutes? I want to make sure we find the right fit for you rather than just a quick sale.
+AGENT: Wonderful. Thank you for your time this morning. I'm calling because you recently filled out a request for a life insurance quote on our website. My name is Emma, and I work with our personal protection team here at Insurvas. Before we start, do you have about fifteen to twenty minutes? I want to make sure we find the right fit for you rather than just a quick sale.
 CUSTOMER: Yes, I've set some time aside. I've been meaning to sort out cover for a while now.
 AGENT: That's great to hear. A lot of people put it off, so you're ahead of the curve. Let me start by asking a few questions so I really understand your situation. First, could you tell me your age?
 CUSTOMER: I'm forty four.

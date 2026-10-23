@@ -1,0 +1,25 @@
+AGENT: Hello, this is Sarah Mitchell calling from Insurvas Insurance. Before we get started, I want to let you know that this call may be recorded for training and quality purposes. Is that okay with you?
+CUSTOMER: Yes, absolutely fine.
+AGENT: Brilliant. Thank you. I'm calling today because you recently requested information about life insurance cover through our website, and I wanted to follow up personally. Do you have about ten minutes to chat?
+CUSTOMER: Yes I do.
+AGENT: Wonderful. I'd like to start by understanding your situation so I can make sure I'm giving you the most relevant information. Could I ask how old you are?
+CUSTOMER: I'm forty-six.
+AGENT: And how would you describe your general health? Any major health conditions or anything I should be aware of — things like heart disease, diabetes, cancer history?
+CUSTOMER: No, I'm fit and healthy. I run a few times a week. Touch wood nothing major.
+AGENT: That's great to hear. Do you currently have any life insurance in place — either privately or through an employer?
+CUSTOMER: I do have some through work, I think it's three times my salary. So about a hundred and fifty thousand.
+AGENT: That's a reasonable employer benefit, though of course it wouldn't continue if you changed roles. And do you have dependants — a partner, children — who rely on your income?
+CUSTOMER: Yes, my wife works part time and we have a fifteen year old son.
+AGENT: And do you have a mortgage or any significant financial commitments?
+CUSTOMER: Yes, we have about two hundred thousand left on the mortgage.
+AGENT: Really helpful context, thank you. And in terms of monthly premium, is there a rough budget in mind, or would you prefer I outline a few options?
+CUSTOMER: A rough budget — I'd say up to seventy pounds a month, ideally less.
+AGENT: Perfect. Based on everything you've shared, I'd suggest a level term policy for around three hundred and fifty thousand pounds covering a fifteen year term — that sees your son through to adulthood and covers the mortgage. For a healthy non-smoking forty-six year old, that would typically come in around forty to fifty-five pounds a month. That said, the final premium is confirmed by underwriting, so that's an estimate rather than a guarantee.
+CUSTOMER: What does the underwriting involve?
+AGENT: Mostly a health questionnaire — they'll ask about your lifestyle, family history, that sort of thing. Given your health profile it should be fairly smooth. The key thing is to answer fully and accurately.
+CUSTOMER: And what if I decide it's not right for me after all?
+AGENT: Once the policy is in force, you have a fourteen day cooling off period. Cancel within that window and you receive a full refund, no questions asked.
+CUSTOMER: Perfect. What's the next step?
+AGENT: I'll send you a detailed summary email within the hour — it includes a full quote illustration, a breakdown of the product features, and a secure link to begin the application at your own pace. The underwriting team will then follow up within two working days. There's no obligation at any stage.
+CUSTOMER: That sounds excellent, Sarah. I'm very happy with how you've explained everything.
+AGENT: That's lovely to hear. I'll get that email sent right away. Thank you so much for your time, and I hope the rest of your day goes well.

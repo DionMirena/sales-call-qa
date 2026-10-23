@@ -1,0 +1,23 @@
+AGENT: Good afternoon, this is James O'Brien from Insurvas Insurance. This call may be recorded for training and quality purposes. Is that alright?
+CUSTOMER: Yes, go ahead.
+AGENT: Thank you. I'm following up on your life insurance enquiry. Is now a good time to talk?
+CUSTOMER: Yes, I have about fifteen minutes.
+AGENT: Perfect. Can I start with your age and a brief health overview?
+CUSTOMER: I'm thirty-nine. Healthy — no major issues.
+AGENT: Excellent. Do you have any existing life insurance?
+CUSTOMER: No, nothing at all.
+AGENT: And dependants?
+CUSTOMER: My partner and an eighteen month old daughter.
+AGENT: And what kind of monthly budget are you comfortable with?
+CUSTOMER: Around thirty to fifty pounds.
+AGENT: Great. Given your age and health, a level term policy for two hundred and fifty thousand pounds over a twenty-five year term would bring your daughter through to her mid-twenties. That would likely cost around twenty to thirty-five pounds a month — though underwriting confirms the final figure.
+CUSTOMER: That sounds good. I'd want to think it over though.
+AGENT: Of course, there's no rush. Take the time you need. Would it help if I emailed you a summary and illustration to review?
+CUSTOMER: Yes, that would be useful.
+AGENT: I'll do that now. Once you're ready to proceed, you simply click the link in the email to start the application. The underwriting team follows up within two working days with any additional questions.
+CUSTOMER: And if I start the application and then change my mind — am I committed?
+AGENT: You can withdraw from the application at any point before signing, and even after signing you'd have a period to reconsider. But once the policy is active, it does renew monthly so you'd just need to cancel the direct debit.
+CUSTOMER: Okay, that makes sense.
+AGENT: Great. I'll send that email over shortly. Anything else you'd like to know before we finish?
+CUSTOMER: No, I think that covers it. Thanks James.
+AGENT: Thank you for your time. Speak soon.

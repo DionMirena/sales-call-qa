@@ -44,6 +44,57 @@ CALLS = [
         "script": "call_long.txt",
         "description": "Long (~15 min) compliant call with full needs discovery",
     },
+    # ---- 10 new varied calls ----
+    {
+        "name": "compliant_full",
+        "script": "call_compliant_full.txt",
+        "description": "Emma Clarke — full discovery, all criteria met — pass",
+    },
+    {
+        "name": "objection_handling",
+        "script": "call_objection_handling.txt",
+        "description": "James O'Brien — sceptical customer, objections handled — pass",
+    },
+    {
+        "name": "near_perfect",
+        "script": "call_near_perfect.txt",
+        "description": "Sarah Mitchell — near-perfect call, detailed discovery — pass",
+    },
+    {
+        "name": "no_recording_notice",
+        "script": "call_no_recording_notice.txt",
+        "description": "Priya Sharma — missing call-recording disclosure — auto-fail",
+    },
+    {
+        "name": "guaranteed_approval_2",
+        "script": "call_guaranteed_approval_2.txt",
+        "description": "Daniel Hughes — guaranteed-approval claims — auto-fail",
+    },
+    {
+        "name": "pressure_subtle",
+        "script": "call_pressure_subtle.txt",
+        "description": "Emma Clarke — subtle 'enhanced rate this week' pressure — auto-fail",
+    },
+    {
+        "name": "no_cooling_off",
+        "script": "call_no_cooling_off.txt",
+        "description": "James O'Brien — never explicitly states 14-day cooling-off period — fail",
+    },
+    {
+        "name": "no_next_steps",
+        "script": "call_no_next_steps.txt",
+        "description": "Sarah Mitchell — vague handoff, no clear next steps — fail",
+    },
+    {
+        "name": "incomplete_discovery",
+        "script": "call_incomplete_discovery.txt",
+        "description": "Priya Sharma — skips dependants, existing cover, budget — fail",
+    },
+    {
+        "name": "thorough_discovery",
+        "script": "call_thorough_discovery.txt",
+        "description": "Daniel Hughes — exceptionally thorough needs discovery — pass",
+    },
 ]
 
 
@@ -140,7 +191,11 @@ async def main() -> None:
 
     print(f"Output directory: {SAMPLES_DIR.resolve()}\n")
 
-    for call in CALLS:
+    # Optional: only regenerate the calls named on the command line, e.g. `good_call long_call`.
+    wanted = set(sys.argv[1:])
+    calls = [c for c in CALLS if not wanted or c["name"] in wanted]
+
+    for call in calls:
         print(f"[{call['name']}] {call['description']}")
         out = await generate_call(call, tmp_dir)
         duration = probe_duration(out)
@@ -150,7 +205,7 @@ async def main() -> None:
     print("\n=== Generated samples ===")
     print(f"{'File':<30} {'Size':>8} {'Duration':>10}  Description")
     print("-" * 80)
-    for call in CALLS:
+    for call in calls:
         p = SAMPLES_DIR / f"{call['name']}.mp3"
         if p.exists():
             size = f"{p.stat().st_size // 1024} KB"

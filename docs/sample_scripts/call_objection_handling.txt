@@ -1,0 +1,23 @@
+AGENT: Good morning, this is James O'Brien from Insurvas Insurance. I should let you know this call may be recorded for training and quality purposes. Is that alright?
+CUSTOMER: Yes, go ahead.
+AGENT: Thank you. I'm calling because you recently enquired about life insurance on our website. I'd love to help. Is now a convenient time?
+CUSTOMER: It is, yes, though I'm a bit sceptical about these calls to be honest.
+AGENT: I completely understand. There's no pressure here at all — I just want to make sure I give you the right information. Can I ask a few quick questions so I can tailor what I share?
+CUSTOMER: Alright, go on then.
+AGENT: How old are you, and are there any health conditions I should be aware of?
+CUSTOMER: I'm thirty-five. I'm healthy, no issues.
+AGENT: Great. Do you have any existing life insurance at the moment?
+CUSTOMER: No, nothing. My partner keeps saying I should get something sorted.
+AGENT: And do you have children or other dependants?
+CUSTOMER: One child, she's three.
+AGENT: And what kind of monthly budget were you thinking?
+CUSTOMER: Honestly I haven't thought about it. Whatever's reasonable, I suppose.
+AGENT: That's fair. For a healthy thirty-five year old with a young child, a lot of people go for something in the range of two hundred to three hundred thousand pounds over a twenty to twenty-five year term. That kind of cover would usually come in around fifteen to twenty-five pounds a month. Does that kind of range sound workable?
+CUSTOMER: It does, but I've heard these policies can be really hard to claim on.
+AGENT: That's a really valid concern. The main thing to know is that term life pays out if you die during the policy term — it's quite straightforward. The key is disclosing everything accurately when you apply. Problems arise when people don't declare pre-existing conditions. Since you've said you're healthy, that should be very straightforward.
+CUSTOMER: And what if I want to cancel?
+AGENT: Once the policy is issued, you have a fourteen day cooling off period where you can cancel for a full refund, no questions asked. After that, you can cancel at any time — you'd just stop paying and the cover would end.
+CUSTOMER: Okay, that's fair enough. So what happens next?
+AGENT: I'll email you a summary with a quote illustration and a link to begin the application. The underwriting team follows up within two working days with the health questionnaire. No obligation at any stage.
+CUSTOMER: Right, okay. That sounds manageable. Let's do that.
+AGENT: Brilliant. I'll get that sent over now. Thank you for giving me the chance to explain everything. Have a good day.
