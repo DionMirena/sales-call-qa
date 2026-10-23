@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "template_name": "Standard Insurance QA",
+  "description": "Labelled evaluation set for the Standard Insurance QA template. Use `php artisan qa:eval` to score.",
+  "cases": [
+    {
+      "id": "gs_001",
+      "description": "High-quality call: clear intro, full recording disclosure, structured discovery, accurate quote, cooling-off mentioned, clear close",
+      "segments": [
+        {
+          "speaker": 0, "start_ms": 1000, "end_ms": 8000,
+          "text": "Hello, this is Sarah Mitchell from Clearview Life Insurance. Just to let you know, this call may be recorded for training and quality purposes."
+        },
+        {
+          "speaker": 1, "start_ms": 8500, "end_ms": 10000,
+          "text": "Sure, that's fine."
+        },
+        {
+          "speaker": 0, "start_ms": 10500, "end_ms": 18000,
+          "text": "Wonderful. I'm calling today because you recently submitted an enquiry about life insurance cover. Could you tell me your age and whether you have any dependants?"
+        },
+        {
+          "speaker": 1, "start_ms": 18500, "end_ms": 24000,
+          "text": "I'm thirty-eight. I have two kids, seven and nine."
+        },
+        {
+          "speaker": 0, "start_ms": 24500, "end_ms": 34000,
+          "text": "Do you have any existing life insurance cover? And what monthly premium are you comfortable with?"
+        },
+        {
+          "speaker": 1, "start_ms": 34500, "end_ms": 42000,
+          "text": "No existing cover. Somewhere between thirty and fifty pounds a month."
+        },
+        {
+          "speaker": 0, "start_ms": 42500, "end_ms": 68000,
+          "text": "Based on what you've told me, I'd suggest a level term policy for five hundred thousand pounds of cover over a twenty-five year term, at around thirty-two to thirty-six pounds a month. The final premium is subject to underwriting and is not guaranteed until the policy is issued."
+        },
+        {
+          "speaker": 0, "start_ms": 68500, "end_ms": 86000,
+          "text": "Once the policy is issued, you have a fourteen-day cooling-off period where you can cancel and receive a full refund. There are no penalties for cancelling within that window."
+        },
+        {
+          "speaker": 1, "start_ms": 86500, "end_ms": 90000,
+          "text": "Good to know."
+        },
+        {
+          "speaker": 0, "start_ms": 90500, "end_ms": 108000,
+          "text": "The next step is I'll send you a summary email with all the details and a link to start the application. The underwriting team will follow up within two working days. Is there anything else you'd like to know today?"
+        },
+        {
+          "speaker": 1, "start_ms": 108500, "end_ms": 112000,
+          "text": "No, that all sounds great. Thank you Sarah."
+        },
+        {
+          "speaker": 0, "start_ms": 112500, "end_ms": 118000,
+          "text": "Thank you for your time. Have a lovely day."
+        }
+      ],
+      "expected": [
+        {
+          "criterion_name": "Recording Disclosure",
+          "result": "pass",
+          "notes": "Agent states recording at S1: 'this call may be recorded for training and quality purposes'"
+        },
+        {
+          "criterion_name": "Greeting and Introduction",
+          "result": "pass",
+          "notes": "Agent gives full name and company at the start of S1"
+        },
+        {
+          "criterion_name": "Discovery Questions",
+          "result": "pass",
+          "notes": "Agent asks age, dependants, existing cover, budget across S3, S5"
+        },
+        {
+          "criterion_name": "Premium Quote Accuracy",
+          "result": "pass",
+          "notes": "Quote given as range with 'not guaranteed' caveat in S7"
+        },
+        {
+          "criterion_name": "Cooling-Off Period",
+          "result": "pass",
+          "notes": "14-day cooling-off mentioned explicitly at S8"
+        },
+        {
+          "criterion_name": "Clear Close",
+          "result": "pass",
+          "notes": "Next steps explained in S10: summary email and underwriting timeline"
+        }
+      ]
+    },
+    {
+      "id": "gs_002",
+      "description": "Weak call: skips recording disclosure, jumps straight to pitch, no budget discovery, no cooling-off",
+      "segments": [
+        {
+          "speaker": 0, "start_ms": 500, "end_ms": 5000,
+          "text": "Hi is this John? I'm calling from an insurance company. Are you interested in life insurance?"
+        },
+        {
+          "speaker": 1, "start_ms": 5500, "end_ms": 7000,
+          "text": "Maybe, what are you offering?"
+        },
+        {
+          "speaker": 0, "start_ms": 7500, "end_ms": 18000,
+          "text": "We have a really great policy, five hundred thousand pounds cover for only forty pounds a month. You just need to fill out a form and we can get you sorted today."
+        },
+        {
+          "speaker": 1, "start_ms": 18500, "end_ms": 22000,
+          "text": "Sounds okay I guess. What happens if I want to cancel?"
+        },
+        {
+          "speaker": 0, "start_ms": 22500, "end_ms": 26000,
+          "text": "You can cancel anytime. Shall I send you the form?"
+        },
+        {
+          "speaker": 1, "start_ms": 26500, "end_ms": 28000,
+          "text": "Sure."
+        }
+      ],
+      "expected": [
+        {
+          "criterion_name": "Recording Disclosure",
+          "result": "fail",
+          "notes": "No mention of call recording anywhere in the transcript"
+        },
+        {
+          "criterion_name": "Greeting and Introduction",
+          "result": "fail",
+          "notes": "Agent only says 'I'm calling from an insurance company', no name given"
+        },
+        {
+          "criterion_name": "Discovery Questions",
+          "result": "fail",
+          "notes": "Agent skips age, dependants, existing cover and budget — goes straight to pitch"
+        },
+        {
+          "criterion_name": "Premium Quote Accuracy",
+          "result": "fail",
+          "notes": "Quote given as single fixed figure, no 'subject to underwriting' caveat"
+        },
+        {
+          "criterion_name": "Cooling-Off Period",
+          "result": "fail",
+          "notes": "Agent only says 'cancel anytime' — 14-day statutory period never mentioned"
+        },
+        {
+          "criterion_name": "Clear Close",
+          "result": "fail",
+          "notes": "Close is 'shall I send you the form' with no explanation of next steps"
+        }
+      ]
+    }
+  ]
+}
