@@ -8,6 +8,7 @@ use App\Models\Call;
 use App\Models\Template;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -80,9 +81,26 @@ class CallController extends Controller
     public function show(Call $call): View
     {
         $this->authorize('view', $call);
-        $call->load(['agent', 'template', 'uploader', 'criterionResults']);
+        $call->load(['agent', 'template', 'uploader', 'criterionResults', 'segments']);
 
-        return view('calls.show', compact('call'));
+        $segmentsJson = $call->segments->map(fn ($s) => [
+            'code'     => $s->code,
+            'speaker'  => $s->speaker,
+            'start_ms' => $s->start_ms,
+            'text'     => $s->text,
+        ])->values()->all();
+
+        return view('calls.show', compact('call', 'segmentsJson'));
+    }
+
+    public function swapSpeaker(Call $call): JsonResponse
+    {
+        $this->authorize('view', $call);
+        abort_unless($call->status === 'done', 422, 'Can only swap speakers on completed calls.');
+
+        $call->update(['agent_speaker' => 1 - ($call->agent_speaker ?? 0)]);
+
+        return response()->json(['agent_speaker' => $call->agent_speaker]);
     }
 
     public function audio(Call $call): Response
@@ -99,7 +117,7 @@ class CallController extends Controller
         ]);
     }
 
-    public function status(Call $call): \Illuminate\Http\JsonResponse
+    public function status(Call $call): JsonResponse
     {
         $this->authorize('view', $call);
 

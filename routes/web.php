@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('calls/{call}/audio', [CallController::class, 'audio'])->name('calls.audio');
     Route::get('calls/{call}/status', [CallController::class, 'status'])->name('calls.status');
     Route::post('calls/{call}/retry', [CallController::class, 'retry'])->name('calls.retry');
+    Route::post('calls/{call}/swap-speaker', [CallController::class, 'swapSpeaker'])->name('calls.swap_speaker');
 });
 
 require __DIR__.'/auth.php';
