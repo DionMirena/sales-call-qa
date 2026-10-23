@@ -40,12 +40,17 @@ class CriterionResult extends Model
 
     public function overrides(): HasMany
     {
-        return $this->hasMany(Override::class)->orderBy('created_at');
+        return $this->hasMany(Override::class)->orderBy('id');
     }
 
     public function latestOverride(): ?Override
     {
-        return $this->overrides()->latest('created_at')->first();
+        if ($this->relationLoaded('overrides')) {
+            return $this->overrides->last(); // already ordered ascending by id
+        }
+
+        // reorder() clears the relationship's ASC scope before applying DESC
+        return $this->overrides()->reorder()->latest('id')->first();
     }
 
     public function effectiveResult(): string
