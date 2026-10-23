@@ -34,6 +34,10 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-        return view('dashboard', compact('todayDone', 'todayAvgScore', 'needsReviewCount', 'needsReviewCalls'));
+        $stats       = StatsController::buildStats();
+        $outcomesData = $stats['outcomesData'];
+        $trendData    = $stats['trendData'];
+
+        return view('dashboard', compact('todayDone', 'todayAvgScore', 'needsReviewCount', 'needsReviewCalls', 'outcomesData', 'trendData'));
     }
 }
