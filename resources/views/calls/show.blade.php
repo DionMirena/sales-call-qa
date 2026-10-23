@@ -13,18 +13,35 @@
                     @endif
                 </p>
             </div>
-            @if($call->status === 'done')
-                @php
-                    $badgeClass = match($call->outcome) {
-                        'pass'      => 'bg-green-100 text-green-800',
-                        'auto_fail' => 'bg-red-100 text-red-800',
-                        default     => 'bg-yellow-100 text-yellow-800',
-                    };
-                @endphp
-                <span class="shrink-0 px-3 py-1 rounded-full font-bold text-sm {{ $badgeClass }}">
-                    {{ strtoupper(str_replace('_', '-', $call->outcome)) }}
-                </span>
-            @endif
+            <div class="shrink-0 flex items-center gap-2">
+                @if($call->status === 'done')
+                    @php
+                        $badgeClass = match($call->outcome) {
+                            'pass'      => 'bg-green-100 text-green-800',
+                            'auto_fail' => 'bg-red-100 text-red-800',
+                            default     => 'bg-yellow-100 text-yellow-800',
+                        };
+                    @endphp
+                    <span class="px-3 py-1 rounded-full font-bold text-sm {{ $badgeClass }}">
+                        {{ strtoupper(str_replace('_', '-', $call->outcome)) }}
+                    </span>
+                    <form method="POST" action="{{ route('calls.rescore', $call) }}"
+                          onsubmit="return confirm('Re-score this call? Existing scores and overrides will be deleted.')">
+                        @csrf
+                        <button class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded hover:bg-gray-200">
+                            Re-score
+                        </button>
+                    </form>
+                @endif
+                <form method="POST" action="{{ route('calls.destroy', $call) }}"
+                      onsubmit="return confirm('Delete this call and all its data?')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="px-3 py-1 bg-red-50 text-red-600 text-sm rounded hover:bg-red-100">
+                        Delete
+                    </button>
+                </form>
+            </div>
         </div>
     </x-slot>
 

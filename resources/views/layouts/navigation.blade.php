@@ -15,6 +15,15 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('calls.index')" :active="request()->routeIs('calls.*')">
+                        {{ __('Calls') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('agents.index')" :active="request()->routeIs('agents.*')">
+                        {{ __('Agents') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('templates.index')" :active="request()->routeIs('templates.*')">
+                        {{ __('Templates') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +78,15 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('calls.index')" :active="request()->routeIs('calls.*')">
+                {{ __('Calls') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('agents.index')" :active="request()->routeIs('agents.*')">
+                {{ __('Agents') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('templates.index')" :active="request()->routeIs('templates.*')">
+                {{ __('Templates') }}
             </x-responsive-nav-link>
         </div>
 
