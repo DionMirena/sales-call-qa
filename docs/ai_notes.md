@@ -15,4 +15,12 @@ This file records every mistake made by the AI assistant during this project: wr
 
 ---
 
+## Phase 1 – Skeleton
+
+### Mistake 2: Assumed Node.js 18 would work with Vite 6 / Laravel 13
+- **What happened:** The project was installed successfully, but `npm run build` failed with `SyntaxError: The requested module 'node:util' does not provide an export named 'styleText'`. Node.js 18.8.0 was installed on the machine; `styleText` was added to Node.js `util` in v20.12.0.
+- **How it was caught:** `npm run build` error during Phase 1 after noticing 7 test failures all caused by a missing Vite manifest.
+- **Fix:** Installed Node.js 24 LTS via winget. Also added `$this->withoutVite()` to `tests/TestCase.php` so tests never require a build artefact, making the test suite faster and independent of front-end compilation.
+- **Lesson:** Check Node.js version compatibility with the framework's front-end toolchain. Laravel 13 requires Node 20+. Always add `withoutVite()` to base TestCase on any Breeze/Vite project.
+
 <!-- Add new entries below as they occur. -->
