@@ -1,0 +1,28 @@
+# Laravel
+/vendor/
+/node_modules/
+/.env
+/.env.backup
+/.phpunit.result.cache
+/storage/*.key
+/public/hot
+/public/storage
+/bootstrap/cache/*.php
+
+# Audio / transcripts (privacy + size)
+/samples/
+/storage/app/audio/
+/storage/app/private/
+
+# Build artefacts
+/public/build/
+
+# IDE
+/.idea/
+/.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
