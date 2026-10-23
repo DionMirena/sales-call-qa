@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "transaction_key": "test",
+    "request_id": "test-uuid",
+    "sha256": "abc123",
+    "created": "2024-01-01T00:00:00.000Z",
+    "duration": 163.0,
+    "channels": 1,
+    "models": ["nova-2"]
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Hello this is Sarah Mitchell from Clearview Life Insurance.",
+            "confidence": 0.99,
+            "words": []
+          }
+        ]
+      }
+    ],
+    "utterances": [
+      {
+        "start": 1.0,
+        "end": 8.0,
+        "confidence": 0.99,
+        "channel": 0,
+        "transcript": "Hello, this is Sarah Mitchell from Clearview Life Insurance. Just to let you know, this call may be recorded.",
+        "words": [],
+        "speaker": 0,
+        "id": "utt-1"
+      },
+      {
+        "start": 8.5,
+        "end": 10.0,
+        "confidence": 0.98,
+        "channel": 0,
+        "transcript": "Sure, that's fine.",
+        "words": [],
+        "speaker": 1,
+        "id": "utt-2"
+      },
+      {
+        "start": 10.5,
+        "end": 18.0,
+        "confidence": 0.97,
+        "channel": 0,
+        "transcript": "Could you tell me your age?",
+        "words": [],
+        "speaker": 0,
+        "id": "utt-3"
+      }
+    ]
+  }
+}
