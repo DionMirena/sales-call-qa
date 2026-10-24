@@ -114,4 +114,22 @@ This file records every mistake made by the AI assistant during this project: wr
 - **Fix:** Corrected the guide, then built the feature with a test.
 - **Lesson:** Verify documentation against the code; plans and reality drift apart.
 
+### Mistake 18: The template stated the wrong cooling-off period
+- **What happened:** The cancellation criterion and 13 call scripts said life insurance has a 14-day cooling-off period. Under FCA ICOBS 7.1, life insurance (a pure protection contract) has 30 days; 14 days applies to other insurance.
+- **How it was caught:** A full review of the project before submission; the rule was checked against the FCA Handbook.
+- **Fix:** The criterion now describes the cancellation period without a hard-coded number (30 days in the UK, the free-look period in the US). The 13 scripts say thirty days; their audio was regenerated and the calls re-processed. Scores were unchanged.
+- **Lesson:** Domain facts in sample data need checking against the source, not just code.
+
+### Mistake 19: The golden set did not match the template, so qa:eval measured nothing
+- **What happened:** `tests/golden/golden_set.json` used a template name and criterion names ("Recording Disclosure", "Clear Close"…) that did not exist in the seeded template. `qa:eval` reported "Template not found", and with the right template name it scored 0/12 because every criterion was "not scored". Its tests passed only because they created their own matching template.
+- **How it was caught:** Running `qa:eval` on the real app during the review.
+- **Fix:** Rebuilt the golden set from five real call transcripts with 55 hand-written labels, and added a test that every labelled criterion exists in the seeded template. Result: 52/55 (95%).
+- **Lesson:** Tests that build their own fixtures can hide a mismatch with the real data; test against the real seed too.
+
+### Mistake 20: A fresh clone could not be installed
+- **What happened:** The `bootstrap/cache` folder was never committed, so `composer install` on a fresh clone failed. The README also said the SQLite file is created automatically, which is only true for brand-new projects.
+- **How it was caught:** Cloning the GitHub repository into an empty folder and following the README step by step.
+- **Fix:** Committed `bootstrap/cache/.gitignore` (as Laravel's skeleton does) and added the SQLite file step to the README.
+- **Lesson:** Test the setup from a clean clone, exactly as a reviewer would.
+
 <!-- Add new entries below as they occur. -->
