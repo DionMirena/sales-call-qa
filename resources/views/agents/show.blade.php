@@ -140,6 +140,7 @@
                     <table class="min-w-full divide-y divide-slate-50 text-sm">
                         <thead class="bg-slate-50">
                             <tr>
+                                <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Call</th>
                                 <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Template</th>
                                 <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Score</th>
                                 <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Outcome</th>
@@ -150,6 +151,10 @@
                         <tbody class="divide-y divide-slate-50">
                             @foreach ($recentCalls as $call)
                                 <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-4 py-2.5 whitespace-nowrap">
+                                        <a href="{{ route('calls.show', $call) }}" class="font-bold text-indigo-600 hover:text-indigo-800">#{{ $call->id }}</a>
+                                        <span class="text-xs text-slate-400 ml-1">{{ $call->original_filename }}</span>
+                                    </td>
                                     <td class="px-4 py-2.5 text-slate-700 truncate max-w-[200px]">{{ $call->template->name }}</td>
                                     <td class="px-4 py-2.5">
                                         @if ($call->score_percent !== null)

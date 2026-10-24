@@ -42,6 +42,21 @@ class CallListTest extends TestCase
         $this->get(route('calls.index'))->assertRedirect('/login');
     }
 
+    public function test_calls_are_numbered_in_the_list_and_on_the_results_page(): void
+    {
+        $manager = $this->makeManager();
+        $call    = $this->makeCall($manager, ['original_filename' => 'good_call.mp3']);
+
+        $this->actingAs($manager)->get(route('calls.index'))
+            ->assertOk()
+            ->assertSee("#{$call->id}")
+            ->assertSee('good_call.mp3');
+
+        $this->actingAs($manager)->get(route('calls.show', $call))
+            ->assertOk()
+            ->assertSee("Call #{$call->id}");
+    }
+
     public function test_manager_sees_only_own_calls(): void
     {
         $manager  = $this->makeManager();

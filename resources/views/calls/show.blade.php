@@ -8,7 +8,9 @@
                 </svg>
             </a>
             <div class="min-w-0 flex-1">
-                <h1 class="text-sm font-semibold text-slate-800 truncate">{{ $call->original_filename }}</h1>
+                <h1 class="text-sm font-semibold text-slate-800 truncate">
+                    <span class="text-indigo-600">Call #{{ $call->id }}</span> · {{ $call->original_filename }}
+                </h1>
                 <div class="flex items-center gap-1.5 text-xs text-slate-400 mt-0.5">
                     <span class="font-medium text-slate-600">{{ $call->agent->name }}</span>
                     <span>·</span>

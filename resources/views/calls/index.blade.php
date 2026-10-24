@@ -166,6 +166,7 @@
                     <table class="min-w-full divide-y divide-slate-100 text-sm">
                         <thead class="bg-slate-50">
                             <tr>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Call</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Agent</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Template</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Score</th>
@@ -178,6 +179,10 @@
                         <tbody class="divide-y divide-slate-50">
                             @foreach ($calls as $call)
                                 <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <a href="{{ route('calls.show', $call) }}" class="font-bold text-indigo-600 hover:text-indigo-800">#{{ $call->id }}</a>
+                                        <p class="text-xs text-slate-400 max-w-[160px] truncate" title="{{ $call->original_filename }}">{{ $call->original_filename }}</p>
+                                    </td>
                                     <td class="px-4 py-3">
                                         <div class="flex items-center gap-2.5">
                                             <div class="w-7 h-7 bg-indigo-100 rounded-full flex items-center justify-center text-xs font-bold text-indigo-700 shrink-0">

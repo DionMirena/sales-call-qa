@@ -179,8 +179,10 @@
                                 {{ strtoupper(substr($call->agent->name, 0, 2)) }}
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-semibold text-slate-800 truncate">{{ $call->agent->name }}</p>
-                                <p class="text-xs text-slate-400 truncate">{{ $call->template->name }}</p>
+                                <p class="text-sm font-semibold text-slate-800 truncate">
+                                    <span class="text-indigo-600">#{{ $call->id }}</span> {{ $call->agent->name }}
+                                </p>
+                                <p class="text-xs text-slate-400 truncate">{{ $call->original_filename }} · {{ $call->template->name }}</p>
                             </div>
                             @if ($call->score_percent !== null)
                                 <div class="text-right shrink-0">
