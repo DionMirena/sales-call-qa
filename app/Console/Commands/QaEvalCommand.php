@@ -53,15 +53,27 @@ class QaEvalCommand extends Command
             $this->warn('Running in FAKE AI mode (QA_FAKE_AI=true). Accuracy results are not meaningful.');
         }
 
-        // Ensure an eval agent and user exist
-        $agent = Agent::firstOrCreate(['name' => '_eval'], ['team' => null]);
-        $user  = User::first();
+        $user = User::first();
 
         if (! $user) {
             $this->error('No users found in the database. Run database seeders first.');
             return self::FAILURE;
         }
 
+        // A temporary agent owns the temporary eval calls; it is removed again at the end.
+        $agent = Agent::firstOrCreate(['name' => '_eval'], ['team' => null]);
+
+        try {
+            return $this->evaluate($cases, $template, $agent, $user, $scoring);
+        } finally {
+            if ($agent->calls()->doesntExist()) {
+                $agent->delete();
+            }
+        }
+    }
+
+    private function evaluate(array $cases, Template $template, Agent $agent, User $user, ScoringService $scoring): int
+    {
         $allRows          = [];
         $totalRight       = 0;
         $totalItems       = 0;

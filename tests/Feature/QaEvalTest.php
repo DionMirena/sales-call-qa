@@ -86,6 +86,7 @@ class QaEvalTest extends TestCase
         $after = \App\Models\Call::count();
 
         $this->assertEquals($before, $after, 'qa:eval must clean up temp call records');
+        $this->assertFalse(Agent::where('name', '_eval')->exists(), 'qa:eval must remove its temporary agent');
     }
 
     public function test_eval_exit_code_reflects_accuracy(): void
