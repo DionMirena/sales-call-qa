@@ -311,10 +311,23 @@
                 </div>
 
                 {{-- Criteria list --}}
-                <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+                <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3"
+                     x-data="{ reviewOnly: false }">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Criteria</h3>
-                        <span class="text-xs text-slate-400">{{ $call->criterionResults->count() }} criteria</span>
+                        <div class="flex items-center gap-3">
+                            @php $needsReviewCount = $call->criterionResults->where('needs_review', true)->count(); @endphp
+                            @if($needsReviewCount > 0)
+                                <label class="flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer select-none">
+                                    <input type="checkbox" x-model="reviewOnly"
+                                           class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                                    <span>Needs review only
+                                        <span class="px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-full ml-0.5">{{ $needsReviewCount }}</span>
+                                    </span>
+                                </label>
+                            @endif
+                            <span class="text-xs text-slate-400">{{ $call->criterionResults->count() }} criteria</span>
+                        </div>
                     </div>
 
                     @forelse($call->criterionResults as $result)
@@ -326,7 +339,8 @@
                             $hasErrors = $errors->hasBag("cr_{$result->id}");
                         @endphp
 
-                        <div class="bg-white rounded-2xl border shadow-sm overflow-hidden
+                        <div x-show="!reviewOnly || {{ $result->needs_review ? 'true' : 'false' }}"
+                             class="bg-white rounded-2xl border shadow-sm overflow-hidden
                                     {{ $result->needs_review ? 'border-amber-300' : 'border-slate-100' }}">
 
                             {{-- Card header --}}
