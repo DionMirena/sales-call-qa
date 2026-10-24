@@ -114,21 +114,27 @@ Open [http://localhost:8000](http://localhost:8000) and log in (see **Demo login
 
 ---
 
-## Sample calls
+## Sample data
 
-Audio files are not included in the repository. To generate 14 sample MP3s (requires edge-tts and ffmpeg):
+No call recordings or QA criteria were provided. All 14 sample calls are synthetic:
+
+- Scripts written from scratch, covering good calls, specific compliance failures, and durations from 1 to 50 minutes
+- Audio generated with Microsoft edge-tts (UK voices), so the correct outcome for each call is known and can be measured with `php artisan qa:eval`
+- The sample criteria (`docs/example_criteria.md`) are based on common UK life-insurance compliance requirements (FCA ICOBS, cooling-off obligations); a QA manager can replace them in the template builder
+
+**Limitation:** synthetic audio is cleaner than real calls — no background noise, accents, or overlapping speech.
+
+### Regenerating sample audio
+
+Audio is not in the repository (too large, and privacy-sensitive in a real deployment). Requires edge-tts and ffmpeg:
 
 ```bash
-python scripts/make_sample_calls.py
+pip install edge-tts
+python scripts/make_sample_calls.py          # generates samples/ folder
+php artisan db:seed --class=SampleCallSeeder # loads into DB and queues processing
 ```
 
-Then load them into the database:
-
-```bash
-php artisan db:seed --class=SampleCallSeeder
-```
-
-The seeder creates DB records and dispatches processing jobs; the queue worker (above) must be running to transcribe and score them.
+The queue worker must be running to transcribe and score them.
 
 ---
 
