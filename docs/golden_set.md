@@ -8,11 +8,37 @@ criterion.
 
 `tests/golden/golden_set.json`
 
+## What is in it
+
+Five sample calls, using their **real Deepgram transcripts** (agent normalised to speaker 0), labelled by hand from each call's script. The labels are deliberately strict: they record what the criterion asks for, not what the scorer happens to output.
+
+| Case | Call | What it tests |
+|---|---|---|
+| gs_001 | `good_call.mp3` (#15) | US live transfer, fully compliant |
+| gs_002 | `no_disclosure.mp3` (#17) | US live transfer: no recording notice, first name only, no discovery, no free-look, vague close |
+| gs_003 | `no_recording_notice.mp3` (#4) | UK call, good except the missing recording notice |
+| gs_004 | `guaranteed_approval_2.mp3` (#5) | UK call: guaranteed-approval claims, almost no discovery |
+| gs_005 | `pressure_subtle.mp3` (#6) | UK call: complete discovery but subtle urgency |
+
+The 11 pass/fail and yes/no criteria are labelled for every case (55 labels). Tone (scale 1–5) and the premium extract are left out: tone is subjective, and the extract is informational.
+
+## Current result (rule-based scorer)
+
+`php artisan qa:eval` → **52/55 correct (95%)**, 2 false passes, 1 false fail:
+
+- gs_002, Agent Identification — expected **fail** (first name only), scored pass. The scorer accepts "This is James" as an introduction.
+- gs_004, Age and Health — expected **fail** (health never asked), scored pass. The agent says "regardless of your *health* history" while dismissing it; the scorer only sees the word.
+- gs_004, Cooling-off — expected **pass** ("a standard thirty day cancellation window"), scored fail. No refund is mentioned, which the scorer's pattern requires.
+
+These are kept as honest examples of the scorer's limits rather than tuned away; tuning a scorer to its own test set would make the number meaningless.
+
+A test (`QaEvalTest::test_golden_set_matches_the_seeded_template`) checks that every labelled criterion exists in the seeded template, so the set cannot silently drift from the template again.
+
 ## Schema
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "template_name": "<name of the QA template in the database>",
   "description": "<human-readable description of this set>",
   "cases": [
@@ -43,7 +69,7 @@ criterion.
 
 | Field | Required | Description |
 |---|---|---|
-| `version` | yes | Always `1` for now |
+| `version` | yes | `2` (real transcripts, labels for the current template) |
 | `template_name` | yes | Must match a template name in the live database |
 | `cases[].id` | yes | Unique within the file; used in output tables |
 | `cases[].segments[].speaker` | yes | `0` = agent, `1` = customer (same convention as calls) |
@@ -70,7 +96,7 @@ php artisan qa:eval
 php artisan qa:eval --golden=tests/golden/my_set.json
 
 # Override the template name
-php artisan qa:eval --template="Standard Insurance QA"
+php artisan qa:eval --template="Standard Life Insurance Sales Call"
 
 # Demo mode (fake AI — useful for testing the command itself)
 QA_FAKE_AI=true php artisan qa:eval

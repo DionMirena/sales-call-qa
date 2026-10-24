@@ -1,155 +1,1491 @@
 {
-  "version": 1,
-  "template_name": "Standard Insurance QA",
-  "description": "Labelled evaluation set for the Standard Insurance QA template. Use `php artisan qa:eval` to score.",
-  "cases": [
-    {
-      "id": "gs_001",
-      "description": "High-quality call: clear intro, full recording disclosure, structured discovery, accurate quote, cooling-off mentioned, clear close",
-      "segments": [
+    "version": 2,
+    "template_name": "Standard Life Insurance Sales Call",
+    "description": "Five sample calls with their real Deepgram transcripts, labelled by hand from each script. Agent is always speaker 0. Run `php artisan qa:eval`.",
+    "cases": [
         {
-          "speaker": 0, "start_ms": 1000, "end_ms": 8000,
-          "text": "Hello, this is Sarah Mitchell from Clearview Life Insurance. Just to let you know, this call may be recorded for training and quality purposes."
+            "id": "gs_001",
+            "description": "US live transfer, fully compliant 20-year term sale (Sarah Mitchell)",
+            "source": "samples/good_call.mp3",
+            "segments": [
+                {
+                    "speaker": 0,
+                    "start_ms": 160,
+                    "end_ms": 3860,
+                    "text": "Hi, Robert. Thanks for holding while my colleague transferred you over."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 4480,
+                    "end_ms": 8740,
+                    "text": "This is Sarah Mitchell, a licensed life insurance agent with Summit Life Agency."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 9600,
+                    "end_ms": 13860,
+                    "text": "Before we start, this call is recorded for quality and compliance purposes."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 14945,
+                    "end_ms": 16325,
+                    "text": "Is that okay with you?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 17185,
+                    "end_ms": 18405,
+                    "text": "Yeah. That's fine."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 19265,
+                    "end_ms": 19765,
+                    "text": "Great."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 20545,
+                    "end_ms": 26485,
+                    "text": "And just to confirm, you filled out a form online asking us to call you about life insurance. Is that right?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 27470,
+                    "end_ms": 28930,
+                    "text": "Yes. That was me."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 29470,
+                    "end_ms": 31570,
+                    "text": "I put my details in last night."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 32350,
+                    "end_ms": 32850,
+                    "text": "Perfect."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 33710,
+                    "end_ms": 39090,
+                    "text": "So I'm calling about your request for a life insurance quote, and I'd love to help you find the right fit."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 39765,
+                    "end_ms": 41305,
+                    "text": "Do you have about ten minutes?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 42325,
+                    "end_ms": 43625,
+                    "text": "Sure. Go ahead."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 44485,
+                    "end_ms": 45305,
+                    "text": "Thank you."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 45845,
+                    "end_ms": 47865,
+                    "text": "And which state are you in, Robert?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 48725,
+                    "end_ms": 50745,
+                    "text": "I want to make sure I'm licensed there."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 51780,
+                    "end_ms": 52280,
+                    "text": "Ohio."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 53540,
+                    "end_ms": 55400,
+                    "text": "Great. I'm licensed in Ohio."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 56260,
+                    "end_ms": 59640,
+                    "text": "To recommend the right policy, may I ask a few quick questions?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 60580,
+                    "end_ms": 61960,
+                    "text": "Could you tell me your age?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 62820,
+                    "end_ms": 64040,
+                    "text": "I'm 42."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 64935,
+                    "end_ms": 65675,
+                    "text": "Thank you."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 66295,
+                    "end_ms": 69915,
+                    "text": "Do you currently have any life insurance through work or on your own?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 70695,
+                    "end_ms": 72635,
+                    "text": "Just the policy through my job."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 73335,
+                    "end_ms": 75115,
+                    "text": "I think it's one year of salary."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 76055,
+                    "end_ms": 79195,
+                    "text": "That's common, but it usually ends if you leave the job."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 79770,
+                    "end_ms": 82670,
+                    "text": "Do you have children or anyone else who relies on your income?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 83690,
+                    "end_ms": 85470,
+                    "text": "Yes. My wife and two kids."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 86170,
+                    "end_ms": 87470,
+                    "text": "They're eight and 11."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 88490,
+                    "end_ms": 89310,
+                    "text": "Thank you."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 89850,
+                    "end_ms": 91150,
+                    "text": "And do you have a mortgage?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 92235,
+                    "end_ms": 94475,
+                    "text": "Yes. About $200,000"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 94475,
+                    "end_ms": 95375,
+                    "text": "left on it."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 95995,
+                    "end_ms": 96495,
+                    "text": "Okay."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 97435,
+                    "end_ms": 100255,
+                    "text": "Any health conditions I should know about, like diabetes,"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 100715,
+                    "end_ms": 103375,
+                    "text": "heart problems, or any medications you take?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 104250,
+                    "end_ms": 105870,
+                    "text": "Just blood pressure medication."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 106810,
+                    "end_ms": 108030,
+                    "text": "It's well controlled."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 109050,
+                    "end_ms": 110830,
+                    "text": "That's helpful. Thank you."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 111370,
+                    "end_ms": 114350,
+                    "text": "And what monthly budget would you be comfortable with for this?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 115210,
+                    "end_ms": 117550,
+                    "text": "Maybe 40 or $50 a month."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 118425,
+                    "end_ms": 119485,
+                    "text": "That works well."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 120185,
+                    "end_ms": 125865,
+                    "text": "Based on what you've told me, I'd suggest a twenty year term life policy with $250,000"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 125865,
+                    "end_ms": 126605,
+                    "text": "of coverage."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 127465,
+                    "end_ms": 130365,
+                    "text": "That would cover the mortgage and see both kids through school."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 131180,
+                    "end_ms": 135660,
+                    "text": "With your age and health, that would likely come in around 41 to $46"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 135660,
+                    "end_ms": 136320,
+                    "text": "a month."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 137020,
+                    "end_ms": 138240,
+                    "text": "How does that sound?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 139100,
+                    "end_ms": 140320,
+                    "text": "That sounds reasonable."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 141500,
+                    "end_ms": 142000,
+                    "text": "Good."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 142715,
+                    "end_ms": 146495,
+                    "text": "I do want to be clear that the final price depends on the carriers underwriting,"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 146795,
+                    "end_ms": 148975,
+                    "text": "and they may ask a few more health questions."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 149995,
+                    "end_ms": 154575,
+                    "text": "It's not guaranteed to be approved at that rate, but from what you've told me it should go smoothly."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 155860,
+                    "end_ms": 156840,
+                    "text": "Okay. Understood."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 158020,
+                    "end_ms": 162200,
+                    "text": "Also, once your policy is issued, you have a thirty day free look period."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 162980,
+                    "end_ms": 166840,
+                    "text": "If you change your mind for any reason, you can cancel for a full refund."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 167795,
+                    "end_ms": 168775,
+                    "text": "Good to know."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 169555,
+                    "end_ms": 171415,
+                    "text": "Who would you like to name as the beneficiary?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 172755,
+                    "end_ms": 173975,
+                    "text": "My wife, Linda."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 174915,
+                    "end_ms": 175735,
+                    "text": "Thank you."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 176355,
+                    "end_ms": 181255,
+                    "text": "So the next step is I'll send you an email with the quote and a secure link to complete the application."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 182370,
+                    "end_ms": 187910,
+                    "text": "The carrier will follow-up within two business days, and nothing is charged until the policy is approved."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 188770,
+                    "end_ms": 189990,
+                    "text": "Does that sound good?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 191097,
+                    "end_ms": 191997,
+                    "text": "Yes. Perfect."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 192857,
+                    "end_ms": 194077,
+                    "text": "Thanks, Sarah."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 194937,
+                    "end_ms": 196317,
+                    "text": "You're welcome, Robert."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 197177,
+                    "end_ms": 198317,
+                    "text": "Have a great evening."
+                }
+            ],
+            "expected": [
+                {
+                    "criterion_name": "Opening – Agent Identification",
+                    "result": "pass",
+                    "notes": "Full name and agency: \"This is Sarah Mitchell, a licensed life insurance agent with Summit Life Agency.\""
+                },
+                {
+                    "criterion_name": "Opening – Call Recording Disclosure",
+                    "result": "yes",
+                    "notes": "Recording notice given before any personal questions."
+                },
+                {
+                    "criterion_name": "Opening – Purpose of Call",
+                    "result": "pass",
+                    "notes": "\"I'm calling about your request for a life insurance quote.\""
+                },
+                {
+                    "criterion_name": "Needs Discovery – Age and Health Status",
+                    "result": "pass",
+                    "notes": "Asks age and health/medications before recommending."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Existing Cover and Dependants",
+                    "result": "pass",
+                    "notes": "Asks about current cover (work policy) and family who rely on the income."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Budget",
+                    "result": "pass",
+                    "notes": "Asks for a monthly budget before quoting."
+                },
+                {
+                    "criterion_name": "Product Explanation – Coverage Amount and Term",
+                    "result": "pass",
+                    "notes": "$250,000 over a twenty-year term."
+                },
+                {
+                    "criterion_name": "Compliance – No Guaranteed-Approval Claims",
+                    "result": "yes",
+                    "notes": "Says approval is not guaranteed."
+                },
+                {
+                    "criterion_name": "Compliance – No Pressure Tactics",
+                    "result": "yes",
+                    "notes": "No urgency or pressure."
+                },
+                {
+                    "criterion_name": "Compliance – Cancellation / Cooling-Off Period",
+                    "result": "pass",
+                    "notes": "Explains the 30-day free-look period with a full refund."
+                },
+                {
+                    "criterion_name": "Close – Clear Next Steps",
+                    "result": "pass",
+                    "notes": "Email with quote and application link; carrier follows up in two business days."
+                }
+            ]
         },
         {
-          "speaker": 1, "start_ms": 8500, "end_ms": 10000,
-          "text": "Sure, that's fine."
+            "id": "gs_002",
+            "description": "US live transfer, final expense: no recording notice, first name only, no discovery, no free-look, vague close (James O'Brien)",
+            "source": "samples/no_disclosure.mp3",
+            "segments": [
+                {
+                    "speaker": 0,
+                    "start_ms": 160,
+                    "end_ms": 6740,
+                    "text": "Hey there. This is James with Summit Life Agency. You just got transferred over to me about the final expense coverage."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 7280,
+                    "end_ms": 8180,
+                    "text": "Oh, okay."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 9200,
+                    "end_ms": 9700,
+                    "text": "Yes."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 10640,
+                    "end_ms": 14500,
+                    "text": "Great. Can I get your full name and date of birth so I can pull up some rates?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 14975,
+                    "end_ms": 18835,
+                    "text": "Sure. It's Dorothy Miller, 03/10/1958."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 19615,
+                    "end_ms": 21235,
+                    "text": "Perfect. And your address?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 21695,
+                    "end_ms": 24435,
+                    "text": "42 Birchwood Avenue, Tampa, Florida."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 25375,
+                    "end_ms": 30610,
+                    "text": "Alright, Dorothy. I can get you a whole life final expense policy with $15,000"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 30610,
+                    "end_ms": 31190,
+                    "text": "of coverage."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 31570,
+                    "end_ms": 33570,
+                    "text": "The premium would be $62"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 33570,
+                    "end_ms": 35430,
+                    "text": "a month. How does that sound?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 36130,
+                    "end_ms": 37830,
+                    "text": "Is that the best you can do?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 38530,
+                    "end_ms": 41830,
+                    "text": "That's the standard rate for your age. It's a really good price."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 42290,
+                    "end_ms": 44630,
+                    "text": "Okay. I suppose I can think about it."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 45355,
+                    "end_ms": 48815,
+                    "text": "Great. Should I go ahead and get that set up for you? Maybe."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 49675,
+                    "end_ms": 51695,
+                    "text": "Can you send me the details first?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 52635,
+                    "end_ms": 55535,
+                    "text": "Sure thing. I'll mail those over. Thanks, Dorothy."
+                }
+            ],
+            "expected": [
+                {
+                    "criterion_name": "Opening – Agent Identification",
+                    "result": "fail",
+                    "notes": "Gives only his first name (\"this is James\"); the criterion requires the full name."
+                },
+                {
+                    "criterion_name": "Opening – Call Recording Disclosure",
+                    "result": "no",
+                    "notes": "No recording notice at all (critical)."
+                },
+                {
+                    "criterion_name": "Opening – Purpose of Call",
+                    "result": "pass",
+                    "notes": "\"You just got transferred over to me about the final expense coverage.\""
+                },
+                {
+                    "criterion_name": "Needs Discovery – Age and Health Status",
+                    "result": "fail",
+                    "notes": "Takes the date of birth but never asks about health before quoting."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Existing Cover and Dependants",
+                    "result": "fail",
+                    "notes": "Neither existing cover nor dependants discussed."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Budget",
+                    "result": "fail",
+                    "notes": "Premium quoted with no budget discussion."
+                },
+                {
+                    "criterion_name": "Product Explanation – Coverage Amount and Term",
+                    "result": "pass",
+                    "notes": "$15,000 of whole life final expense coverage."
+                },
+                {
+                    "criterion_name": "Compliance – No Guaranteed-Approval Claims",
+                    "result": "yes",
+                    "notes": "No guarantee claims."
+                },
+                {
+                    "criterion_name": "Compliance – No Pressure Tactics",
+                    "result": "yes",
+                    "notes": "Asks once to set it up and accepts \"send me the details first\"."
+                },
+                {
+                    "criterion_name": "Compliance – Cancellation / Cooling-Off Period",
+                    "result": "fail",
+                    "notes": "Free-look / cancellation period never mentioned."
+                },
+                {
+                    "criterion_name": "Close – Clear Next Steps",
+                    "result": "fail",
+                    "notes": "\"I'll mail those over\" does not explain what happens next."
+                }
+            ]
         },
         {
-          "speaker": 0, "start_ms": 10500, "end_ms": 18000,
-          "text": "Wonderful. I'm calling today because you recently submitted an enquiry about life insurance cover. Could you tell me your age and whether you have any dependants?"
+            "id": "gs_003",
+            "description": "UK call, good in every way except the missing recording notice (Priya Sharma)",
+            "source": "samples/no_recording_notice.mp3",
+            "segments": [
+                {
+                    "speaker": 0,
+                    "start_ms": 240,
+                    "end_ms": 3780,
+                    "text": "Good afternoon. This is Priya Sharma from INSURVAS Insurance."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 4480,
+                    "end_ms": 5860,
+                    "text": "Is this mister Davidson?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 6560,
+                    "end_ms": 7620,
+                    "text": "Yes. Speaking."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 8720,
+                    "end_ms": 9220,
+                    "text": "Great."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 9600,
+                    "end_ms": 15140,
+                    "text": "I'm calling because you submitted an inquiry about life insurance last week and I wanted to follow-up."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 15685,
+                    "end_ms": 16985,
+                    "text": "Is now a good time?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 17525,
+                    "end_ms": 18745,
+                    "text": "Yes. That's fine."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 19765,
+                    "end_ms": 20265,
+                    "text": "Brilliant."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 20885,
+                    "end_ms": 24665,
+                    "text": "To point you toward the right product, can I ask a few questions?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 25205,
+                    "end_ms": 28585,
+                    "text": "Firstly, how old are you? I'm 51."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 29260,
+                    "end_ms": 31360,
+                    "text": "And are you generally in good health?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 31740,
+                    "end_ms": 33760,
+                    "text": "Anything significant to mention?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 34300,
+                    "end_ms": 39280,
+                    "text": "I had a minor heart scare about four years ago, but I've been clear since and I'm on a low dose aspirin."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 40300,
+                    "end_ms": 41920,
+                    "text": "Thank you for sharing that."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 42285,
+                    "end_ms": 45105,
+                    "text": "Do you currently have any life insurance in place?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 45645,
+                    "end_ms": 49665,
+                    "text": "No. I had a policy but it expired last year and I didn't renew it."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 50285,
+                    "end_ms": 53825,
+                    "text": "And do you have a partner or children who depend on your income?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 54380,
+                    "end_ms": 56400,
+                    "text": "My wife and we have a son at university."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 57740,
+                    "end_ms": 58240,
+                    "text": "Understood."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 58940,
+                    "end_ms": 61680,
+                    "text": "What kind of monthly budget are you working with?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 62060,
+                    "end_ms": 63920,
+                    "text": "I'd say 50 to £80."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 64940,
+                    "end_ms": 69760,
+                    "text": "Based on your age and health history, a level term policy would probably work well."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 70115,
+                    "end_ms": 71795,
+                    "text": "For £300,000"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 71795,
+                    "end_ms": 76115,
+                    "text": "over fifteen years, you might expect to pay around 60 to £75"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 76115,
+                    "end_ms": 81735,
+                    "text": "a month, though that could be affected by the cardiac history. So underwriting will confirm the exact rate."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 82195,
+                    "end_ms": 82695,
+                    "text": "Okay."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 83530,
+                    "end_ms": 85950,
+                    "text": "I'd want to know the exact figure before committing."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 86970,
+                    "end_ms": 87470,
+                    "text": "Absolutely."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 88010,
+                    "end_ms": 88830,
+                    "text": "That's sensible."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 89290,
+                    "end_ms": 92430,
+                    "text": "You'd only commit once you've seen the confirmed premium."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 92890,
+                    "end_ms": 99275,
+                    "text": "Also, after the policy is issued, you'd have a thirty day cooling off period to change your mind and get a full refund."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 99975,
+                    "end_ms": 101435,
+                    "text": "Okay. Good to know."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 102215,
+                    "end_ms": 111355,
+                    "text": "So the next steps are, I'll email you a summary and illustration, and the underwriting team will follow-up within two working days with a full quote based on your health details."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 112071,
+                    "end_ms": 113131,
+                    "text": "That sounds fine."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 113911,
+                    "end_ms": 115131,
+                    "text": "Thank you, Priya."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 115991,
+                    "end_ms": 118811,
+                    "text": "Thank you for your time. Have a good afternoon."
+                }
+            ],
+            "expected": [
+                {
+                    "criterion_name": "Opening – Agent Identification",
+                    "result": "pass",
+                    "notes": "Full name and company."
+                },
+                {
+                    "criterion_name": "Opening – Call Recording Disclosure",
+                    "result": "no",
+                    "notes": "No recording notice (critical)."
+                },
+                {
+                    "criterion_name": "Opening – Purpose of Call",
+                    "result": "pass",
+                    "notes": "\"I'm calling because you submitted an enquiry about life insurance.\""
+                },
+                {
+                    "criterion_name": "Needs Discovery – Age and Health Status",
+                    "result": "pass",
+                    "notes": "Age and health asked before recommending."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Existing Cover and Dependants",
+                    "result": "pass",
+                    "notes": "Existing cover and dependants both asked."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Budget",
+                    "result": "pass",
+                    "notes": "Budget asked before quoting."
+                },
+                {
+                    "criterion_name": "Product Explanation – Coverage Amount and Term",
+                    "result": "pass",
+                    "notes": "£300,000 over fifteen years."
+                },
+                {
+                    "criterion_name": "Compliance – No Guaranteed-Approval Claims",
+                    "result": "yes",
+                    "notes": "Says underwriting will confirm the rate."
+                },
+                {
+                    "criterion_name": "Compliance – No Pressure Tactics",
+                    "result": "yes",
+                    "notes": "Supports the customer waiting for the exact figure."
+                },
+                {
+                    "criterion_name": "Compliance – Cancellation / Cooling-Off Period",
+                    "result": "pass",
+                    "notes": "30-day cooling-off period with a full refund."
+                },
+                {
+                    "criterion_name": "Close – Clear Next Steps",
+                    "result": "pass",
+                    "notes": "Email summary and underwriting follow-up within two working days."
+                }
+            ]
         },
         {
-          "speaker": 1, "start_ms": 18500, "end_ms": 24000,
-          "text": "I'm thirty-eight. I have two kids, seven and nine."
+            "id": "gs_004",
+            "description": "UK call with guaranteed-approval claims and almost no discovery (Daniel Hughes)",
+            "source": "samples/guaranteed_approval_2.mp3",
+            "segments": [
+                {
+                    "speaker": 0,
+                    "start_ms": 240,
+                    "end_ms": 3700,
+                    "text": "Good morning. This is Daniel Hughes from INSURVAS Insurance."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 4480,
+                    "end_ms": 6020,
+                    "text": "This call may be recorded."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 6480,
+                    "end_ms": 9140,
+                    "text": "I'm calling about your life insurance inquiry."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 9920,
+                    "end_ms": 11780,
+                    "text": "Yes. I filled in a form online."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 12815,
+                    "end_ms": 13315,
+                    "text": "Great."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 13775,
+                    "end_ms": 20675,
+                    "text": "I've got some really exciting news for you. We have a product that offers guaranteed acceptance, no medical questions,"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 20975,
+                    "end_ms": 23155,
+                    "text": "no health checks, everyone is approved."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 23535,
+                    "end_ms": 25235,
+                    "text": "You cannot be turned down."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 25740,
+                    "end_ms": 27200,
+                    "text": "Oh, that sounds interesting."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 28220,
+                    "end_ms": 31440,
+                    "text": "I have some health issues so I was worried about getting cover."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 32220,
+                    "end_ms": 39280,
+                    "text": "With this product you don't need to worry at all. Guaranteed approval regardless of your health history. You're in."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 39595,
+                    "end_ms": 40815,
+                    "text": "That does sound appealing."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 41755,
+                    "end_ms": 45375,
+                    "text": "Can I ask your age and roughly what level of cover you're thinking?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 45835,
+                    "end_ms": 47055,
+                    "text": "I'm 62."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 47675,
+                    "end_ms": 49755,
+                    "text": "I'd like maybe a £100,000"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 49755,
+                    "end_ms": 50975,
+                    "text": "to leave for my kids."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 52180,
+                    "end_ms": 52680,
+                    "text": "Perfect."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 53140,
+                    "end_ms": 55400,
+                    "text": "At 62 with guaranteed acceptance,"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 55780,
+                    "end_ms": 60820,
+                    "text": "we can absolutely get that sorted for you. The premium would be around £85"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 60820,
+                    "end_ms": 61480,
+                    "text": "a month."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 61860,
+                    "end_ms": 64680,
+                    "text": "Is there any cooling off period if I change my mind?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 65765,
+                    "end_ms": 70585,
+                    "text": "Yes. There's a standard thirty day cancellation window once the policy is issued."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 71045,
+                    "end_ms": 71545,
+                    "text": "Okay."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 72485,
+                    "end_ms": 73625,
+                    "text": "What happens next?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 74565,
+                    "end_ms": 76905,
+                    "text": "I'll get your application started now."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 77220,
+                    "end_ms": 83720,
+                    "text": "I just need a few details. Your full name, address, date of birth, and bank details for the direct debit."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 84180,
+                    "end_ms": 88760,
+                    "text": "I can give you my name and address but I'd rather not give bank details over the phone today."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 89635,
+                    "end_ms": 90535,
+                    "text": "That's completely"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 91155,
+                    "end_ms": 95015,
+                    "text": "fine. I'll email you a secure link to complete the application online"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 95315,
+                    "end_ms": 96935,
+                    "text": "including the payment setup."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 97315,
+                    "end_ms": 99815,
+                    "text": "The next step summary will come through today."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 100469,
+                    "end_ms": 102009,
+                    "text": "Alright. Thank you."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 102789,
+                    "end_ms": 105609,
+                    "text": "Thank you. I'll get that sent over now."
+                }
+            ],
+            "expected": [
+                {
+                    "criterion_name": "Opening – Agent Identification",
+                    "result": "pass",
+                    "notes": "Full name and company."
+                },
+                {
+                    "criterion_name": "Opening – Call Recording Disclosure",
+                    "result": "yes",
+                    "notes": "\"This call may be recorded\" at the start."
+                },
+                {
+                    "criterion_name": "Opening – Purpose of Call",
+                    "result": "pass",
+                    "notes": "\"I'm calling about your life insurance enquiry.\""
+                },
+                {
+                    "criterion_name": "Needs Discovery – Age and Health Status",
+                    "result": "fail",
+                    "notes": "Asks age only; health never asked (and dismissed with \"guaranteed acceptance\")."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Existing Cover and Dependants",
+                    "result": "fail",
+                    "notes": "Agent never asks about existing cover or dependants."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Budget",
+                    "result": "fail",
+                    "notes": "Premium quoted with no budget discussion."
+                },
+                {
+                    "criterion_name": "Product Explanation – Coverage Amount and Term",
+                    "result": "fail",
+                    "notes": "Cover amount comes from the customer; no term is ever stated."
+                },
+                {
+                    "criterion_name": "Compliance – No Guaranteed-Approval Claims",
+                    "result": "no",
+                    "notes": "\"Guaranteed acceptance… everyone is approved. You cannot be turned down.\" (critical)"
+                },
+                {
+                    "criterion_name": "Compliance – No Pressure Tactics",
+                    "result": "yes",
+                    "notes": "Overselling, but no urgency; accepts the customer declining bank details."
+                },
+                {
+                    "criterion_name": "Compliance – Cancellation / Cooling-Off Period",
+                    "result": "pass",
+                    "notes": "Confirms the 30-day cancellation window (when asked) before any payment."
+                },
+                {
+                    "criterion_name": "Close – Clear Next Steps",
+                    "result": "pass",
+                    "notes": "Emails a secure application link and a next-steps summary."
+                }
+            ]
         },
         {
-          "speaker": 0, "start_ms": 24500, "end_ms": 34000,
-          "text": "Do you have any existing life insurance cover? And what monthly premium are you comfortable with?"
-        },
-        {
-          "speaker": 1, "start_ms": 34500, "end_ms": 42000,
-          "text": "No existing cover. Somewhere between thirty and fifty pounds a month."
-        },
-        {
-          "speaker": 0, "start_ms": 42500, "end_ms": 68000,
-          "text": "Based on what you've told me, I'd suggest a level term policy for five hundred thousand pounds of cover over a twenty-five year term, at around thirty-two to thirty-six pounds a month. The final premium is subject to underwriting and is not guaranteed until the policy is issued."
-        },
-        {
-          "speaker": 0, "start_ms": 68500, "end_ms": 86000,
-          "text": "Once the policy is issued, you have a fourteen-day cooling-off period where you can cancel and receive a full refund. There are no penalties for cancelling within that window."
-        },
-        {
-          "speaker": 1, "start_ms": 86500, "end_ms": 90000,
-          "text": "Good to know."
-        },
-        {
-          "speaker": 0, "start_ms": 90500, "end_ms": 108000,
-          "text": "The next step is I'll send you a summary email with all the details and a link to start the application. The underwriting team will follow up within two working days. Is there anything else you'd like to know today?"
-        },
-        {
-          "speaker": 1, "start_ms": 108500, "end_ms": 112000,
-          "text": "No, that all sounds great. Thank you Sarah."
-        },
-        {
-          "speaker": 0, "start_ms": 112500, "end_ms": 118000,
-          "text": "Thank you for your time. Have a lovely day."
+            "id": "gs_005",
+            "description": "UK call, complete discovery but subtle urgency about an \"enhanced rate this week\" (Emma Clarke)",
+            "source": "samples/pressure_subtle.mp3",
+            "segments": [
+                {
+                    "speaker": 0,
+                    "start_ms": 240,
+                    "end_ms": 3300,
+                    "text": "Hello. This is Emma Clark from INSURVAS Insurance."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 4000,
+                    "end_ms": 6740,
+                    "text": "This call may be recorded for quality purposes."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 7440,
+                    "end_ms": 8420,
+                    "text": "Is that okay?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 9040,
+                    "end_ms": 10100,
+                    "text": "Yes. Fine."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 11120,
+                    "end_ms": 11620,
+                    "text": "Great."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 12000,
+                    "end_ms": 15460,
+                    "text": "I'm calling because you inquired about life insurance recently."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 15985,
+                    "end_ms": 21845,
+                    "text": "I'm glad I caught you today because we have an enhanced rate available this week that I want to make sure you know about."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 22305,
+                    "end_ms": 23125,
+                    "text": "Oh, right."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 23825,
+                    "end_ms": 24965,
+                    "text": "What does that mean?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 25825,
+                    "end_ms": 34300,
+                    "text": "It means the underwriters are offering slightly lower premiums for new applications submitted this week. It's a pricing window they open periodically,"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 34760,
+                    "end_ms": 36620,
+                    "text": "and it won't be available indefinitely."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 37240,
+                    "end_ms": 39820,
+                    "text": "So it's worth exploring while it's on the table."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 40360,
+                    "end_ms": 41100,
+                    "text": "I see."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 41800,
+                    "end_ms": 43180,
+                    "text": "How long does it last?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 44055,
+                    "end_ms": 49355,
+                    "text": "It typically closes by end of week, sometimes sooner depending on application volumes."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 49735,
+                    "end_ms": 54955,
+                    "text": "Let me get some details from you so we can take advantage of it. How old are you?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 55335,
+                    "end_ms": 56235,
+                    "text": "44."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 56960,
+                    "end_ms": 58580,
+                    "text": "And are you in good health?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 59120,
+                    "end_ms": 60820,
+                    "text": "Yes. Generally healthy."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 61600,
+                    "end_ms": 64340,
+                    "text": "Do you have dependents, a partner, or kids?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 64960,
+                    "end_ms": 66660,
+                    "text": "Yes. Wife and two kids."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 67600,
+                    "end_ms": 68980,
+                    "text": "An existing cover."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 69520,
+                    "end_ms": 71060,
+                    "text": "A small employer policy."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 72005,
+                    "end_ms": 73305,
+                    "text": "Budget per month."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 73925,
+                    "end_ms": 75785,
+                    "text": "Maybe 40 to £60."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 77045,
+                    "end_ms": 77545,
+                    "text": "Perfect."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 78005,
+                    "end_ms": 81445,
+                    "text": "For your profile, I'd suggest 250,000"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 81445,
+                    "end_ms": 85125,
+                    "text": "over twenty years, likely around 35 to £45"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 85125,
+                    "end_ms": 90800,
+                    "text": "a month at the enhanced rate. If we can get your application in this week, you'd lock in the lower"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 91260,
+                    "end_ms": 95840,
+                    "text": "price. The cooling off period is thirty days if you change your mind once it's issued."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 96300,
+                    "end_ms": 98400,
+                    "text": "I'm not sure I want to rush into this."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 99275,
+                    "end_ms": 100735,
+                    "text": "I completely understand."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 101355,
+                    "end_ms": 105135,
+                    "text": "I just want to make sure you have all the information so you can decide."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 105515,
+                    "end_ms": 108975,
+                    "text": "The enhanced rate really is worth acting on while it's there."
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 109355,
+                    "end_ms": 111375,
+                    "text": "Okay. What do you need from me?"
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 112090,
+                    "end_ms": 115310,
+                    "text": "I'll email you the summary and application link today."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 115690,
+                    "end_ms": 121950,
+                    "text": "Please do try to complete it within the next few days to secure the rate. Shall I send that over now?"
+                },
+                {
+                    "speaker": 1,
+                    "start_ms": 122367,
+                    "end_ms": 124067,
+                    "text": "Yes. Okay. Go ahead."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 125087,
+                    "end_ms": 125587,
+                    "text": "Brilliant."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 126127,
+                    "end_ms": 127587,
+                    "text": "Thank you for your time."
+                },
+                {
+                    "speaker": 0,
+                    "start_ms": 127887,
+                    "end_ms": 129667,
+                    "text": "I'll get that sent right away."
+                }
+            ],
+            "expected": [
+                {
+                    "criterion_name": "Opening – Agent Identification",
+                    "result": "pass",
+                    "notes": "Full name and company."
+                },
+                {
+                    "criterion_name": "Opening – Call Recording Disclosure",
+                    "result": "yes",
+                    "notes": "Recording notice at the start."
+                },
+                {
+                    "criterion_name": "Opening – Purpose of Call",
+                    "result": "pass",
+                    "notes": "\"I'm calling because you enquired about life insurance recently.\""
+                },
+                {
+                    "criterion_name": "Needs Discovery – Age and Health Status",
+                    "result": "pass",
+                    "notes": "Age and health asked."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Existing Cover and Dependants",
+                    "result": "pass",
+                    "notes": "Dependants and existing cover asked."
+                },
+                {
+                    "criterion_name": "Needs Discovery – Budget",
+                    "result": "pass",
+                    "notes": "Budget asked before quoting."
+                },
+                {
+                    "criterion_name": "Product Explanation – Coverage Amount and Term",
+                    "result": "pass",
+                    "notes": "£250,000 over twenty years."
+                },
+                {
+                    "criterion_name": "Compliance – No Guaranteed-Approval Claims",
+                    "result": "yes",
+                    "notes": "No guarantee claims."
+                },
+                {
+                    "criterion_name": "Compliance – No Pressure Tactics",
+                    "result": "no",
+                    "notes": "\"Won't be available indefinitely… closes by end of week… worth acting on\" after the customer says they do not want to rush (critical)."
+                },
+                {
+                    "criterion_name": "Compliance – Cancellation / Cooling-Off Period",
+                    "result": "pass",
+                    "notes": "30-day cooling-off period."
+                },
+                {
+                    "criterion_name": "Close – Clear Next Steps",
+                    "result": "pass",
+                    "notes": "Emails the summary and application link today."
+                }
+            ]
         }
-      ],
-      "expected": [
-        {
-          "criterion_name": "Recording Disclosure",
-          "result": "pass",
-          "notes": "Agent states recording at S1: 'this call may be recorded for training and quality purposes'"
-        },
-        {
-          "criterion_name": "Greeting and Introduction",
-          "result": "pass",
-          "notes": "Agent gives full name and company at the start of S1"
-        },
-        {
-          "criterion_name": "Discovery Questions",
-          "result": "pass",
-          "notes": "Agent asks age, dependants, existing cover, budget across S3, S5"
-        },
-        {
-          "criterion_name": "Premium Quote Accuracy",
-          "result": "pass",
-          "notes": "Quote given as range with 'not guaranteed' caveat in S7"
-        },
-        {
-          "criterion_name": "Cooling-Off Period",
-          "result": "pass",
-          "notes": "14-day cooling-off mentioned explicitly at S8"
-        },
-        {
-          "criterion_name": "Clear Close",
-          "result": "pass",
-          "notes": "Next steps explained in S10: summary email and underwriting timeline"
-        }
-      ]
-    },
-    {
-      "id": "gs_002",
-      "description": "Weak call: skips recording disclosure, jumps straight to pitch, no budget discovery, no cooling-off",
-      "segments": [
-        {
-          "speaker": 0, "start_ms": 500, "end_ms": 5000,
-          "text": "Hi is this John? I'm calling from an insurance company. Are you interested in life insurance?"
-        },
-        {
-          "speaker": 1, "start_ms": 5500, "end_ms": 7000,
-          "text": "Maybe, what are you offering?"
-        },
-        {
-          "speaker": 0, "start_ms": 7500, "end_ms": 18000,
-          "text": "We have a really great policy, five hundred thousand pounds cover for only forty pounds a month. You just need to fill out a form and we can get you sorted today."
-        },
-        {
-          "speaker": 1, "start_ms": 18500, "end_ms": 22000,
-          "text": "Sounds okay I guess. What happens if I want to cancel?"
-        },
-        {
-          "speaker": 0, "start_ms": 22500, "end_ms": 26000,
-          "text": "You can cancel anytime. Shall I send you the form?"
-        },
-        {
-          "speaker": 1, "start_ms": 26500, "end_ms": 28000,
-          "text": "Sure."
-        }
-      ],
-      "expected": [
-        {
-          "criterion_name": "Recording Disclosure",
-          "result": "fail",
-          "notes": "No mention of call recording anywhere in the transcript"
-        },
-        {
-          "criterion_name": "Greeting and Introduction",
-          "result": "fail",
-          "notes": "Agent only says 'I'm calling from an insurance company', no name given"
-        },
-        {
-          "criterion_name": "Discovery Questions",
-          "result": "fail",
-          "notes": "Agent skips age, dependants, existing cover and budget — goes straight to pitch"
-        },
-        {
-          "criterion_name": "Premium Quote Accuracy",
-          "result": "fail",
-          "notes": "Quote given as single fixed figure, no 'subject to underwriting' caveat"
-        },
-        {
-          "criterion_name": "Cooling-Off Period",
-          "result": "fail",
-          "notes": "Agent only says 'cancel anytime' — 14-day statutory period never mentioned"
-        },
-        {
-          "criterion_name": "Clear Close",
-          "result": "fail",
-          "notes": "Close is 'shall I send you the form' with no explanation of next steps"
-        }
-      ]
-    }
-  ]
+    ]
 }

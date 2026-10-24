@@ -3,45 +3,49 @@
 namespace Tests\Feature;
 
 use App\Models\Agent;
+use App\Models\Call;
 use App\Models\Template;
 use App\Models\User;
 use App\Services\FakeScoringService;
+use App\Services\KeywordScoringService;
 use App\Services\ScoringService;
+use Database\Seeders\TemplateSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class QaEvalTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function makeTemplate(User $manager): Template
+    /** The real seeded template, the same one the golden set is labelled against. */
+    private function seedRealTemplate(): Template
     {
-        $tpl = Template::factory()->create([
-            'created_by'     => $manager->id,
-            'name'           => 'Standard Insurance QA',
-            'pass_threshold' => 80,
-        ]);
+        User::factory()->create(['role' => 'admin', 'email' => 'admin@example.com']);
+        $this->seed(TemplateSeeder::class);
 
-        $criteria = [
-            ['name' => 'Recording Disclosure',    'type' => 'pass_fail', 'weight' => 1, 'is_critical' => true],
-            ['name' => 'Greeting and Introduction','type' => 'pass_fail', 'weight' => 1, 'is_critical' => false],
-            ['name' => 'Discovery Questions',      'type' => 'pass_fail', 'weight' => 1, 'is_critical' => false],
-            ['name' => 'Premium Quote Accuracy',   'type' => 'pass_fail', 'weight' => 1, 'is_critical' => false],
-            ['name' => 'Cooling-Off Period',        'type' => 'pass_fail', 'weight' => 1, 'is_critical' => false],
-            ['name' => 'Clear Close',              'type' => 'pass_fail', 'weight' => 1, 'is_critical' => false],
-        ];
+        return Template::firstOrFail();
+    }
 
-        foreach ($criteria as $i => $attrs) {
-            $tpl->criteria()->create(array_merge([
-                'position'        => $i + 1,
-                'description'     => $attrs['name'],
-                'fail_conditions' => null,
-                'phase_hint'      => 'anywhere',
-            ], $attrs));
+    private function goldenSet(): array
+    {
+        return json_decode(file_get_contents(base_path('tests/golden/golden_set.json')), true);
+    }
+
+    public function test_golden_set_matches_the_seeded_template(): void
+    {
+        $template = $this->seedRealTemplate();
+        $golden   = $this->goldenSet();
+        $names    = $template->criteria->pluck('name')->all();
+
+        $this->assertSame($template->name, $golden['template_name']);
+        $this->assertGreaterThanOrEqual(3, count($golden['cases']));
+
+        foreach ($golden['cases'] as $case) {
+            $this->assertNotEmpty($case['segments'], "{$case['id']} has no transcript");
+            foreach ($case['expected'] as $exp) {
+                $this->assertContains($exp['criterion_name'], $names, "{$case['id']}: unknown criterion \"{$exp['criterion_name']}\"");
+            }
         }
-
-        return $tpl;
     }
 
     public function test_eval_errors_when_golden_file_missing(): void
@@ -53,95 +57,67 @@ class QaEvalTest extends TestCase
 
     public function test_eval_errors_when_template_not_in_db(): void
     {
-        Config::set('qa.fake_ai', true);
-
         $this->artisan('qa:eval', ['--template' => 'Nonexistent Template'])
             ->assertFailed()
             ->expectsOutputToContain('Template not found');
     }
 
-    public function test_eval_runs_and_produces_accuracy_output(): void
+    public function test_rule_based_scorer_scores_every_golden_criterion(): void
     {
-        Config::set('qa.fake_ai', true);
+        $this->seedRealTemplate();
+        $this->app->bind(ScoringService::class, KeywordScoringService::class);
 
-        $manager = User::factory()->create(['role' => 'manager']);
-        $this->makeTemplate($manager);
-
-        // The full golden set has gs_002 (all-fail expected) which the fake AI
-        // scores wrong — exit code may be 0 or 1 depending on overall accuracy.
-        // We only verify the command completes and shows the summary line.
         $this->artisan('qa:eval')
+            ->doesntExpectOutputToContain('Criterion not found')
             ->expectsOutputToContain('Overall accuracy');
     }
 
     public function test_eval_leaves_no_temp_records(): void
     {
-        Config::set('qa.fake_ai', true);
+        $this->seedRealTemplate();
+        $this->app->bind(ScoringService::class, FakeScoringService::class);
 
-        $manager = User::factory()->create(['role' => 'manager']);
-        $this->makeTemplate($manager);
-
-        $before = \App\Models\Call::count();
+        $before = Call::count();
         $this->artisan('qa:eval');
-        $after = \App\Models\Call::count();
 
-        $this->assertEquals($before, $after, 'qa:eval must clean up temp call records');
+        $this->assertSame($before, Call::count(), 'qa:eval must clean up temp call records');
         $this->assertFalse(Agent::where('name', '_eval')->exists(), 'qa:eval must remove its temporary agent');
     }
 
     public function test_eval_exit_code_reflects_accuracy(): void
     {
-        Config::set('qa.fake_ai', true);
+        $this->seedRealTemplate();
         $this->app->bind(ScoringService::class, FakeScoringService::class);
 
-        $manager = User::factory()->create(['role' => 'manager']);
-        $this->makeTemplate($manager);
-
-        // With fake AI (all pass) vs gs_001 (all pass expected) → 100% → exit 0
-        // With gs_002 (all fail expected) → 0% → but the file has BOTH cases
-        // Net accuracy depends on mix; we just assert the command runs successfully
-        // since gs_001 (6 criteria all pass) dominates the 12-item set at 50%
-        // which is < 80% → exit 1. Use a custom golden set with only gs_001 to get 100%.
-
-        $gs001Only = [
-            'version'       => 1,
-            'template_name' => 'Standard Insurance QA',
-            'cases'         => [json_decode(file_get_contents(base_path('tests/golden/golden_set.json')), true)['cases'][0]],
-        ];
-
+        // The fake scorer passes everything; gs_001 is the fully compliant call, so it scores 100%.
+        $golden = $this->goldenSet();
+        $golden['cases'] = [$golden['cases'][0]];
         $tmpPath = sys_get_temp_dir() . '/gs_test.json';
-        file_put_contents($tmpPath, json_encode($gs001Only));
+        file_put_contents($tmpPath, json_encode($golden));
 
-        $this->artisan('qa:eval', ['--golden' => $tmpPath])
-            ->assertSuccessful(); // all-pass expected + fake-AI all-pass = 100% ≥ 80%
+        $this->artisan('qa:eval', ['--golden' => $tmpPath])->assertSuccessful();
 
         unlink($tmpPath);
     }
 
     public function test_eval_prints_false_pass_false_fail_breakdown(): void
     {
+        $this->seedRealTemplate();
+        // Passing everything produces false passes on the calls labelled as failures.
         $this->app->bind(ScoringService::class, FakeScoringService::class);
 
-        $manager = User::factory()->create(['role' => 'manager']);
-        $this->makeTemplate($manager);
-
-        // Fake AI scores everything pass; golden set gs_002 expects all-fail → false-passes.
-        // The command must print the per-criterion breakdown table and the summary line.
         $this->artisan('qa:eval')
+            ->assertFailed()
             ->expectsOutputToContain('Per-criterion error breakdown')
-            ->expectsOutputToContain('False-pass | False-fail')
             ->expectsOutputToContain('Overall false-pass');
     }
 
-    public function test_eval_cleans_up_on_scoring_failure(): void
+    public function test_eval_fails_cleanly_when_no_template_exists(): void
     {
-        // Without a template, scoring will fail; command should still exit cleanly
-        Config::set('qa.fake_ai', true);
         User::factory()->create(['role' => 'manager']);
-        // No template created → command exits with failure but does not throw
 
-        $before = \App\Models\Call::count();
+        $before = Call::count();
         $this->artisan('qa:eval')->assertFailed();
-        $this->assertEquals($before, \App\Models\Call::count());
+        $this->assertSame($before, Call::count());
     }
 }
