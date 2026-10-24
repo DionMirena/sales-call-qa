@@ -73,6 +73,13 @@ outcome =
 
 ---
 
+## Where it gets it wrong
+
+- **Rule-based fallback scorer** (`KeywordScoringService`) only recognises known phrasings. It may be overfitted to the synthetic scripts — a real call phrasing the cooling-off period differently ("you have two weeks to change your mind") would score incorrectly. Claude scoring is implemented and tested with mocks; it does not have this brittleness.
+- Mistakes are surfaced by three mechanisms: `needs_review` flags (low-confidence or unverified evidence), the golden set (`php artisan qa:eval`), and the override rate visible in `php artisan qa:stats` (high override rate signals a drifting scorer).
+
+---
+
 ## Testing approach
 
 - **141 tests**, split between `tests/Unit/` (ScoreCalculator, EvidenceVerifier — fast, no DB) and `tests/Feature/` (HTTP + Artisan — SQLite in-memory via `RefreshDatabase`)
