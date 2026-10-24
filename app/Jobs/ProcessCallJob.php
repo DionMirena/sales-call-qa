@@ -66,7 +66,7 @@ class ProcessCallJob implements ShouldQueue
 
                 $call->update([
                     'duration_seconds' => $result['duration_seconds'],
-                    'agent_speaker'    => $this->guessAgentSpeaker($segments),
+                    'agent_speaker'    => static::guessAgentSpeaker($segments),
                 ]);
             }
 
@@ -95,11 +95,26 @@ class ProcessCallJob implements ShouldQueue
     }
 
     /**
-     * The first speaker in the transcript is assumed to be the agent.
-     * If no segments exist, default to 0.
+     * Prefer the speaker who introduces themselves ("my name is", "this is <Name>",
+     * or mentions the company name) within the first 10 segments.
+     * Falls back to the first speaker if no match is found.
      */
-    private function guessAgentSpeaker(array $segments): int
+    public static function guessAgentSpeaker(array $segments): int
     {
+        $companyName = strtolower((string) config('qa.company_name', ''));
+        $head        = array_slice($segments, 0, 10);
+
+        foreach ($head as $seg) {
+            $text = strtolower($seg['text'] ?? '');
+            if (
+                str_contains($text, 'my name is') ||
+                str_contains($text, 'this is ') ||
+                ($companyName !== '' && str_contains($text, $companyName))
+            ) {
+                return (int) $seg['speaker'];
+            }
+        }
+
         return (int) ($segments[0]['speaker'] ?? 0);
     }
 }
