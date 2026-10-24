@@ -185,13 +185,19 @@ class CallController extends Controller
             ->with('success', 'Call and all associated data deleted.');
     }
 
-    public function rescore(Call $call): RedirectResponse
+    public function rescore(Request $request, Call $call): RedirectResponse
     {
         $this->authorize('view', $call);
         abort_unless($call->status === 'done', 422, 'Only completed calls can be re-scored.');
 
+        if ($request->filled('template_id')) {
+            $request->validate(['template_id' => 'exists:templates,id']);
+            $call->template_id = $request->template_id;
+            $call->save();
+        }
+
+        // Keep segments (transcript); only clear previous scores and overrides.
         $call->criterionResults()->delete();
-        $call->segments()->delete();
 
         $call->update([
             'status'        => 'queued',
@@ -200,7 +206,7 @@ class CallController extends Controller
             'error_message' => null,
         ]);
 
-        ProcessCallJob::dispatch($call->id);
+        ProcessCallJob::dispatch($call->id, rescoreOnly: true);
 
         return redirect()->route('calls.show', $call)
             ->with('success', 'Call queued for re-scoring.');

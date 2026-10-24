@@ -20,7 +20,10 @@ class ProcessCallJob implements ShouldQueue
     public int $timeout = 900;
     public int $tries   = 2;
 
-    public function __construct(public readonly int $callId) {}
+    public function __construct(
+        public readonly int  $callId,
+        public readonly bool $rescoreOnly = false,
+    ) {}
 
     public function handle(
         AudioNormaliser     $normaliser,
@@ -30,40 +33,42 @@ class ProcessCallJob implements ShouldQueue
         $call = Call::findOrFail($this->callId);
 
         try {
-            // 1 — Normalise
-            $call->update(['status' => 'normalising']);
+            if (! $this->rescoreOnly) {
+                // 1 — Normalise
+                $call->update(['status' => 'normalising']);
 
-            $inputPath  = Storage::disk('private')->path($call->original_path);
-            $normalised = 'calls/' . $call->id . '/audio.mp3';
-            $outputPath = Storage::disk('private')->path($normalised);
+                $inputPath  = Storage::disk('private')->path($call->original_path);
+                $normalised = 'calls/' . $call->id . '/audio.mp3';
+                $outputPath = Storage::disk('private')->path($normalised);
 
-            @mkdir(dirname($outputPath), 0755, true);
-            $normaliser->normalise($inputPath, $outputPath);
-            $call->update(['audio_path' => $normalised]);
+                @mkdir(dirname($outputPath), 0755, true);
+                $normaliser->normalise($inputPath, $outputPath);
+                $call->update(['audio_path' => $normalised]);
 
-            // 2 — Transcribe
-            $call->update(['status' => 'transcribing']);
-            $result = $transcription->transcribe($outputPath);
+                // 2 — Transcribe
+                $call->update(['status' => 'transcribing']);
+                $result = $transcription->transcribe($outputPath);
 
-            // 3 — Store segments
-            $segments = $result['segments'];
-            $bulk = [];
-            foreach ($segments as $i => $seg) {
-                $bulk[] = [
-                    'call_id'  => $call->id,
-                    'code'     => 'S' . ($i + 1),
-                    'speaker'  => $seg['speaker'],
-                    'start_ms' => $seg['start_ms'],
-                    'end_ms'   => $seg['end_ms'],
-                    'text'     => $seg['text'],
-                ];
+                // 3 — Store segments
+                $segments = $result['segments'];
+                $bulk = [];
+                foreach ($segments as $i => $seg) {
+                    $bulk[] = [
+                        'call_id'  => $call->id,
+                        'code'     => 'S' . ($i + 1),
+                        'speaker'  => $seg['speaker'],
+                        'start_ms' => $seg['start_ms'],
+                        'end_ms'   => $seg['end_ms'],
+                        'text'     => $seg['text'],
+                    ];
+                }
+                \App\Models\TranscriptSegment::insert($bulk);
+
+                $call->update([
+                    'duration_seconds' => $result['duration_seconds'],
+                    'agent_speaker'    => $this->guessAgentSpeaker($segments),
+                ]);
             }
-            \App\Models\TranscriptSegment::insert($bulk);
-
-            $call->update([
-                'duration_seconds' => $result['duration_seconds'],
-                'agent_speaker'    => $this->guessAgentSpeaker($segments),
-            ]);
 
             // 4 — Score
             $call->update(['status' => 'scoring']);

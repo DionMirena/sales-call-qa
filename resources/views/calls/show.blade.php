@@ -38,13 +38,33 @@
                              {{ $call->score_percent >= 80 ? 'bg-emerald-100 text-emerald-700' : ($call->score_percent >= 60 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700') }}">
                     {{ number_format($call->score_percent, 0) }}%
                 </span>
-                <form method="POST" action="{{ route('calls.rescore', $call) }}"
-                      onsubmit="return confirm('Re-score this call? Existing scores and overrides will be deleted.')">
-                    @csrf
-                    <button class="px-3 py-1.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-200 transition-colors">
-                        Re-score
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open"
+                            class="px-3 py-1.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-200 transition-colors">
+                        Re-score ▾
                     </button>
-                </form>
+                    <div x-show="open" x-cloak @click.outside="open = false"
+                         class="absolute right-0 top-full mt-1 w-64 bg-white rounded-xl shadow-lg border border-slate-100 p-3 z-10">
+                        <form method="POST" action="{{ route('calls.rescore', $call) }}"
+                              onsubmit="return confirm('Re-score? Existing scores and overrides will be cleared. The transcript is kept.')">
+                            @csrf
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Template (optional)</label>
+                            <select name="template_id"
+                                    class="w-full text-xs border-slate-200 rounded-lg bg-slate-50 mb-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">{{ $call->template->name }} (current)</option>
+                                @foreach(\App\Models\Template::orderBy('name')->get(['id','name']) as $tpl)
+                                    @if($tpl->id !== $call->template_id)
+                                        <option value="{{ $tpl->id }}">{{ $tpl->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <button type="submit"
+                                    class="w-full px-3 py-1.5 bg-indigo-600 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+                                Re-score now
+                            </button>
+                        </form>
+                    </div>
+                </div>
             @endif
             <form method="POST" action="{{ route('calls.destroy', $call) }}"
                   onsubmit="return confirm('Delete this call and all its data?')">
