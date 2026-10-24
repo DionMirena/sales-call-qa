@@ -1,6 +1,10 @@
 # Example QA Criteria – Life Insurance Sales Calls
-# STATUS: PLACEHOLDER — replace with the company's actual criteria when received.
-# Created as a realistic stand-in for development and testing.
+
+These criteria are my own, written for this project because no criteria were
+provided by the company. They are based on common UK life-insurance sales
+compliance requirements (FCA ICOBS rules, cooling-off obligations, suitability
+assessment). Any QA manager can replace or extend them through the template
+builder in the UI.
 
 ## Template: Standard Life Insurance Sales Call
 
