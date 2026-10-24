@@ -9,18 +9,21 @@ Browser (Blade + Alpine.js + Tailwind)
 Laravel HTTP layer (routes/web.php)
     │
     ├─ TemplateController   — CRUD + duplicate
-    ├─ CallController       — upload, index (filters), destroy, rescore
+    ├─ CallController       — upload, index (filters + sort), show, audio, status, retry,
+    │                         rescore, swap speaker, destroy
     ├─ OverrideController   — store (validates + recalculates score)
     ├─ AgentController      — index, show (stats + trend)
-    └─ DashboardController  — today's KPIs + needs-review queue
+    ├─ DashboardController  — today's KPIs + needs-review queue
+    └─ StatsController      — chart data
     │
     ▼
-ProcessCallJob (queued, timeout=600, tries=2)
+ProcessCallJob (queued, timeout=900, tries=2)
     │
     ├─ AudioNormaliser          → ffmpeg: mono 16kHz MP3
     ├─ TranscriptionService     → DeepgramTranscriptionService
     │                              (FakeTranscriptionService in demo/test)
-    └─ ScoringService           → ClaudeScoringService
+    └─ ScoringService           → ClaudeScoringService (when an sk-ant- key is set)
+                                   or KeywordScoringService (free, rule-based)
                                    (FakeScoringService in demo/test)
 ```
 
@@ -30,14 +33,14 @@ ProcessCallJob (queued, timeout=600, tries=2)
 
 ### Upload
 1. `POST /calls` — validates MIME, size, agent, template
-2. File stored to `private` disk (`storage/app/private/`)
+2. File stored to the `private` disk (`storage/app/audio/calls/originals/`)
 3. `Call` record created (`status=queued`)
 4. `ProcessCallJob::dispatch($call->id)` pushed to queue
 
 ### Processing (job)
-1. `AudioNormaliser::normalise(originalPath)` → writes normalised MP3 to `audio/` prefix on private disk
+1. `AudioNormaliser::normalise(originalPath)` → writes the normalised MP3 to `calls/{id}/audio.mp3` on the private disk
 2. `TranscriptionService::transcribe(normalised)` → array of `{speaker, start_ms, end_ms, text}`
-3. `TranscriptSegment` rows bulk-inserted (code = "S1", "S2", ...)
+3. `TranscriptSegment` rows bulk-inserted (code = "S1", "S2", ...); `agent_speaker` guessed (company name, then "my name is", then "This is <Name>", else the first speaker)
 4. `ScoringService::score(Call)` → stores `CriterionResult` rows, updates `score_percent` + `outcome`
 5. `Call::status` transitions: `queued → normalising → transcribing → scoring → done` (or `failed`)
 
@@ -52,7 +55,7 @@ ProcessCallJob (queued, timeout=600, tries=2)
 8. Store results + update call
 
 ### Override
-1. `POST /overrides/{criterionResult}` — named error bag scoped to `cr_{$id}`
+1. `POST /criterion-results/{criterionResult}/overrides` — named error bag scoped to `cr_{$id}`
 2. `Override` row appended (immutable — no `updated_at`)
 3. `CriterionResult::latestOverride()` uses `reorder()->latest('id')->first()` to read the new override
 4. `ScoreCalculator::calculate()` re-run on the call's full `criterionResults()->with('overrides')` collection
@@ -76,7 +79,7 @@ ProcessCallJob (queued, timeout=600, tries=2)
 | Column | Type |
 |--------|------|
 | id | bigint PK |
-| name | varchar unique |
+| name | varchar |
 | team | varchar nullable |
 | timestamps | |
 
@@ -147,7 +150,7 @@ Index: `(call_id, code)` unique. No timestamps (insert-only, high volume).
 | criterion_id | FK criteria nullable (null if criterion deleted) |
 | criterion_name | varchar — snapshot at scoring time |
 | criterion_description | text |
-| criterion_type | varchar |
+| criterion_type | enum (same values as criteria.type) |
 | criterion_weight | tinyint unsigned |
 | criterion_is_critical | boolean |
 | ai_result | varchar(20) — "pass","fail","yes","no","na","1"–"5", or extracted text |
@@ -198,7 +201,10 @@ if (config('qa.fake_ai')) {
     $this->app->bind(ScoringService::class, FakeScoringService::class);
 } else {
     $this->app->bind(TranscriptionService::class, DeepgramTranscriptionService::class);
-    $this->app->bind(ScoringService::class, ClaudeScoringService::class);
+    // Without an Anthropic key, score the real transcript with the free keyword scorer.
+    $this->app->bind(ScoringService::class, str_starts_with((string) config('qa.anthropic_key'), 'sk-ant-')
+        ? ClaudeScoringService::class
+        : KeywordScoringService::class);
 }
 ```
 
@@ -271,7 +277,7 @@ Override     belongsTo CriterionResult, User
 
 ## Audio security
 
-Audio files live on the `private` disk (`storage/app/private/`), which is not web-accessible. Served only through `GET /audio/{call}` — an authenticated, policy-gated route that streams with HTTP range-request support (enabling seek in the browser audio player). The route requires `Auth::check()` + `CallPolicy::view()`.
+Audio files live on the `private` disk (`storage/app/audio/`), which is not web-accessible. Served only through `GET /calls/{call}/audio` — an authenticated, policy-gated route that streams with HTTP range-request support (enabling seek in the browser audio player); `?download=1` downloads it instead. The route requires login + `CallPolicy::view()`.
 
 ---
 
