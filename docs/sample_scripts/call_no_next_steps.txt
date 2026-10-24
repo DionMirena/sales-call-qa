@@ -14,7 +14,7 @@ AGENT: Budget per month?
 CUSTOMER: I was thinking forty to sixty pounds.
 AGENT: Understood. With managed diabetes, cover is absolutely available but underwriting will want more detail and the premium may be slightly higher than for someone without that history. A level term at two hundred and fifty thousand pounds over twenty-five years might come in around forty-five to sixty-five pounds, depending on underwriting. I'd say expect the higher end of your budget.
 CUSTOMER: Okay. That's honest, I appreciate it.
-AGENT: Also, once the policy is issued, you have a fourteen day cooling off period to cancel and receive a full refund.
+AGENT: Also, once the policy is issued, you have a thirty day cooling off period to cancel and receive a full refund.
 CUSTOMER: Good to know. So what do I do now?
 AGENT: I'll pass your details to our underwriting team and they'll be in touch.
 CUSTOMER: Okay. Should I expect a call or email?

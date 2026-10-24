@@ -112,7 +112,7 @@ class TemplateSeeder extends Seeder
             ],
             [
                 'name'            => 'Compliance – Cancellation / Cooling-Off Period',
-                'description'     => 'Agent explains that the customer has a 14-day cooling-off period during which they can cancel with a full refund, before any payment is taken or application is submitted.',
+                'description'     => 'Agent explains that the customer can cancel within the cooling-off period and get a full refund (30 days for UK life insurance, which is a pure protection contract under FCA ICOBS 7.1; called the free-look period in the US, usually 10 to 30 days depending on the state), before any payment is taken or application is submitted.',
                 'fail_conditions' => 'Cooling-off period is not mentioned before close or payment step.',
                 'type'            => 'pass_fail',
                 'weight'          => 3,

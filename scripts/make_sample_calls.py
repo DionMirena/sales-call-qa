@@ -82,7 +82,7 @@ CALLS = [
     {
         "name": "no_cooling_off",
         "script": "call_no_cooling_off.txt",
-        "description": "James O'Brien — never explicitly states 14-day cooling-off period — fail",
+        "description": "James O'Brien — never explicitly states the cooling-off period — fail",
     },
     {
         "name": "no_next_steps",

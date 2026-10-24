@@ -46,7 +46,7 @@ AGENT: Will do. Now — the figures I've been giving you are illustrative, not a
 CUSTOMER: Do I need to see a doctor for it?
 AGENT: Not usually. You complete it yourself online. Occasionally underwriters ask for a GP report for clarification — for example if there's a more complex medical history — but for your profile I'd expect it to be straightforward. If they do need a report, they contact your GP directly and let you know.
 CUSTOMER: Good. I really don't have time for waiting rooms.
-AGENT: Ha, completely understandable. Right, there's one more important thing I should mention — once a policy is issued, you have a fourteen day cooling off period during which you can cancel and receive a full refund. No questions asked, no penalties. So there's absolutely no risk in getting the process started.
+AGENT: Ha, completely understandable. Right, there's one more important thing I should mention — once a policy is issued, you have a thirty day cooling off period during which you can cancel and receive a full refund. No questions asked, no penalties. So there's absolutely no risk in getting the process started.
 CUSTOMER: Oh, that's reassuring. I always worry about getting committed to something before I'm ready.
 AGENT: No, definitely not the case here. And you can withdraw from the application at any point before the policy is issued if you have second thoughts. There's no obligation until you're completely happy.
 CUSTOMER: Perfect. One last thing — my mate Dave also said life insurance can affect things. Like other financial products or memberships. Is that true?

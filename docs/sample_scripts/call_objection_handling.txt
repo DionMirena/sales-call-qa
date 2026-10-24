@@ -16,7 +16,7 @@ AGENT: That's fair. For a healthy thirty-five year old with a young child, a lot
 CUSTOMER: It does, but I've heard these policies can be really hard to claim on.
 AGENT: That's a really valid concern. The main thing to know is that term life pays out if you die during the policy term — it's quite straightforward. The key is disclosing everything accurately when you apply. Problems arise when people don't declare pre-existing conditions. Since you've said you're healthy, that should be very straightforward.
 CUSTOMER: And what if I want to cancel?
-AGENT: Once the policy is issued, you have a fourteen day cooling off period where you can cancel for a full refund, no questions asked. After that, you can cancel at any time — you'd just stop paying and the cover would end.
+AGENT: Once the policy is issued, you have a thirty day cooling off period where you can cancel for a full refund, no questions asked. After that, you can cancel at any time — you'd just stop paying and the cover would end.
 CUSTOMER: Okay, that's fair enough. So what happens next?
 AGENT: I'll email you a summary with a quote illustration and a link to begin the application. The underwriting team follows up within two working days with the health questionnaire. No obligation at any stage.
 CUSTOMER: Right, okay. That sounds manageable. Let's do that.

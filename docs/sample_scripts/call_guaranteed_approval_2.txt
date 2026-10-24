@@ -8,7 +8,7 @@ AGENT: Can I ask your age and roughly what level of cover you're thinking?
 CUSTOMER: I'm sixty-two. I'd like maybe a hundred thousand pounds to leave for my kids.
 AGENT: Perfect. At sixty-two with guaranteed acceptance, we can absolutely get that sorted for you. The premium would be around eighty-five pounds a month.
 CUSTOMER: Is there any cooling off period if I change my mind?
-AGENT: Yes, there's a standard fourteen day cancellation window once the policy is issued.
+AGENT: Yes, there's a standard thirty day cancellation window once the policy is issued.
 CUSTOMER: Okay. What happens next?
 AGENT: I'll get your application started now. I just need a few details — your full name, address, date of birth, and bank details for the direct debit.
 CUSTOMER: I can give you my name and address but I'd rather not give bank details over the phone today.

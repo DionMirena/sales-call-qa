@@ -32,7 +32,7 @@ AGENT: Great question. In the worst case, assuming your husband also had a claim
 CUSTOMER: That makes sense. I think I'd lean toward that option.
 AGENT: Before we go further on that, there are a couple of things I want to make sure I've told you. One, nothing I'm quoting you today is a guaranteed price. The final premium depends on the underwriting process, which means the insurer will ask questions about your asthma, blood pressure medication, and smoking history. Based on what you've told me, I'd expect it to be in the range I've quoted, but it could be slightly higher.
 CUSTOMER: Okay, that's fair.
-AGENT: Two, once you receive your policy documents, you have a fourteen day cooling off period to review everything. If you change your mind for any reason during that window, you can cancel and receive a full refund with no penalty.
+AGENT: Two, once you receive your policy documents, you have a thirty day cooling off period to review everything. If you change your mind for any reason during that window, you can cancel and receive a full refund with no penalty.
 CUSTOMER: That's reassuring.
 AGENT: Now, I also want to talk briefly about whether it's worth considering joint life cover versus two separate policies. With joint, you get one payout and the policy ends. With separate policies, each person has their own sum assured. Given that your situations are different and your husband has employer cover, I'd actually lean toward separate policies, but it depends on cost. Do you want me to check whether a joint policy would be cheaper?
 CUSTOMER: Yes, please compare them.
@@ -44,7 +44,7 @@ AGENT: Exactly. Each policy is completely independent. Given you have two young 
 CUSTOMER: I appreciate that. I'll talk to him tonight.
 AGENT: Perfect. The main things to discuss are the sum assured, the term, and whether you go joint or separate. What I'll do is send you a summary email with both scenarios, the key terms, and what the underwriting process looks like. That way you and your husband can review it together before committing to anything.
 CUSTOMER: That would be really helpful. Thank you Emma.
-AGENT: Of course. One last thing, just to summarise what I'll be sending you. Option one, decreasing term, one hundred and sixty thousand over twelve years, around eighteen to twenty two pounds. Option two, level term, three hundred thousand over twenty years, around forty to forty eight pounds. And the comparison with a joint policy. The email will also explain the fourteen day cooling off period, the underwriting process, and what documents you'll need. Does that all sound right?
+AGENT: Of course. One last thing, just to summarise what I'll be sending you. Option one, decreasing term, one hundred and sixty thousand over twelve years, around eighteen to twenty two pounds. Option two, level term, three hundred thousand over twenty years, around forty to forty eight pounds. And the comparison with a joint policy. The email will also explain the thirty day cooling off period, the underwriting process, and what documents you'll need. Does that all sound right?
 CUSTOMER: Yes, that covers everything we discussed.
 AGENT: Wonderful. And just for the record, your contact email is the one on the form?
 CUSTOMER: Yes, that's the right one.

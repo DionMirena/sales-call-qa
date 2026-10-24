@@ -127,7 +127,7 @@ AGENT: Completely understandable. What works for you day and time wise?
 CUSTOMER: Thursday afternoon? After about two?
 AGENT: Thursday afternoon works perfectly. Shall we say two o'clock? I'll call on this number.
 CUSTOMER: Yes, two o'clock on Thursday. That's great.
-AGENT: Brilliant. And just before I let you go — one last important thing. When the policies are eventually issued, you'll each have a fourteen day cooling off period from the date of issue. During that time, you can cancel either policy for a full refund, no questions asked. So there's genuinely no financial risk in starting the application — if you change your mind, you're fully protected.
+AGENT: Brilliant. And just before I let you go — one last important thing. When the policies are eventually issued, you'll each have a thirty day cooling off period from the date of issue. During that time, you can cancel either policy for a full refund, no questions asked. So there's genuinely no financial risk in starting the application — if you change your mind, you're fully protected.
 CUSTOMER: That's good to know. I like that there's an out.
 AGENT: There is, and I always want people to know that before they start. Alright, so to confirm the plan: I'll send the email today with the illustrations for both of you, the critical illness overview, and the trust information. On Thursday at two I'll call back to talk through any questions, and if you're both happy we can initiate the applications at that point. Does that all sound right?
 CUSTOMER: Yes, that's perfect. Thank you, Emma.

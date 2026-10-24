@@ -16,7 +16,7 @@ AGENT: That's really helpful. Based on what you've shared, I think a decreasing 
 CUSTOMER: That sounds reasonable. What does underwriting involve?
 AGENT: It's mostly a health questionnaire — they'll ask about your blood pressure medication, family medical history, lifestyle. It's usually straightforward. The important thing is it's not a guaranteed rate until underwriting completes.
 CUSTOMER: Okay, understood.
-AGENT: Also, once the policy is issued, you have a fourteen day cooling off period where you can cancel for a full refund, no questions asked.
+AGENT: Also, once the policy is issued, you have a thirty day cooling off period where you can cancel for a full refund, no questions asked.
 CUSTOMER: Oh good, that's reassuring.
 AGENT: Perfect. So the next steps are I'll send you a summary email today with the product details, a quote illustration, and a link to start the application. The underwriting team will then be in touch within two working days. Does that work for you?
 CUSTOMER: Yes, that's great. Thanks, Emma.

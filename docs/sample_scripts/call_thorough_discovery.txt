@@ -20,6 +20,6 @@ AGENT: Right. So thinking about it holistically: you've got employer cover of ei
 CUSTOMER: That's helpful context. I hadn't thought about splitting the cover.
 AGENT: It's worth considering. The premium is confirmed after underwriting, not before — I want to be clear that the figures I've quoted are illustrative, not a guarantee.
 CUSTOMER: I understand. What's the process to apply?
-AGENT: I'll email you a detailed illustration today — it'll cover both options so you can compare. There'll be a link to begin the application at your own pace. Once you submit, the underwriting team follows up within two working days. And once the policy is issued, you have a fourteen day cooling off period to cancel for a full refund.
+AGENT: I'll email you a detailed illustration today — it'll cover both options so you can compare. There'll be a link to begin the application at your own pace. Once you submit, the underwriting team follows up within two working days. And once the policy is issued, you have a thirty day cooling off period to cancel for a full refund.
 CUSTOMER: That all sounds very thorough. Thank you, Daniel.
 AGENT: My pleasure. I'll get that email sent within the hour. Congratulations again on the baby, and have a great day.
