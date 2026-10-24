@@ -9,7 +9,7 @@ A Laravel tool for QA managers to evaluate life insurance sales calls against cu
 | **Templates** | Create/edit/duplicate templates with weighted criteria (pass/fail, yes/no/na, 1–5 scale, extract) |
 | **Upload** | Upload MP3/WAV/M4A/AAC/OGG/FLAC/WebM up to 1 GB |
 | **Processing** | ffmpeg normalise → Deepgram transcribe → Claude score, all in a queue job |
-| **Results page** | Audio player with transcript sync, evidence linking, speaker swap |
+| **Results page** | Audio player with playback speed, transcript sync + line highlight, evidence linking, speaker swap, download |
 | **Overrides** | Inline per-criterion overrides with append-only audit trail; score recalculates immediately |
 | **Dashboard** | Today's stats, needs-review queue |
 | **Calls list** | Filterable by agent / template / outcome / status / date range, paginated |
@@ -22,64 +22,117 @@ A Laravel tool for QA managers to evaluate life insurance sales calls against cu
 
 ## Requirements
 
-- PHP 8.3+ with `pdo_sqlite`, `pdo_mysql`, `fileinfo`, `mbstring`, `curl`, `zip`
-- Composer 2.x
-- Node.js 18+ and npm
-- ffmpeg (any recent build)
-- MySQL 8.x (local)
+| Requirement | Version |
+|---|---|
+| PHP | 8.3+ with `pdo_mysql`, `fileinfo`, `mbstring`, `curl`, `zip` |
+| Composer | 2.x |
+| Node.js | 20+ |
+| npm | bundled with Node |
+| MySQL | 8.x |
+| ffmpeg + ffprobe | any recent build (required for audio normalisation) |
+| Python 3 + edge-tts | only needed to **generate** sample call audio (not for running the app) |
+
+Install edge-tts:
+```bash
+pip install edge-tts
+```
 
 ---
 
 ## Setup
 
 ```bash
-git clone <repo-url> sales-call-qa
+git clone https://github.com/DionMirena/sales-call-qa.git
 cd sales-call-qa
-cp .env.example .env
 composer install
-php artisan key:generate
-php artisan migrate
-php artisan db:seed
 npm install && npm run build
-php artisan serve
+cp .env.example .env
+php artisan key:generate
 ```
 
-Open http://localhost:8000 and log in (see **Seeded logins** below).
+### Configure `.env`
 
-### Fill in `.env`
+Open `.env` and set:
 
-```
+```dotenv
+# Database
+DB_DATABASE=sales_call_qa
+DB_USERNAME=root
 DB_PASSWORD=          # your MySQL root password (blank if none)
-DEEPGRAM_API_KEY=     # from console.deepgram.com
-ANTHROPIC_API_KEY=    # from console.anthropic.com
 
-# Optional — defaults shown
-ANTHROPIC_MODEL=claude-sonnet-4-6
-QA_LANGUAGE=en
-QA_FAKE_AI=false
+# API keys (see section below)
+DEEPGRAM_API_KEY=
+ANTHROPIC_API_KEY=
+
+# ffmpeg — only needed if ffmpeg is not on your system PATH
+FFMPEG_PATH=ffmpeg
+FFPROBE_PATH=ffprobe
 ```
 
-### ffmpeg path (Windows)
+Then run migrations and seed demo data:
 
-If ffmpeg is not on your system `PATH`, add the full path to `.env` using forward slashes:
-
+```bash
+php artisan migrate --seed
 ```
-FFMPEG_PATH=C:/path/to/ffmpeg.exe
-FFPROBE_PATH=C:/path/to/ffprobe.exe
-```
-
-Backslashes in `.env` values are treated as escape sequences and will break the dotenv parser.
 
 ---
 
-## Demo mode (no API keys)
+## API keys
 
-Set `QA_FAKE_AI=true` in `.env`.  
+### Deepgram (required for real call transcription)
+
+1. Create a free account at [console.deepgram.com](https://console.deepgram.com) — free credit is included.
+2. Generate an API key and set `DEEPGRAM_API_KEY=` in `.env`.
+
+### Anthropic Claude (optional — for AI scoring)
+
+Set `ANTHROPIC_API_KEY=` in `.env`. Without it, the app falls back to a free rule-based keyword scorer that still produces pass/fail outcomes; you just won't get natural-language reasoning per criterion.
+
+### No keys at all (demo mode)
+
+```dotenv
+QA_FAKE_AI=true
+```
+
 The app uses fixture transcription and fake scoring — the full UI is clickable, including overrides and the results page.
 
 ---
 
-## Seeded logins
+## Running the app
+
+Two processes must run simultaneously:
+
+```bash
+# Terminal 1 — web server
+php artisan serve
+
+# Terminal 2 — queue worker (handles call processing)
+php artisan queue:work --timeout=900
+```
+
+Open [http://localhost:8000](http://localhost:8000) and log in (see **Demo logins** below).
+
+---
+
+## Sample calls
+
+Audio files are not included in the repository. To generate 14 sample MP3s (requires edge-tts and ffmpeg):
+
+```bash
+python scripts/make_sample_calls.py
+```
+
+Then load them into the database:
+
+```bash
+php artisan db:seed --class=SampleCallSeeder
+```
+
+The seeder creates DB records and dispatches processing jobs; the queue worker (above) must be running to transcribe and score them.
+
+---
+
+## Demo logins
 
 | Role | Email | Password |
 |---|---|---|
@@ -90,29 +143,24 @@ The app uses fixture transcription and fake scoring — the full UI is clickable
 
 ---
 
-## Running the queue
-
-Call processing (normalise → transcribe → score) runs as a queued job.
-
-```bash
-# Single worker
-php artisan queue:work --timeout=600
-
-# Everything together (server + queue + Vite hot-reload)
-composer run dev
-```
-
----
-
 ## Running tests
 
 ```bash
 php artisan test
-# or directly
-./vendor/bin/phpunit
 ```
 
-Tests use an in-memory SQLite database — no MySQL required. 141 tests, ~15 seconds.
+Tests use an in-memory SQLite database — no MySQL required. 173 tests, ~17 seconds.
+
+---
+
+## ffmpeg on Windows
+
+If ffmpeg is not on your system `PATH` (common with WinGet installs), set the full paths in `.env` using forward slashes — backslashes are treated as escape sequences:
+
+```dotenv
+FFMPEG_PATH=C:/Users/you/AppData/Local/Microsoft/WinGet/.../ffmpeg.exe
+FFPROBE_PATH=C:/Users/you/AppData/Local/Microsoft/WinGet/.../ffprobe.exe
+```
 
 ---
 
@@ -123,17 +171,12 @@ Tests use an in-memory SQLite database — no MySQL required. 141 tests, ~15 sec
 Evaluates AI scoring accuracy against a hand-labelled golden set.
 
 ```bash
-# Use the default golden set (tests/golden/golden_set.json)
-php artisan qa:eval
-
-# Different file
+php artisan qa:eval                              # default golden set
 php artisan qa:eval --golden=tests/golden/my_set.json
-
-# Override template name
 php artisan qa:eval --template="Standard Insurance QA"
 ```
 
-Exits `0` if overall accuracy ≥ 80%, `1` otherwise — usable in CI.  
+Exits `0` if overall accuracy ≥ 80%, `1` otherwise — usable in CI.
 See `docs/golden_set.md` for the file format.
 
 ### `php artisan qa:stats`
@@ -146,13 +189,11 @@ php artisan qa:stats --days=0   # all time
 php artisan qa:stats --template="Standard Insurance QA"
 ```
 
-Outputs: total calls, avg score, pass/fail breakdown, per-template table, top-10 failed criteria.
-
 ---
 
 ## Upload limits
 
-For calls longer than a few minutes, ensure your PHP and web-server limits are generous:
+For calls longer than a few minutes, ensure your PHP and web-server limits allow large uploads:
 
 ```ini
 ; php.ini
@@ -171,13 +212,16 @@ app/
   Jobs/               ProcessCallJob
   Models/             Call, Agent, Template, Criterion, CriterionResult, Override, TranscriptSegment
   Policies/           CallPolicy, TemplatePolicy, OverridePolicy
-  Services/           TranscriptionService, ScoringService (+ Fake/Claude/Deepgram impls)
+  Services/           TranscriptionService, ScoringService (+ Fake/Claude/Deepgram/Keyword impls)
   Support/            AudioNormaliser, EvidenceVerifier, ScoreCalculator
 docs/
   golden_set.md       Golden set format spec
-  ai_notes.md         Log of AI scoring mistakes
+  ai_notes.md         Log of AI scoring decisions
+  sample_scripts/     Call transcripts used to generate sample audio
 tests/
   Feature/            HTTP + job integration tests
   Unit/               EvidenceVerifier, ScoreCalculator unit tests
   golden/             golden_set.json (labelled eval cases)
+scripts/
+  make_sample_calls.py   Generate sample MP3s with edge-tts + ffmpeg
 ```
