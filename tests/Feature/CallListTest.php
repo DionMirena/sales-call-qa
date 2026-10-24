@@ -121,6 +121,55 @@ class CallListTest extends TestCase
         $this->assertEquals($new->id, $response->viewData('calls')->first()->id);
     }
 
+    public function test_filter_by_score_min(): void
+    {
+        $manager = $this->makeManager();
+        $low  = $this->makeCall($manager, ['score_percent' => 50.0]);
+        $high = $this->makeCall($manager, ['score_percent' => 90.0]);
+
+        $ids = $this->actingAs($manager)
+            ->get(route('calls.index', ['score_min' => 80]))
+            ->viewData('calls')->pluck('id')->toArray();
+
+        $this->assertContains($high->id, $ids);
+        $this->assertNotContains($low->id, $ids);
+    }
+
+    public function test_filter_by_score_max(): void
+    {
+        $manager = $this->makeManager();
+        $low  = $this->makeCall($manager, ['score_percent' => 50.0]);
+        $high = $this->makeCall($manager, ['score_percent' => 90.0]);
+
+        $ids = $this->actingAs($manager)
+            ->get(route('calls.index', ['score_max' => 70]))
+            ->viewData('calls')->pluck('id')->toArray();
+
+        $this->assertContains($low->id, $ids);
+        $this->assertNotContains($high->id, $ids);
+    }
+
+    public function test_filter_needs_review_only(): void
+    {
+        $manager  = $this->makeManager();
+        $clean    = $this->makeCall($manager);
+        $flagged  = $this->makeCall($manager);
+        $flagged->criterionResults()->create([
+            'criterion_name'        => 'C', 'criterion_description' => 'D',
+            'criterion_type'        => 'pass_fail', 'criterion_weight' => 1,
+            'criterion_is_critical' => false, 'ai_result' => 'fail', 'ai_score' => 0.0,
+            'confidence' => 0.3, 'reasoning' => 'r', 'evidence' => [],
+            'verification_status' => 'unverified', 'needs_review' => true,
+        ]);
+
+        $ids = $this->actingAs($manager)
+            ->get(route('calls.index', ['needs_review' => '1']))
+            ->viewData('calls')->pluck('id')->toArray();
+
+        $this->assertContains($flagged->id, $ids);
+        $this->assertNotContains($clean->id, $ids);
+    }
+
     public function test_results_are_paginated(): void
     {
         $manager = $this->makeManager();

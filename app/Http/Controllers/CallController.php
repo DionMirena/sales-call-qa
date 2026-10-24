@@ -59,6 +59,15 @@ class CallController extends Controller
         if ($request->filled('date_to')) {
             $query->whereDate('created_at', '<=', $request->date_to);
         }
+        if ($request->filled('score_min')) {
+            $query->where('score_percent', '>=', (float) $request->score_min);
+        }
+        if ($request->filled('score_max')) {
+            $query->where('score_percent', '<=', (float) $request->score_max);
+        }
+        if ($request->boolean('needs_review')) {
+            $query->whereHas('criterionResults', fn ($q) => $q->where('needs_review', true));
+        }
 
         $calls     = $query->latest()->paginate(25)->withQueryString();
         $agents    = Agent::orderBy('name')->get(['id', 'name']);

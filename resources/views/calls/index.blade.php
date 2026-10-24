@@ -25,8 +25,13 @@
         @endif
 
         {{-- Filters --}}
+        @php
+            $allFilterKeys  = ['agent_id','template_id','outcome','status','date_from','date_to','score_min','score_max'];
+            $activeFilters  = collect(request()->only($allFilterKeys))->filter()->count()
+                            + (request()->boolean('needs_review') ? 1 : 0);
+        @endphp
         <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4"
-             x-data="{ showFilters: {{ collect(request()->only(['agent_id','template_id','outcome','status','date_from','date_to']))->filter()->isNotEmpty() ? 'true' : 'false' }} }">
+             x-data="{ showFilters: {{ $activeFilters > 0 ? 'true' : 'false' }} }">
             <div class="flex items-center justify-between mb-3">
                 <button @click="showFilters = !showFilters"
                         class="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors">
@@ -35,7 +40,6 @@
                               d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                     </svg>
                     Filters
-                    @php $activeFilters = collect(request()->only(['agent_id','template_id','outcome','status','date_from','date_to']))->filter()->count(); @endphp
                     @if($activeFilters)
                         <span class="px-1.5 py-0.5 bg-indigo-600 text-white text-xs rounded-full">{{ $activeFilters }}</span>
                     @endif
@@ -103,6 +107,26 @@
                             <input type="date" name="date_to" value="{{ request('date_to') }}"
                                    class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Score min %</label>
+                            <input type="number" name="score_min" min="0" max="100" step="1"
+                                   value="{{ request('score_min') }}" placeholder="0"
+                                   class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Score max %</label>
+                            <input type="number" name="score_max" min="0" max="100" step="1"
+                                   value="{{ request('score_max') }}" placeholder="100"
+                                   class="w-full text-sm border-slate-200 rounded-xl bg-slate-50 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-4">
+                        <label class="flex items-center gap-1.5 text-sm text-slate-600 cursor-pointer select-none">
+                            <input type="checkbox" name="needs_review" value="1"
+                                   {{ request()->boolean('needs_review') ? 'checked' : '' }}
+                                   class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                            Needs review only
+                        </label>
                     </div>
                     <div class="mt-3 flex gap-2">
                         <button type="submit"
