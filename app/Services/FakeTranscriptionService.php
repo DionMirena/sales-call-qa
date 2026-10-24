@@ -10,7 +10,7 @@ class FakeTranscriptionService implements TranscriptionService
         return [
             'duration_seconds' => 163,
             'segments'         => [
-                ['speaker' => 0, 'start_ms' => 1000,   'end_ms' => 8000,   'text' => 'Hello, this is Sarah Mitchell from Clearview Life Insurance. Just to let you know, this call may be recorded for training and quality purposes.'],
+                ['speaker' => 0, 'start_ms' => 1000,   'end_ms' => 8000,   'text' => 'Hello, this is Sarah Mitchell from Insurvas Insurance. Just to let you know, this call may be recorded for training and quality purposes.'],
                 ['speaker' => 1, 'start_ms' => 8500,   'end_ms' => 10000,  'text' => 'Sure, that\'s fine.'],
                 ['speaker' => 0, 'start_ms' => 10500,  'end_ms' => 18000,  'text' => 'Wonderful. I\'m calling today because you recently submitted an enquiry about life insurance cover. Could you tell me your age?'],
                 ['speaker' => 1, 'start_ms' => 18500,  'end_ms' => 20000,  'text' => 'I\'m thirty eight.'],
