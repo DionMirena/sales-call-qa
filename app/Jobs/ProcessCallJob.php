@@ -104,14 +104,19 @@ class ProcessCallJob implements ShouldQueue
         $companyName = strtolower((string) config('qa.company_name', ''));
         $head        = array_slice($segments, 0, 10);
 
-        foreach ($head as $seg) {
-            $text = strtolower($seg['text'] ?? '');
-            if (
-                str_contains($text, 'my name is') ||
-                str_contains($text, 'this is ') ||
-                ($companyName !== '' && str_contains($text, $companyName))
-            ) {
-                return (int) $seg['speaker'];
+        // Strongest signal first: a customer may answer "Hello, this is Tom",
+        // but only the agent names the company.
+        $signals = [
+            fn ($text) => $companyName !== '' && str_contains(strtolower($text), $companyName),
+            fn ($text) => str_contains(strtolower($text), 'my name is'),
+            fn ($text) => (bool) preg_match('/\b[Tt]his is [A-Z][a-z]+/', $text),
+        ];
+
+        foreach ($signals as $matches) {
+            foreach ($head as $seg) {
+                if ($matches($seg['text'] ?? '')) {
+                    return (int) $seg['speaker'];
+                }
             }
         }
 

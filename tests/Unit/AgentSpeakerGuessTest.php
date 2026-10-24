@@ -77,6 +77,30 @@ class AgentSpeakerGuessTest extends TestCase
         $this->assertEquals(1, ProcessCallJob::guessAgentSpeaker($segments));
     }
 
+    public function test_customer_answering_with_their_name_is_not_the_agent(): void
+    {
+        config(['qa.company_name' => 'INSURVAS']);
+
+        $segments = [
+            $this->seg(1, 'Hello, this is Tom.'),
+            $this->seg(0, 'Hi Tom, I am calling from INSURVAS Insurance about your enquiry.'),
+        ];
+
+        $this->assertEquals(0, ProcessCallJob::guessAgentSpeaker($segments));
+    }
+
+    public function test_casual_this_is_does_not_count_as_an_introduction(): void
+    {
+        config(['qa.company_name' => '']);
+
+        $segments = [
+            $this->seg(1, 'Thanks for calling back.'),
+            $this->seg(0, 'Oh this is great timing actually.'),
+        ];
+
+        $this->assertEquals(1, ProcessCallJob::guessAgentSpeaker($segments));
+    }
+
     public function test_returns_zero_for_empty_segments(): void
     {
         $this->assertEquals(0, ProcessCallJob::guessAgentSpeaker([]));
