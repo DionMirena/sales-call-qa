@@ -21,7 +21,7 @@
             $passRate = null;
             // We compute pass rate from needs review context if available
         @endphp
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
 
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
                 <div class="flex items-center justify-between mb-3">
@@ -71,6 +71,22 @@
                     {{ $needsReviewCount }}
                 </p>
                 <p class="text-xs text-slate-400 mt-1">flagged for review</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Auto-fails</p>
+                    <div class="w-8 h-8 {{ $autoFailCount > 0 ? 'bg-red-50' : 'bg-slate-50' }} rounded-xl flex items-center justify-center">
+                        <svg class="w-4 h-4 {{ $autoFailCount > 0 ? 'text-red-500' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-3xl font-bold {{ $autoFailCount > 0 ? 'text-red-600' : 'text-slate-900' }}">
+                    {{ $autoFailCount }}
+                </p>
+                <p class="text-xs text-slate-400 mt-1">critical failures</p>
             </div>
 
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">

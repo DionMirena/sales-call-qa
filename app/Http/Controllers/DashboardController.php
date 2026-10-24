@@ -26,11 +26,16 @@ class DashboardController extends Controller
             ->whereHas('criterionResults', fn ($q) => $q->where('needs_review', true))
             ->count();
 
+        $autoFailCount = Call::when(! $isAdmin, fn ($q) => $q->where('uploaded_by', auth()->id()))
+            ->where('status', 'done')
+            ->where('outcome', 'auto_fail')
+            ->count();
+
         $needsReviewCalls = Call::with(['agent', 'template'])
             ->when(! $isAdmin, fn ($q) => $q->where('uploaded_by', auth()->id()))
             ->whereHas('criterionResults', fn ($q) => $q->where('needs_review', true))
             ->withCount(['criterionResults as needs_review_count' => fn ($q) => $q->where('needs_review', true)])
-            ->latest()
+            ->oldest()
             ->limit(10)
             ->get();
 
@@ -38,6 +43,6 @@ class DashboardController extends Controller
         $outcomesData = $stats['outcomesData'];
         $trendData    = $stats['trendData'];
 
-        return view('dashboard', compact('todayDone', 'todayAvgScore', 'needsReviewCount', 'needsReviewCalls', 'outcomesData', 'trendData'));
+        return view('dashboard', compact('todayDone', 'todayAvgScore', 'needsReviewCount', 'autoFailCount', 'needsReviewCalls', 'outcomesData', 'trendData'));
     }
 }

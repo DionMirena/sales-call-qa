@@ -120,6 +120,35 @@ class DashboardTest extends TestCase
         $this->assertNotContains($noReview->id, $ids);
     }
 
+    public function test_auto_fail_count_is_correct(): void
+    {
+        $manager = User::factory()->create(['role' => 'manager']);
+
+        $this->makeCall($manager, ['outcome' => 'auto_fail']);
+        $this->makeCall($manager, ['outcome' => 'auto_fail']);
+        $this->makeCall($manager, ['outcome' => 'fail']);
+
+        $response = $this->actingAs($manager)->get(route('dashboard'));
+        $this->assertEquals(2, $response->viewData('autoFailCount'));
+    }
+
+    public function test_needs_review_queue_is_ordered_oldest_first(): void
+    {
+        $manager = User::factory()->create(['role' => 'manager']);
+
+        $newer = $this->makeCall($manager);
+        $older = $this->makeCall($manager);
+        DB::table('calls')->where('id', $older->id)->update(['created_at' => now()->subDay()]);
+
+        $this->addNeedsReviewResult($newer);
+        $this->addNeedsReviewResult($older);
+
+        $response = $this->actingAs($manager)->get(route('dashboard'));
+        $queue = $response->viewData('needsReviewCalls');
+
+        $this->assertEquals($older->id, $queue->first()->id);
+    }
+
     public function test_needs_review_count_reflects_withcount(): void
     {
         $manager = User::factory()->create(['role' => 'manager']);
