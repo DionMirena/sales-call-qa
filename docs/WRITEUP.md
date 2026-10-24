@@ -8,6 +8,14 @@ This tool lets QA managers define a custom criteria template (pass/fail, yes/no/
 
 ---
 
+## Assumptions and sample data
+
+- No call recordings or QA criteria were provided; "it's in your hands" was the brief.
+- I wrote all 14 call scripts (covering good calls, specific compliance failures, and lengths from 1 to 50 minutes) and generated audio with Microsoft edge-tts, so the correct answer is known for every call and accuracy can be measured objectively with the golden set (`php artisan qa:eval`).
+- **Limitation:** synthetic audio is cleaner than real calls — no background noise, accents, overlapping speech, or transcription errors. The scorer has been tuned to these scripts, so real-call accuracy will differ; see "Where it gets it wrong" below.
+
+---
+
 ## Architecture decisions
 
 ### Service interfaces + demo mode
