@@ -126,14 +126,14 @@ class KeywordScoringService implements ScoringService
     private const CONCEPTS = [
         'identification' => ['label' => 'agent introduction',  'pattern' => '/\b((?i:my name is)|(?i:this is) [A-Z][a-z]+|(?i:i\'?m) [A-Z][a-z]+,? (?i:from|with|at|calling))/'],
         'recording'      => ['label' => 'recording notice',    'pattern' => '/\brecord(ed|ing)\b/i'],
-        'purpose'        => ['label' => 'reason for the call', 'pattern' => '/\b(calling (you )?(today )?(because|about|regarding|to)|reason for (my|the|this) call|following up|follow up on|your (recent )?(enquiry|inquiry|request|application))/i'],
+        'purpose'        => ['label' => 'reason for the call', 'pattern' => '/\b(calling (you )?(today )?(because|about|regarding|to)|reason for (my|the|this) call|following up|follow up on|your (recent )?(enquiry|inquiry|request|application)|transferred\b.{0,20}\b(about|regarding))/i'],
         'age'            => ['label' => 'age question',        'pattern' => '/\b(how old|your age|age is|date of birth|what age)\b/i'],
         'health'         => ['label' => 'health question',     'pattern' => '/\b(health|medical|smoke|smoker|conditions?|illness)\b/i'],
         'existing cover' => ['label' => 'existing cover',      'pattern' => '/(\b(existing|already have|current(ly)?)\b.{0,30}\b(cover|policy|insurance)\b|\b(cover|policy|insurance)\b.{0,15}\bcurrently\b)/i'],
         'dependant'      => ['label' => 'dependants',          'pattern' => '/\b(dependants?|dependents?|children|kids|rely on)\b/i'],
         'budget'         => ['label' => 'budget question',     'pattern' => '/\b(budget|afford|comfortable|spend)\b/i'],
         'amount'         => ['label' => 'cover amount',        'pattern' => '/([£$€]\s?\d|\b\d{1,3}(,\d{3})+\b|\b\d[\d,]*\s?(k|thousand|million)\b|\b(thousand|million) (pounds|dollars|euros)|sum assured|of cover)/iu'],
-        'term'           => ['label' => 'policy term',         'pattern' => '/(\b(\d+|five|ten|twelve|fifteen|twenty|twenty[- ]five|thirty|thirty[- ]five|forty)[- ]years?\b|\byear term\b|whole[- ]of[- ]life)/i'],
+        'term'           => ['label' => 'policy term',         'pattern' => '/(\b(\d+|five|ten|twelve|fifteen|twenty|twenty[- ]five|thirty|thirty[- ]five|forty)[- ]years?\b|\byear term\b|whole[- ](of[- ])?life)/i'],
         'cooling'        => ['label' => 'cooling-off period',  'pattern' => '/\b(cooling[- ]off|cancel\w*.{0,40}refund)/i'],
         'next step'      => ['label' => 'next steps',          'pattern' => '/\b(next steps?|what happens next|i\'?ll (send|email|get|have)\b|we\'?ll send|you\'?ll (receive|get)|will follow up|within \w+ (working )?days|send (that|it) over|get that sent)\b/i'],
     ];

@@ -90,6 +90,29 @@ class KeywordScoringServiceTest extends TestCase
         $this->assertMatchesRegularExpression($pattern, "I'll send you the illustration today.");
     }
 
+    // --- US live-transfer phrasings ---
+
+    public function test_purpose_pattern_matches_live_transfer_opening(): void
+    {
+        $pattern = $this->constants('CONCEPTS')['purpose']['pattern'];
+        $this->assertMatchesRegularExpression($pattern, 'You just got transferred over to me about the final expense coverage.');
+        $this->assertMatchesRegularExpression($pattern, "You've been transferred to me regarding your life insurance quote.");
+    }
+
+    public function test_purpose_pattern_ignores_unrelated_transfers(): void
+    {
+        $pattern = $this->constants('CONCEPTS')['purpose']['pattern'];
+        $this->assertDoesNotMatchRegularExpression($pattern, 'My salary is transferred on Fridays.');
+    }
+
+    public function test_term_pattern_matches_us_and_uk_whole_life(): void
+    {
+        $pattern = $this->constants('CONCEPTS')['term']['pattern'];
+        $this->assertMatchesRegularExpression($pattern, 'a whole life final expense policy');
+        $this->assertMatchesRegularExpression($pattern, 'a whole-of-life policy');
+        $this->assertMatchesRegularExpression($pattern, 'a twenty-year term life policy');
+    }
+
     // --- pressure phrase detection ---
 
     public function test_findPhrase_detects_lock_in_the(): void
