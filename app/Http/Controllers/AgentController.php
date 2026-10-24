@@ -9,11 +9,17 @@ use Illuminate\View\View;
 
 class AgentController extends Controller
 {
+    /** Admins see every call; managers only see the calls they uploaded (same rule as CallPolicy). */
+    private function onlyVisibleCalls($query)
+    {
+        return $query->when(! auth()->user()->isAdmin(), fn ($q) => $q->where('uploaded_by', auth()->id()));
+    }
+
     public function index(): View
     {
         $agents = Agent::withCount([
-            'calls as total_calls_count',
-            'calls as done_calls_count' => fn ($q) => $q->where('status', 'done'),
+            'calls as total_calls_count' => fn ($q) => $this->onlyVisibleCalls($q),
+            'calls as done_calls_count'  => fn ($q) => $this->onlyVisibleCalls($q)->where('status', 'done'),
         ])
             ->orderBy('name')
             ->paginate(25);
@@ -23,7 +29,14 @@ class AgentController extends Controller
 
     public function show(Agent $agent): View
     {
-        $doneCalls = $agent->calls()
+        $recentCalls = $this->onlyVisibleCalls($agent->calls())
+            ->with('template')
+            ->where('status', 'done')
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        $doneCalls = $this->onlyVisibleCalls($agent->calls())
             ->where('status', 'done')
             ->whereNotNull('score_percent')
             ->orderBy('created_at')
@@ -63,6 +76,6 @@ class AgentController extends Controller
             ];
         }
 
-        return view('agents.show', compact('agent', 'totalDone', 'avgScore', 'passRate', 'failCounts', 'weeks'));
+        return view('agents.show', compact('agent', 'totalDone', 'avgScore', 'passRate', 'failCounts', 'weeks', 'recentCalls'));
     }
 }

@@ -130,9 +130,6 @@
             <div class="px-5 py-4 border-b border-slate-100">
                 <h3 class="text-sm font-semibold text-slate-700">Recent Calls</h3>
             </div>
-            @php
-                $recentCalls = $agent->calls()->with('template')->where('status', 'done')->latest()->limit(10)->get();
-            @endphp
             @if ($recentCalls->isEmpty())
                 <div class="py-10 text-center text-sm text-slate-400">No completed calls yet.</div>
             @else

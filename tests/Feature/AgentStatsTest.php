@@ -49,6 +49,30 @@ class AgentStatsTest extends TestCase
         ], $attrs));
     }
 
+    public function test_manager_only_sees_their_own_calls_on_agent_pages(): void
+    {
+        $manager = User::factory()->create(['role' => 'manager']);
+        $other   = User::factory()->create(['role' => 'manager']);
+        $admin   = User::factory()->create(['role' => 'admin']);
+        $agent   = Agent::factory()->create();
+
+        $own     = $this->makeCall($agent, $manager, ['score_percent' => 90.0]);
+        $foreign = $this->makeCall($agent, $other, ['score_percent' => 20.0, 'outcome' => 'auto_fail']);
+
+        $show = $this->actingAs($manager)->get(route('agents.show', $agent))->assertOk();
+        $this->assertEquals(1, $show->viewData('totalDone'));
+        $this->assertEquals(90.0, $show->viewData('avgScore'));
+        $this->assertSame([$own->id], $show->viewData('recentCalls')->pluck('id')->all());
+
+        $index = $this->actingAs($manager)->get(route('agents.index'))->assertOk();
+        $this->assertEquals(1, $index->viewData('agents')->firstWhere('id', $agent->id)->total_calls_count);
+
+        // Admins still see every call.
+        $adminShow = $this->actingAs($admin)->get(route('agents.show', $agent));
+        $this->assertEquals(2, $adminShow->viewData('totalDone'));
+        $this->assertContains($foreign->id, $adminShow->viewData('recentCalls')->pluck('id')->all());
+    }
+
     public function test_agent_show_requires_auth(): void
     {
         $agent = Agent::factory()->create();
