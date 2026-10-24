@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Seeds 10 sample calls from samples/ directory, spread over the last 3 weeks.
+ * Seeds one call per sample in samples/ (18 calls), spread over the last 3 weeks.
  * Run: php artisan db:seed --class=SampleCallSeeder
  * Then: php artisan queue:work --stop-when-empty --timeout=900
  */
@@ -38,6 +38,12 @@ class SampleCallSeeder extends Seeder
         ['no_cooling_pressure', 2, -11],
         ['joint_policy_full',   3, -8],
         ['marathon_call',       4, -2],
+
+        // The 4 original samples
+        ['good_call',         1, -15],
+        ['long_call',         3, -10],
+        ['no_disclosure',     2, -4],
+        ['pressure_tactics',  4, -3],
     ];
 
     public function run(): void
