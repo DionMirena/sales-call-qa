@@ -27,12 +27,16 @@ CALLS = [
     {
         "name": "good_call",
         "script": "call_good.txt",
-        "description": "Complete compliant call — should pass all criteria",
+        "description": "US live transfer, Sarah Mitchell, 20-year term — should pass all criteria",
+        "agent_voice": "en-US-JennyNeural",
+        "customer_voice": "en-US-GuyNeural",
     },
     {
         "name": "no_disclosure",
         "script": "call_no_disclosure.txt",
-        "description": "Missing call-recording disclosure — critical fail",
+        "description": "US live transfer, James, final expense — no recording notice — critical fail",
+        "agent_voice": "en-US-AndrewNeural",
+        "customer_voice": "en-US-AriaNeural",
     },
     {
         "name": "pressure_tactics",
@@ -157,7 +161,11 @@ async def generate_call(call: dict, tmp_dir: Path) -> Path:
     # Generate each line as a separate MP3
     segment_files = []
     for i, line in enumerate(lines):
-        voice = AGENT_VOICE if line["speaker"] == "AGENT" else CUSTOMER_VOICE
+        # A call can set its own voices (e.g. American calls); otherwise use the British defaults.
+        if line["speaker"] == "AGENT":
+            voice = call.get("agent_voice", AGENT_VOICE)
+        else:
+            voice = call.get("customer_voice", CUSTOMER_VOICE)
         seg_path = str(tmp_dir / f"{call['name']}_{i:04d}.mp3")
         await tts_line(line["text"], voice, seg_path)
         segment_files.append(seg_path)

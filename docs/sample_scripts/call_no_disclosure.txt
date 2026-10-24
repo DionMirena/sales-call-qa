@@ -1,13 +1,13 @@
-AGENT: Good afternoon, this is James from Insurvas Insurance. I'm calling about your life insurance enquiry.
-CUSTOMER: Oh right, yes.
-AGENT: Great. Can I take your full name and date of birth so I can pull up your details?
-CUSTOMER: Sure, it's Michael Clarke, tenth of March nineteen eighty five.
+AGENT: Hey there, this is James with Summit Life Agency, you just got transferred over to me about the final expense coverage.
+CUSTOMER: Oh, okay. Yes.
+AGENT: Great. Can I get your full name and date of birth so I can pull up some rates?
+CUSTOMER: Sure, it's Dorothy Miller, March tenth, nineteen fifty eight.
 AGENT: Perfect. And your address?
-CUSTOMER: Forty two Birchwood Avenue, Bristol, BS3 4RT.
-AGENT: Brilliant. So Michael, I can offer you a whole of life policy with two hundred and fifty thousand pounds of coverage. The premium would be forty five pounds a month. How does that sound?
+CUSTOMER: Forty two Birchwood Avenue, Tampa, Florida.
+AGENT: Alright Dorothy, I can get you a whole life final expense policy with fifteen thousand dollars of coverage. The premium would be sixty two dollars a month. How does that sound?
 CUSTOMER: Hmm, is that the best you can do?
-AGENT: That's our standard rate for your age group. It's a very competitive price.
+AGENT: That's the standard rate for your age. It's a really good price.
 CUSTOMER: Okay, I suppose I can think about it.
-AGENT: Great. Shall I go ahead and set that up for you today?
+AGENT: Great. Should I go ahead and get that set up for you?
 CUSTOMER: Maybe. Can you send me the details first?
-AGENT: Of course. I'll email those over now. Thank you Michael.
+AGENT: Sure thing. I'll mail those over. Thanks Dorothy.
