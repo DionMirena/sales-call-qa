@@ -10,12 +10,13 @@ A Laravel tool for QA managers to evaluate life insurance sales calls against cu
 | **Upload** | Upload MP3/WAV/M4A/AAC/OGG/FLAC/WebM up to 1 GB |
 | **Processing** | ffmpeg normalise → Deepgram transcribe → Claude score, all in a queue job |
 | **Results page** | Audio player with playback speed, transcript sync + line highlight, evidence linking, speaker swap, download |
-| **Overrides** | Inline per-criterion overrides with append-only audit trail; score recalculates immediately |
-| **Dashboard** | Today's stats, needs-review queue |
-| **Calls list** | Filterable by agent / template / outcome / status / date range, paginated |
+| **Overrides** | Inline per-criterion overrides with a required reason and an append-only audit trail; "Mark AI correct" records a confirmation; score recalculates immediately |
+| **Dashboard** | Today's stats, auto-fail count, needs-review queue (oldest first), outcome and trend charts |
+| **Calls list** | Call number and file name, length, filters (agent / template / outcome / status / dates / score range / needs review) and sorting (newest, call number, longest/shortest) |
+| **Stats** | Chart.js page: outcomes, calls and average score per agent, most-failed criteria, score trend |
 | **Agent stats** | Avg score, pass rate, top-failed criteria (override-adjusted), 8-week trend bars |
-| **Delete / Re-score** | Delete removes audio + all records; re-score clears results and re-runs |
-| **Artisan** | `qa:eval` evaluates AI accuracy against a labelled golden set; `qa:stats` shows DB aggregate stats |
+| **Delete / Re-score** | Delete removes audio + all records; re-score keeps the transcript, clears the results and scores again (optionally against another template) |
+| **Artisan** | `qa:eval` measures scoring accuracy against a hand-labelled golden set; `qa:stats` shows totals and the override rate per criterion |
 | **Demo mode** | `QA_FAKE_AI=true` runs the full UI without any API keys |
 
 ---
@@ -48,7 +49,10 @@ composer install
 npm install && npm run build
 cp .env.example .env
 php artisan key:generate
+php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
 ```
+
+The last line creates the empty SQLite database file (it works on Windows, macOS and Linux).
 
 ### Configure `.env`
 
@@ -64,7 +68,7 @@ FFMPEG_PATH=ffmpeg
 FFPROBE_PATH=ffprobe
 ```
 
-The `DB_CONNECTION=sqlite` line is already set; migrations will create `database/database.sqlite` automatically. To use **MySQL** instead, replace the `DB_CONNECTION=sqlite` block with:
+The `DB_CONNECTION=sqlite` line is already set and uses `database/database.sqlite`. To use **MySQL** instead, replace the `DB_CONNECTION=sqlite` block with:
 
 ```dotenv
 DB_CONNECTION=mysql
@@ -92,7 +96,7 @@ php artisan migrate --seed
 
 ### Anthropic Claude (optional — for AI scoring)
 
-Set `ANTHROPIC_API_KEY=` in `.env`. Without it, the app falls back to a free rule-based keyword scorer that still produces pass/fail outcomes; you just won't get natural-language reasoning per criterion.
+Set `ANTHROPIC_API_KEY=` in `.env` (a key starting `sk-ant-`). Without it, the app uses a free rule-based scorer: it checks the real transcript for each criterion, quotes the matching line as evidence, and labels every result "Rule-based check, no AI". Tone is always flagged for human review.
 
 ### No keys at all (demo mode)
 
@@ -100,7 +104,7 @@ Set `ANTHROPIC_API_KEY=` in `.env`. Without it, the app falls back to a free rul
 QA_FAKE_AI=true
 ```
 
-The app uses fixture transcription and fake scoring — the full UI is clickable, including overrides and the results page.
+The app uses fixture transcription and fake scoring: any uploaded audio file gets the same sample transcript, and every criterion passes. The full UI is clickable, including overrides and the results page.
 
 ---
 
@@ -122,11 +126,12 @@ Open [http://localhost:8000](http://localhost:8000) and log in (see **Demo login
 
 ## Sample data
 
-No call recordings or QA criteria were provided. All 14 sample calls are synthetic:
+No call recordings or QA criteria were provided. All 18 sample calls are synthetic:
 
 - Scripts written from scratch, covering good calls, specific compliance failures, and durations from 1 to 50 minutes
-- Audio generated with Microsoft edge-tts (UK voices), so the correct outcome for each call is known and can be measured with `php artisan qa:eval`
-- The sample criteria (`docs/example_criteria.md`) are based on common UK life-insurance compliance requirements (FCA ICOBS, cooling-off obligations); a QA manager can replace them in the template builder
+- Audio generated with Microsoft edge-tts, so the correct outcome for each call is known and can be measured with `php artisan qa:eval`
+- 16 calls are UK-style (British voices, £); calls #15 and #17 are US live-transfer calls (American voices, $, a licensed agent from a fictional agency), modelled on a US agency using a platform such as INSURVAS
+- The sample criteria (`docs/example_criteria.md`) are based on common life-insurance sales compliance, including the cancellation (cooling-off) period: 30 days for UK life insurance under FCA ICOBS 7.1, or the US free-look period. A QA manager can replace them in the template builder
 
 **Limitation:** synthetic audio is cleaner than real calls — no background noise, accents, or overlapping speech.
 
@@ -161,7 +166,7 @@ The queue worker must be running to transcribe and score them.
 php artisan test
 ```
 
-Tests use an in-memory SQLite database — no MySQL required. 173 tests, ~17 seconds.
+Tests use an in-memory SQLite database — no MySQL required. 200+ tests, about 15–40 seconds. No real API is called: Deepgram and Anthropic are mocked with `Http::fake()`.
 
 ---
 
@@ -185,7 +190,7 @@ Evaluates AI scoring accuracy against a hand-labelled golden set.
 ```bash
 php artisan qa:eval                              # default golden set
 php artisan qa:eval --golden=tests/golden/my_set.json
-php artisan qa:eval --template="Standard Insurance QA"
+php artisan qa:eval --template="Standard Life Insurance Sales Call"
 ```
 
 Exits `0` if overall accuracy ≥ 80%, `1` otherwise — usable in CI.
@@ -193,13 +198,25 @@ See `docs/golden_set.md` for the file format.
 
 ### `php artisan qa:stats`
 
-Shows aggregate stats from the live database.
+Shows aggregate stats from the live database: totals, pass/fail/auto-fail counts, pass rate per template, the most-failed criteria, and the override rate per criterion (how often managers changed the result — a high rate means the criterion's wording needs fixing).
 
 ```bash
 php artisan qa:stats            # last 30 days
 php artisan qa:stats --days=0   # all time
-php artisan qa:stats --template="Standard Insurance QA"
+php artisan qa:stats --template="Standard Life Insurance Sales Call"
 ```
+
+---
+
+## Sharing a public link (optional)
+
+To let someone try the app running on your machine, expose port 8000 with a tunnel such as [ngrok](https://ngrok.com):
+
+```bash
+ngrok http 8000
+```
+
+The app already trusts proxy headers (`bootstrap/app.php`), so styles and links work over the tunnel's https address. Change the demo passwords first: anyone with the link can reach the login page.
 
 ---
 
@@ -220,7 +237,7 @@ post_max_size = 1G
 ```
 app/
   Console/Commands/   qa:eval, qa:stats
-  Http/Controllers/   Call, Template, Override, Agent, Dashboard
+  Http/Controllers/   Call, Template, Override, Agent, Dashboard, Stats
   Jobs/               ProcessCallJob
   Models/             Call, Agent, Template, Criterion, CriterionResult, Override, TranscriptSegment
   Policies/           CallPolicy, TemplatePolicy, OverridePolicy
@@ -228,11 +245,13 @@ app/
   Support/            AudioNormaliser, EvidenceVerifier, ScoreCalculator
 docs/
   golden_set.md       Golden set format spec
-  ai_notes.md         Log of AI scoring decisions
+  ai_notes.md         Log of AI mistakes and how they were caught
+  ARCHITECTURE.md     Components, data flow, and how to make common changes
+  WRITEUP.md          One-page write-up
   sample_scripts/     Call transcripts used to generate sample audio
 tests/
   Feature/            HTTP + job integration tests
-  Unit/               EvidenceVerifier, ScoreCalculator unit tests
+  Unit/               EvidenceVerifier, ScoreCalculator, keyword scorer, speaker guess
   golden/             golden_set.json (labelled eval cases)
 scripts/
   make_sample_calls.py   Generate sample MP3s with edge-tts + ffmpeg
