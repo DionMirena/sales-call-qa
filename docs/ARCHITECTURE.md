@@ -285,7 +285,10 @@ Audio files live on the `private` disk (`storage/app/private/`), which is not we
 | `qa.language` | `QA_LANGUAGE` | `en` |
 | `qa.model` | `ANTHROPIC_MODEL` | `claude-sonnet-4-6` |
 | `qa.deepgram_key` | `DEEPGRAM_API_KEY` | — |
-| `qa.anthropic_key` | `ANTHROPIC_API_KEY` | — |
+| `qa.anthropic_key` | `ANTHROPIC_API_KEY` | — (a key starting `sk-ant-` switches scoring to Claude) |
+| `qa.company_name` | `QA_COMPANY_NAME` | `INSURVAS` |
+| `qa.scoring.needs_review_confidence_threshold` | — | `0.6` |
+| `qa.scoring.fuzzy_verified_threshold` / `fuzzy_partial_threshold` | — | `0.85` / `0.60` |
 
 ---
 
@@ -296,3 +299,41 @@ Audio files live on the `private` disk (`storage/app/private/`), which is not we
 - `QUEUE_CONNECTION=sync` in `phpunit.xml` — jobs run inline; tests that need to assert dispatch use `Queue::fake()`
 - `Storage::fake('private')` in upload/delete tests
 - `Http::fake()` in scoring feature tests — Anthropic responses mocked; no API calls
+
+---
+
+## How to make common changes
+
+Run `php artisan test` after each change.
+
+### Change the pass threshold
+- For one template: edit the template in the UI (Templates → Edit → Pass threshold). Calls are re-judged when re-scored.
+- The default for new templates: `resources/views/templates/_form.blade.php` (`old('pass_threshold', ... ?? 80)`) and the migration default in `2025_01_01_000020_create_templates_table.php`.
+
+### Change the "needs review" confidence threshold
+- `config/qa.php` → `scoring.needs_review_confidence_threshold` (default `0.6`). Used by `ClaudeScoringService` and `KeywordScoringService`.
+
+### Change the AI model
+- `.env` → `ANTHROPIC_MODEL=...` (read as `config('qa.model')` in `ClaudeScoringService::callAnthropic()`).
+
+### Add a language
+- `.env` → `QA_LANGUAGE=es` (passed to Deepgram as the `language` query parameter). The UI text stays English. The rule-based scorer only knows English phrasings; Claude scoring works in other languages.
+
+### Add a new criterion type (e.g. `number_range`)
+1. A new migration that adds the value to the `type` enum on `criteria` and the `criterion_type` enum on `criterion_results`.
+2. `TemplateController` validation: `criteria.*.type` `in:` list in both `store()` and `update()`.
+3. Builder dropdown: `resources/views/templates/_criteria_builder.blade.php`.
+4. Scoring value: `ScoreCalculator::resultToValue()`.
+5. Allowed AI results: `$allowedResults` in `ClaudeScoringService::validate()` and `normaliseScore()`.
+6. Free scorer: the `match` on `$criterion->type` in `KeywordScoringService::score()`.
+7. Overrides: the allowed values in `OverrideController::store()` / `normaliseScore()` and the override `<select>` in `resources/views/calls/show.blade.php`.
+8. A `ScoreCalculatorTest` case for the new type.
+
+### Add a sort option to the calls list
+- `CallController::index()` → add `'key' => ['column', 'asc|desc']` to `$sorts`, then add the option to the Sort dropdown in `resources/views/calls/index.blade.php`. Unknown keys fall back to newest first, so only whitelisted columns can be sorted.
+
+### Teach the free scorer a new phrasing
+- `KeywordScoringService::CONCEPTS` → extend the regex for that concept (e.g. `'purpose'`), and add a case to `tests/Unit/KeywordScoringServiceTest.php`.
+
+### Change the company name
+- `.env` → `QA_COMPANY_NAME=...`. Used for the logo text, the agent-speaker guess and the Deepgram keyword boost.
