@@ -24,11 +24,11 @@ A Laravel tool for QA managers to evaluate life insurance sales calls against cu
 
 | Requirement | Version |
 |---|---|
-| PHP | 8.3+ with `pdo_mysql`, `fileinfo`, `mbstring`, `curl`, `zip` |
+| PHP | 8.3+ with `pdo_sqlite`, `fileinfo`, `mbstring`, `curl`, `zip` |
 | Composer | 2.x |
 | Node.js | 20+ |
 | npm | bundled with Node |
-| MySQL | 8.x |
+| SQLite | bundled with PHP (`pdo_sqlite`); MySQL 8.x also supported |
 | ffmpeg + ffprobe | any recent build (required for audio normalisation) |
 | Python 3 + edge-tts | only needed to **generate** sample call audio (not for running the app) |
 
@@ -52,14 +52,9 @@ php artisan key:generate
 
 ### Configure `.env`
 
-Open `.env` and set:
+The default `.env.example` uses **SQLite** — no database server required. Open `.env` and set:
 
 ```dotenv
-# Database
-DB_DATABASE=sales_call_qa
-DB_USERNAME=root
-DB_PASSWORD=          # your MySQL root password (blank if none)
-
 # API keys (see section below)
 DEEPGRAM_API_KEY=
 ANTHROPIC_API_KEY=
@@ -67,6 +62,17 @@ ANTHROPIC_API_KEY=
 # ffmpeg — only needed if ffmpeg is not on your system PATH
 FFMPEG_PATH=ffmpeg
 FFPROBE_PATH=ffprobe
+```
+
+The `DB_CONNECTION=sqlite` line is already set; migrations will create `database/database.sqlite` automatically. To use **MySQL** instead, replace the `DB_CONNECTION=sqlite` block with:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sales_call_qa
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
 Then run migrations and seed demo data:
