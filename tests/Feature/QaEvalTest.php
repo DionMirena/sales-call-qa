@@ -117,6 +117,21 @@ class QaEvalTest extends TestCase
         unlink($tmpPath);
     }
 
+    public function test_eval_prints_false_pass_false_fail_breakdown(): void
+    {
+        $this->app->bind(ScoringService::class, FakeScoringService::class);
+
+        $manager = User::factory()->create(['role' => 'manager']);
+        $this->makeTemplate($manager);
+
+        // Fake AI scores everything pass; golden set gs_002 expects all-fail → false-passes.
+        // The command must print the per-criterion breakdown table and the summary line.
+        $this->artisan('qa:eval')
+            ->expectsOutputToContain('Per-criterion error breakdown')
+            ->expectsOutputToContain('False-pass | False-fail')
+            ->expectsOutputToContain('Overall false-pass');
+    }
+
     public function test_eval_cleans_up_on_scoring_failure(): void
     {
         // Without a template, scoring will fail; command should still exit cleanly

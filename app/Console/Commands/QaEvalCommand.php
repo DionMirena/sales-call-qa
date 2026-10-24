@@ -62,9 +62,12 @@ class QaEvalCommand extends Command
             return self::FAILURE;
         }
 
-        $allRows    = [];
-        $totalRight = 0;
-        $totalItems = 0;
+        $allRows          = [];
+        $totalRight       = 0;
+        $totalItems       = 0;
+        $totalFalsePass   = 0;
+        $totalFalseFail   = 0;
+        $criterionStats   = []; // ['correct'=>int,'false_pass'=>int,'false_fail'=>int,'total'=>int]
 
         foreach ($cases as $case) {
             $this->line("<fg=cyan>Case {$case['id']}:</> {$case['description']}");
@@ -126,6 +129,24 @@ class QaEvalCommand extends Command
                     $totalRight++;
                 }
 
+                $name = $exp['criterion_name'];
+                if (! isset($criterionStats[$name])) {
+                    $criterionStats[$name] = ['correct' => 0, 'false_pass' => 0, 'false_fail' => 0, 'total' => 0];
+                }
+                $criterionStats[$name]['total']++;
+                if ($correct) {
+                    $criterionStats[$name]['correct']++;
+                } else {
+                    $fp = $this->isFalsePass($exp['result'], $result->ai_result);
+                    if ($fp === true) {
+                        $criterionStats[$name]['false_pass']++;
+                        $totalFalsePass++;
+                    } elseif ($fp === false) {
+                        $criterionStats[$name]['false_fail']++;
+                        $totalFalseFail++;
+                    }
+                }
+
                 $allRows[] = [
                     $case['id'],
                     $exp['criterion_name'],
@@ -155,6 +176,50 @@ class QaEvalCommand extends Command
         $this->newLine();
         $this->line("<fg={$colour};options=bold>Overall accuracy: {$totalRight}/{$totalItems} ({$overallPct}%)</>");
 
+        // Per-criterion false-pass / false-fail breakdown
+        if ($criterionStats) {
+            $this->newLine();
+            $this->line('<options=bold>Per-criterion error breakdown:</>');
+            $criterionRows = [];
+            foreach ($criterionStats as $name => $s) {
+                $acc = $s['total'] ? round($s['correct'] / $s['total'] * 100) : 0;
+                $criterionRows[] = [
+                    $name,
+                    $s['total'],
+                    $s['correct'],
+                    $s['false_pass'],
+                    $s['false_fail'],
+                    "{$acc}%",
+                ];
+            }
+            $this->table(
+                ['Criterion', 'Total', 'Correct', 'False-pass', 'False-fail', 'Accuracy'],
+                $criterionRows,
+            );
+
+            $this->line("Overall false-pass: <fg=yellow>{$totalFalsePass}</> | false-fail: <fg=yellow>{$totalFalseFail}</>");
+        }
+
         return $overallPct >= 80 ? self::SUCCESS : self::FAILURE;
+    }
+
+    /**
+     * Returns true if AI was too lenient (false-pass), false if too strict (false-fail),
+     * or null if the criterion type cannot be classified directionally.
+     */
+    private function isFalsePass(string $expected, string $aiResult): ?bool
+    {
+        $lenientValues = ['pass', 'yes'];
+        $strictValues  = ['fail', 'no'];
+
+        if (in_array($expected, $strictValues) && in_array($aiResult, $lenientValues)) {
+            return true;  // AI said pass/yes, truth was fail/no → false-pass
+        }
+        if (in_array($expected, $lenientValues) && in_array($aiResult, $strictValues)) {
+            return false; // AI said fail/no, truth was pass/yes → false-fail
+        }
+
+        // For scale or extract types we can't classify directionally
+        return null;
     }
 }
