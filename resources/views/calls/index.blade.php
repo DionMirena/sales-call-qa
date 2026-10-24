@@ -44,14 +44,39 @@
                         <span class="px-1.5 py-0.5 bg-indigo-600 text-white text-xs rounded-full">{{ $activeFilters }}</span>
                     @endif
                 </button>
-                @if($activeFilters)
-                    <a href="{{ route('calls.index') }}"
-                       class="text-xs text-slate-400 hover:text-slate-600 transition-colors">Clear all</a>
-                @endif
+                <div class="flex items-center gap-3">
+                    @if($activeFilters)
+                        <a href="{{ route('calls.index', request()->only('sort')) }}"
+                           class="text-xs text-slate-400 hover:text-slate-600 transition-colors">Clear all</a>
+                    @endif
+                    {{-- Sort: keeps the current filters by re-sending them as hidden fields --}}
+                    <form method="GET" action="{{ route('calls.index') }}" class="flex items-center gap-2">
+                        @foreach (request()->except(['sort', 'page']) as $key => $value)
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endforeach
+                        <label for="sort" class="text-xs text-slate-500">Sort</label>
+                        <select id="sort" name="sort" onchange="this.form.submit()"
+                                class="h-8 pl-2.5 pr-8 py-0 rounded-lg border-slate-200 bg-white text-xs font-medium text-slate-700 focus:border-indigo-500 focus:ring-indigo-500">
+                            @foreach ([
+                                'newest'      => 'Newest first',
+                                'oldest'      => 'Oldest first',
+                                'number_asc'  => 'Call # (1 → last)',
+                                'number_desc' => 'Call # (last → 1)',
+                                'longest'     => 'Longest first',
+                                'shortest'    => 'Shortest first',
+                            ] as $value => $label)
+                                <option value="{{ $value }}" @selected(request('sort', 'newest') === $value)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
             </div>
 
             <div x-show="showFilters">
                 <form method="GET" action="{{ route('calls.index') }}">
+                    @if (request()->filled('sort'))
+                        <input type="hidden" name="sort" value="{{ request('sort') }}">
+                    @endif
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                         <div>
                             <label class="block text-xs font-medium text-slate-500 mb-1">Agent</label>
@@ -169,6 +194,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Call</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Agent</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Template</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Length</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Score</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Outcome</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
@@ -200,6 +226,10 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 text-slate-600 max-w-[160px] truncate">{{ $call->template->name }}</td>
+                                    <td class="px-4 py-3 text-slate-600 tabular-nums whitespace-nowrap">
+                                        {{-- minutes:seconds; minutes can go past 59 for long calls --}}
+                                        {{ $call->duration_seconds !== null ? intdiv($call->duration_seconds, 60) . ':' . str_pad($call->duration_seconds % 60, 2, '0', STR_PAD_LEFT) : '—' }}
+                                    </td>
                                     <td class="px-4 py-3">
                                         @if ($call->score_percent !== null)
                                             <span class="font-bold {{ $call->score_percent >= 80 ? 'text-emerald-600' : ($call->score_percent >= 60 ? 'text-amber-600' : 'text-red-600') }}">

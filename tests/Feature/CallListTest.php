@@ -57,6 +57,33 @@ class CallListTest extends TestCase
             ->assertSee("Call #{$call->id}");
     }
 
+    public function test_calls_can_be_sorted_by_number_and_by_length(): void
+    {
+        $manager = $this->makeManager();
+        $short   = $this->makeCall($manager, ['duration_seconds' => 55]);
+        $long    = $this->makeCall($manager, ['duration_seconds' => 2895]);
+        $medium  = $this->makeCall($manager, ['duration_seconds' => 199]);
+
+        $order = fn (string $sort) => $this->actingAs($manager)
+            ->get(route('calls.index', ['sort' => $sort]))
+            ->viewData('calls')->pluck('id')->all();
+
+        $this->assertSame([$short->id, $long->id, $medium->id], $order('number_asc'));
+        $this->assertSame([$medium->id, $long->id, $short->id], $order('number_desc'));
+        $this->assertSame([$long->id, $medium->id, $short->id], $order('longest'));
+        $this->assertSame([$short->id, $medium->id, $long->id], $order('shortest'));
+
+        $this->actingAs($manager)->get(route('calls.index'))->assertSee('48:15'); // 2895 s
+    }
+
+    public function test_unknown_sort_falls_back_to_newest_first(): void
+    {
+        $manager = $this->makeManager();
+        $this->makeCall($manager);
+
+        $this->actingAs($manager)->get(route('calls.index', ['sort' => 'drop table']))->assertOk();
+    }
+
     public function test_manager_sees_only_own_calls(): void
     {
         $manager  = $this->makeManager();

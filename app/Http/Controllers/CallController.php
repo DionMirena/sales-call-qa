@@ -69,7 +69,18 @@ class CallController extends Controller
             $query->whereHas('criterionResults', fn ($q) => $q->where('needs_review', true));
         }
 
-        $calls     = $query->latest()->paginate(25)->withQueryString();
+        // Sort options shown in the list's "Sort" dropdown: key => [column, direction].
+        $sorts = [
+            'newest'      => ['created_at', 'desc'],
+            'oldest'      => ['created_at', 'asc'],
+            'number_asc'  => ['id', 'asc'],
+            'number_desc' => ['id', 'desc'],
+            'longest'     => ['duration_seconds', 'desc'],
+            'shortest'    => ['duration_seconds', 'asc'],
+        ];
+        [$column, $direction] = $sorts[$request->input('sort')] ?? $sorts['newest'];
+
+        $calls     = $query->orderBy($column, $direction)->orderBy('id', $direction)->paginate(25)->withQueryString();
         $agents    = Agent::orderBy('name')->get(['id', 'name']);
         $templates = Template::orderBy('name')->get(['id', 'name']);
 
