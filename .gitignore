@@ -9,10 +9,25 @@
 /public/storage
 /bootstrap/cache/*.php
 
-# Audio / transcripts (privacy + size)
+# Audio / transcripts / images (privacy + size)
 /samples/
 /storage/app/audio/
 /storage/app/private/
+/docs/design-references/
+/database/*.sqlite
+
+# Binary media — keep nothing except files the app serves from public/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.mp3
+*.wav
+*.m4a
+!public/*.png
+!public/*.jpg
+!public/*.ico
 
 # Laravel runtime cache (generated, not source)
 /storage/framework/views/
