@@ -92,12 +92,13 @@ class QaStatsCommand extends Command
         $this->newLine();
         $this->line('<options=bold>Top 10 most-failed criteria (AI result, not override-adjusted):</>');
 
+        $scopedCallIds = Call::select('id')
+            ->where('status', 'done')
+            ->when($since, fn ($q) => $q->where('updated_at', '>=', $since))
+            ->when($templateFilter, fn ($q) => $q->where('template_id', $templateFilter->id));
+
         $failQuery = CriterionResult::query()
-            ->whereIn('call_id', Call::select('id')
-                ->where('status', 'done')
-                ->when($since, fn ($q) => $q->where('updated_at', '>=', $since))
-                ->when($templateFilter, fn ($q) => $q->where('template_id', $templateFilter->id))
-            )
+            ->whereIn('call_id', $scopedCallIds)
             ->whereIn('ai_result', ['fail', 'no'])
             ->selectRaw('criterion_name, COUNT(*) as fail_count')
             ->groupBy('criterion_name')
@@ -113,6 +114,34 @@ class QaStatsCommand extends Command
                 $failQuery->map(fn ($r) => [$r->criterion_name, $r->fail_count])->toArray()
             );
         }
+
+        // ── Override rate per criterion ───────────────────────────────────────────
+        // "Changed" = a manager overrode the result to a different value, i.e. disagreed
+        // with the scorer. "Mark AI correct" keeps the same value, so it only counts as reviewed.
+        $this->newLine();
+        $this->line('<options=bold>Override rate per criterion (high change rate = reword the criterion):</>');
+
+        $overrideRows = CriterionResult::query()
+            ->whereIn('call_id', $scopedCallIds)
+            ->where('criterion_type', '!=', 'extract')
+            ->selectRaw('criterion_name, COUNT(*) as scored')
+            ->selectRaw('SUM(CASE WHEN EXISTS (SELECT 1 FROM overrides o WHERE o.criterion_result_id = criterion_results.id) THEN 1 ELSE 0 END) as reviewed')
+            ->selectRaw('SUM(CASE WHEN EXISTS (SELECT 1 FROM overrides o WHERE o.criterion_result_id = criterion_results.id AND o.new_result <> o.old_result) THEN 1 ELSE 0 END) as changed')
+            ->groupBy('criterion_name')
+            ->get()
+            ->sortByDesc(fn ($r) => $r->changed / $r->scored)
+            ->values();
+
+        $this->table(
+            ['Criterion', 'Scored', 'Reviewed', 'Changed', 'Change rate'],
+            $overrideRows->map(fn ($r) => [
+                $r->criterion_name,
+                $r->scored,
+                (int) $r->reviewed,
+                (int) $r->changed,
+                round($r->changed / $r->scored * 100) . '%',
+            ])->toArray()
+        );
 
         return self::SUCCESS;
     }

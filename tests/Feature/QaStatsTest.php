@@ -121,6 +121,47 @@ class QaStatsTest extends TestCase
             ->expectsOutputToContain('Greeting');
     }
 
+    public function test_stats_shows_override_rate_per_criterion(): void
+    {
+        $manager = User::factory()->create(['role' => 'manager']);
+        $result  = fn (Call $call, string $name, string $ai) => $call->criterionResults()->create([
+            'criterion_name'        => $name,
+            'criterion_description' => 'Test',
+            'criterion_type'        => 'pass_fail',
+            'criterion_weight'      => 1,
+            'criterion_is_critical' => false,
+            'ai_result'             => $ai,
+            'ai_score'              => $ai === 'pass' ? 1.0 : 0.0,
+            'confidence'            => 0.9,
+            'reasoning'             => 'Test',
+            'evidence'              => [],
+            'verification_status'   => 'verified',
+        ]);
+        $override = fn (CriterionResult $r, string $old, string $new) => $r->overrides()->create([
+            'user_id' => $manager->id, 'old_result' => $old, 'new_result' => $new, 'reason' => 'Checked the recording.',
+        ]);
+
+        // "Recording notice" scored on 4 calls: 1 changed by a manager, 1 confirmed as correct.
+        foreach (range(1, 4) as $i) {
+            $r = $result($this->makeCall($manager), 'Recording notice', 'fail');
+            if ($i === 1) { $override($r, 'fail', 'pass'); }
+            if ($i === 2) { $override($r, 'fail', 'fail'); }
+        }
+        // "Next steps" scored once and never overridden.
+        $result($this->makeCall($manager), 'Next steps', 'pass');
+
+        $this->artisan('qa:stats', ['--days' => '0'])
+            ->assertSuccessful()
+            ->expectsOutputToContain('Override rate per criterion')
+            ->expectsTable(
+                ['Criterion', 'Scored', 'Reviewed', 'Changed', 'Change rate'],
+                [
+                    ['Recording notice', 4, 2, 1, '25%'],
+                    ['Next steps', 1, 0, 0, '0%'],
+                ]
+            );
+    }
+
     public function test_stats_respects_days_filter(): void
     {
         $manager = User::factory()->create(['role' => 'manager']);
