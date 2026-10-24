@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Trust the X-Forwarded-* headers from a tunnel or proxy (e.g. ngrok), so links,
+        // CSS and JS are built with the visitor's https address instead of http://localhost.
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
         ]);
