@@ -132,4 +132,15 @@ This file records every mistake made by the AI assistant during this project: wr
 - **Fix:** Committed `bootstrap/cache/.gitignore` (as Laravel's skeleton does) and added the SQLite file step to the README.
 - **Lesson:** Test the setup from a clean clone, exactly as a reviewer would.
 
+### Mistake 21: Agent pages showed managers other people's calls
+- **What happened:** The calls list, dashboard and stats only show a manager their own calls, but `AgentController` was never filtered. A manager could see the scores, outcomes and failed criteria of every call for an agent, plus links to calls they were not allowed to open.
+- **How it was caught:** Checking every page against the "managers only see their own calls" rule during the final review; the manager account had uploaded 0 calls but its agent pages showed 18.
+- **Fix:** The same admin-or-uploader filter as the other pages, applied to the agent list counts, the agent stats and the recent-calls list, with a test for both roles.
+- **Lesson:** A permission rule has to be checked on every page that reads the data, not only where the data is created.
+
+### Mistake 22: ARCHITECTURE.md described routes and paths that do not exist
+- **What happened:** It gave the wrong override URL (`/overrides/{id}`), audio URL (`/audio/{call}`) and storage folder (`storage/app/private`), a 600 s job timeout instead of 900 s, unique agent names, and scoring by Claude only.
+- **How it was caught:** Reading the document line by line against the routes, migrations and config.
+- **Fix:** Corrected every line.
+
 <!-- Add new entries below as they occur. -->
