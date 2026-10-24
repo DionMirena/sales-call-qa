@@ -376,6 +376,9 @@
                                     @if($isExtract)
                                         <p class="text-sm text-slate-700 italic max-w-[140px] truncate">{{ $effective ?: '—' }}</p>
                                     @else
+                                        @if($result->overrides->isNotEmpty())
+                                            <span class="text-xs line-through text-slate-400 mr-1">{{ strtoupper($result->ai_result) }}</span>
+                                        @endif
                                         <span class="inline-flex px-2.5 py-1 rounded-full text-sm font-bold
                                             {{ $isGood ? 'bg-emerald-100 text-emerald-700' : '' }}
                                             {{ $isBad  ? 'bg-red-100 text-red-700'         : '' }}
@@ -434,9 +437,22 @@
                                     @else
                                         <span></span>
                                     @endif
-                                    <button @click="open = !open" type="button"
-                                            class="text-xs text-slate-400 hover:text-slate-700 transition-colors"
-                                            x-text="open ? 'Cancel' : 'Override result'"></button>
+                                    <div class="flex items-center gap-3">
+                                        @if($result->needs_review && $result->overrides->isEmpty())
+                                            <form method="POST" action="{{ route('overrides.store', $result) }}">
+                                                @csrf
+                                                <input type="hidden" name="new_result" value="{{ $result->ai_result }}">
+                                                <input type="hidden" name="reason" value="Reviewed: AI result confirmed correct.">
+                                                <button type="submit"
+                                                        class="text-xs text-emerald-600 hover:text-emerald-800 transition-colors">
+                                                    ✓ Mark AI correct
+                                                </button>
+                                            </form>
+                                        @endif
+                                        <button @click="open = !open" type="button"
+                                                class="text-xs text-slate-400 hover:text-slate-700 transition-colors"
+                                                x-text="open ? 'Cancel' : 'Override result'"></button>
+                                    </div>
                                 </div>
 
                                 {{-- Override form --}}

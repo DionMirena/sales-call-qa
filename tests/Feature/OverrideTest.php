@@ -239,6 +239,25 @@ class OverrideTest extends TestCase
         $this->assertEquals('4', $result->fresh()->effectiveResult());
     }
 
+    // ── Mark as reviewed ─────────────────────────────────────────────────────
+
+    public function test_mark_as_reviewed_saves_override_with_same_result(): void
+    {
+        [$manager, $call] = $this->makeFixtures();
+        $result = $this->addResult($call, ['ai_result' => 'fail', 'needs_review' => true]);
+
+        $this->override($manager, $result, [
+            'new_result' => 'fail',
+            'reason'     => 'Reviewed: AI result confirmed correct.',
+        ])->assertRedirect(route('calls.show', $call));
+
+        $this->assertDatabaseHas('overrides', [
+            'criterion_result_id' => $result->id,
+            'new_result'          => 'fail',
+        ]);
+        $this->assertFalse((bool) $result->fresh()->needs_review);
+    }
+
     // ── Normalised score ──────────────────────────────────────────────────────
 
     public function test_new_score_normalised_for_scale_type(): void
