@@ -33,9 +33,10 @@ class Call extends Model
         return $this->belongsTo(Agent::class);
     }
 
+    // Include deleted (soft-deleted) templates: a call keeps the template it was scored with.
     public function template(): BelongsTo
     {
-        return $this->belongsTo(Template::class);
+        return $this->belongsTo(Template::class)->withTrashed();
     }
 
     public function uploader(): BelongsTo
