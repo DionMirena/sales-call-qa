@@ -143,4 +143,10 @@ This file records every mistake made by the AI assistant during this project: wr
 - **How it was caught:** Reading the document line by line against the routes, migrations and config.
 - **Fix:** Corrected every line.
 
+### Mistake 23: Deleting a template crashed every page that showed its calls
+- **What happened:** Templates use soft deletes so history is kept, but `Call::template()` did not include soft-deleted templates. After the template used by all 18 calls was deleted, the dashboard returned a 500 error ("Attempt to read property name on null"), and overrides and re-scoring on those calls would also have failed.
+- **How it was caught:** The dashboard crashed while I was using the app through ngrok.
+- **Fix:** `Call::template()` now uses `withTrashed()`, so a call keeps the template it was scored with. A test deletes a template and then loads the dashboard, calls list, call page and agent page, and saves an override.
+- **Lesson:** When a model is soft-deleted, every relationship that points to it must decide whether it should still see it.
+
 <!-- Add new entries below as they occur. -->
